@@ -1,0 +1,25 @@
+# Dependências
+node_modules/
+
+# Variáveis e segredos
+.env
+.env.*
+!.env.example
+
+# Builds
+dist/
+build/
+.out/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
