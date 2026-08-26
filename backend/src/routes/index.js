@@ -2,9 +2,12 @@
 const express = require('express');
 const db = require('../config/db');
 const authRoutes = require('./auth.routes');
+const categoriaRoutes = require('./categoria.routes');
+const produtoRoutes = require('./produto.routes');
+const movimentacaoRoutes = require('./movimentacao.routes');
+const whatsappRoutes = require('./whatsapp.routes');
 const router = express.Router();
 
-// Rota de verificação de vida da API (health check)
 router.get('/health', async (req, res) => {
   try {
     const { rows } = await db.query('SELECT NOW() AS agora, version() AS versao');
@@ -21,14 +24,17 @@ router.get('/health', async (req, res) => {
     res.status(503).json({
       success: false,
       status: 'error',
-      service: 'controle-estoque-api',
       database: 'disconnected',
       message: error.message,
     });
   }
 });
 
-// Rotas de autenticação
 router.use('/auth', authRoutes);
+router.use('/categorias', categoriaRoutes);
+router.use('/produtos', produtoRoutes);
+router.use('/movimentacoes', movimentacaoRoutes);
 
+// Webhook do WhatsApp
+router.use('/whatsapp', whatsappRoutes);
 module.exports = router;

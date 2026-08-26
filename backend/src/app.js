@@ -2,6 +2,8 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 
 const routes = require('./routes');
 const { notFoundHandler, errorHandler } = require('./middlewares/errorHandlers');
@@ -15,6 +17,12 @@ app.use(cors({ origin: process.env.WEB_URL || '*', credentials: true }));
 // Parse de JSON (limite 10mb, útil para fotos em base64 no futuro)
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+// Swagger — documentação da API
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'Controle de Estoque — API Docs',
+}));
 
 // Rotas da API
 app.use('/api', routes);
