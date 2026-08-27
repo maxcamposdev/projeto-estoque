@@ -1,4 +1,4 @@
-// locales/i18n.js — Configuração de internacionalização
+// locales/i18n.js — Configuração de internacionalização (robusta)
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import ptBR from './pt-BR.json';
@@ -13,7 +13,12 @@ i18n.use(initReactI18next).init({
   },
   lng: savedLang,
   fallbackLng: 'pt-BR',
+  supportedLngs: ['pt-BR', 'en'],
+  nonExplicitSupportedLngs: true,
+  load: 'currentOnly',
   interpolation: { escapeValue: false },
+  initImmediate: false,
+  react: { useSuspense: false },
 });
 
 export default i18n;
