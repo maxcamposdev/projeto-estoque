@@ -28,7 +28,9 @@ CREATE TABLE IF NOT EXISTS products (
         min_quantity NUMERIC(12, 3) NOT NULL DEFAULT 0,
         price NUMERIC(12, 2) NOT NULL DEFAULT 0,
         barcode VARCHAR(60),
-        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        image_url TEXT,
+    image_data TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 -- Tabela: movimentações de estoque (entradas e saídas)

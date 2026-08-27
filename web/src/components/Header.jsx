@@ -30,7 +30,7 @@ export default function Header() {
     <header className="header">
       <div className="header-content">
         <span className="header-logo" onClick={() => navigate(showNav ? '/dashboard' : '/')}>
-          <Logo size={28} /> Sistema de Gestão de Estoque
+          <Logo size={36} /> Sistema de Gestão de Estoque
         </span>
 
         {showNav && (

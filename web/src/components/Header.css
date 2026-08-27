@@ -17,19 +17,28 @@
   gap: 1rem;
 }
 
-.header-logo {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--accent);
-  cursor: pointer;
-  white-space: nowrap;
-}
+
+  .header-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .header-logo svg {
+    flex-shrink: 0;
+  }
 
 .header-nav {
   display: flex;
   gap: 0.25rem;
   flex: 1;
-  justify-content: center;
+  justify-content: flex-start;
+  margin-left: 1.5rem;
 }
 
 .nav-btn {

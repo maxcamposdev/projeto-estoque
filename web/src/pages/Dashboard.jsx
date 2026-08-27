@@ -7,17 +7,47 @@ export default function Dashboard() {
   const [resumo, setResumo] = useState(null);
   const [error, setError] = useState('');
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const stored = localStorage.getItem('user');
-    if (stored) setUser(JSON.parse(stored));
+    if (stored) {
+      try { setUser(JSON.parse(stored)); } catch { /* ignore */ }
+    }
   }, []);
 
   useEffect(() => {
+    let cancelado = false;
     api.get('/movimentacoes/resumo')
-      .then(({ data }) => setResumo(data.resumo))
-      .catch((err) => setError(err.response?.data?.message || "Erro ao conectar com o servidor"));
-  }, [t]);
+      .then(({ data }) => {
+        if (cancelado) return;
+        setResumo(data.resumo);
+        setError('');
+      })
+      .catch((err) => {
+        if (cancelado) return;
+        const status = err.response?.status;
+        if (status === 401) {
+          // Token expirou → volta pro login
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = '/';
+        } else {
+          setError(err.response?.data?.message || 'Erro ao conectar com o servidor');
+        }
+      })
+      .finally(() => { if (!cancelado) setLoading(false); });
+    return () => { cancelado = true; };
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="dashboard-loading">
+        <div className="spinner" />
+        <p>Carregando painel...</p>
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -30,43 +60,46 @@ export default function Dashboard() {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <h1>{"Visão Geral"}</h1>
-        {user && <p className="dashboard-user">👋 {user.name}</p>}
+        <div>
+          <h1>Visão Geral</h1>
+          <p className="dashboard-subtitle">Resumo do estoque da empresa</p>
+        </div>
+        {user && <p className="dashboard-user">Olá, <strong>{user.name}</strong> 👋</p>}
       </div>
 
       <div className="dashboard-cards">
         <div className="card">
           <div className="card-icon">📦</div>
           <div className="card-info">
-            <span className="card-value">{resumo?.totalProdutos ?? '...'}</span>
-            <span className="card-label">{"Total de Produtos"}</span>
+            <span className="card-value">{resumo?.totalProdutos ?? '0'}</span>
+            <span className="card-label">Total de Produtos</span>
           </div>
         </div>
 
         <div className="card">
           <div className="card-icon">📊</div>
           <div className="card-info">
-            <span className="card-value">{resumo?.totalUnidades ?? '...'}</span>
-            <span className="card-label">{"Unidades em Estoque"}</span>
+            <span className="card-value">{resumo?.totalUnidades ?? '0'}</span>
+            <span className="card-label">Unidades em Estoque</span>
           </div>
         </div>
 
-        <div className="card card-warning">
+        <div className={`card ${(resumo?.estoqueBaixo ?? 0) > 0 ? 'card-warning' : ''}`}>
           <div className="card-icon">⚠️</div>
           <div className="card-info">
-            <span className="card-value">{resumo?.estoqueBaixo ?? '...'}</span>
-            <span className="card-label">{"Estoque Baixo"}</span>
+            <span className="card-value">{resumo?.estoqueBaixo ?? '0'}</span>
+            <span className="card-label">Estoque Baixo</span>
           </div>
-          {resumo?.estoqueBaixo > 0 && (
-            <span className="card-badge">{"Produtos com estoque abaixo do mínimo"}</span>
-          )}
+    {(resumo?.estoqueBaixo ?? 0) > 0 && (
+      <span className="card-badge">Produtos abaixo do mínimo</span>
+    )}
         </div>
 
         <div className="card">
           <div className="card-icon">🔄</div>
           <div className="card-info">
-            <span className="card-value">{resumo?.totalMovimentacoes ?? '...'}</span>
-            <span className="card-label">{"Movimentações"}</span>
+            <span className="card-value">{resumo?.totalMovimentacoes ?? '0'}</span>
+            <span className="card-label">Movimentações</span>
           </div>
         </div>
       </div>

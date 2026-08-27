@@ -1,11 +1,27 @@
-// components/Logo.jsx — Logotipo oficial do sistema (SVG — mesma em todo o sistema)
-export default function Logo({ size = 32 }) {
+// components/Logo.jsx — Logotipo oficial do sistema (idêntico ao badge da tela de login)
+export default function Logo({ size = 36 }) {
+  const radius = Math.round(size * 0.26);
+  const fontSize = Math.max(7, Math.round(size * 0.16));
+
   return (
-    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="48" height="48" rx="12" fill="var(--accent, #06b6d4)" />
-      <path d="M12 20L24 13L36 20L24 27L12 20Z" fill="#ffffff" />
-      <path d="M12 28L24 35L36 28" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M12 24L24 31L36 24" stroke="#ffffff" strokeOpacity="0.6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <div
+      style={{
+        width: size,
+        height: size,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: radius,
+        background: 'linear-gradient(135deg, #137f9b, #4566d1)',
+        color: '#ffffff',
+        fontSize: fontSize,
+        fontWeight: 700,
+        letterSpacing: '0.01em',
+        flexShrink: 0,
+        lineHeight: 1,
+      }}
+    >
+      SUALOGO
+    </div>
   );
 }
