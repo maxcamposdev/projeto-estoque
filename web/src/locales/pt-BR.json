@@ -1,0 +1,77 @@
+{
+  "app": {
+    "title": "Controle de Estoque",
+    "subtitle": "Sistema de gestão de estoque — Projeto 04",
+    "loading": "Carregando..."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "produtos": "Produtos",
+    "movimentacoes": "Movimentações",
+    "sair": "Sair"
+  },
+  "auth": {
+    "login": "Entrar",
+    "email": "E-mail",
+    "password": "Senha",
+    "loginButton": "Entrar",
+    "enterAsVisitor": "Entrar como visitante (demo)",
+    "demoTitle": "Modo demonstração",
+    "demoDescription": "Você está no modo demonstração. Todos os dados são fictícios e podem ser manipulados livremente."
+  },
+  "dashboard": {
+    "totalProducts": "Total de Produtos",
+    "totalUnits": "Unidades em Estoque",
+    "lowStock": "Estoque Baixo",
+    "totalMovements": "Movimentações",
+    "lowStockAlert": "Produtos com estoque abaixo do mínimo",
+    "recentMovements": "Últimas Movimentações"
+  },
+  "products": {
+    "title": "Produtos",
+    "new": "Novo Produto",
+    "edit": "Editar Produto",
+    "name": "Nome",
+    "sku": "SKU",
+    "category": "Categoria",
+    "quantity": "Quantidade",
+    "minQuantity": "Estoque Mínimo",
+    "price": "Preço",
+    "barcode": "Código de Barras",
+    "description": "Descrição",
+    "search": "Buscar por nome ou SKU...",
+    "filterLowStock": "Só estoque baixo",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "deleteConfirm": "Tem certeza que deseja excluir este produto?",
+    "created": "Produto cadastrado com sucesso!",
+    "updated": "Produto atualizado com sucesso!",
+    "deleted": "Produto excluído com sucesso!"
+  },
+  "movements": {
+    "title": "Movimentações",
+    "new": "Nova Movimentação",
+    "type": "Tipo",
+    "in": "Entrada",
+    "out": "Saída",
+    "product": "Produto",
+    "quantity": "Quantidade",
+    "note": "Observação",
+    "date": "Data",
+    "responsible": "Responsável",
+    "register": "Registrar",
+    "history": "Histórico do Produto",
+    "insufficientStock": "Estoque insuficiente para esta saída."
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados.",
+    "whatsapp": "Vim do site de Controle de Estoque",
+    "contact": "Vamos conversar?"
+  },
+  "errors": {
+    "notFound": "Página não encontrada",
+    "backHome": "Voltar ao início",
+    "serverError": "Erro ao conectar com o servidor"
+  }
+}
