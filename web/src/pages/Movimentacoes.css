@@ -1,0 +1,50 @@
+/* pages/Movimentacoes.css */
+.movimentacoes { animation: fadeIn 0.3s ease; }
+
+.mov-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.mov-header h1 { font-size: 1.5rem; }
+
+.mov-form {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.mov-form h3 { margin-bottom: 1rem; color: var(--accent); }
+
+.hist-title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.badge-tipo {
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.badge-in {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.badge-out {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.cell-date {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+}

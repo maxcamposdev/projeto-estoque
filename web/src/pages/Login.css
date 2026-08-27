@@ -1,158 +1,1151 @@
-/* pages/Login.css */
-.login-page {
+/* =========================================================
+   LOGIN — DESIGN SAAS
+   ========================================================= */
+
+.login-container {
+  position: fixed;
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+
+  overflow: hidden;
+
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 120px);
+  justify-content: center;
+
+  padding: 30px;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 8% 12%,
+      rgba(255, 255, 255, 0.15),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 92% 82%,
+      rgba(255, 255, 255, 0.12),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #16809c 0%,
+      #3675c4 42%,
+      #594fd4 70%,
+      #783fd0 100%
+    );
+
+  z-index: 9999;
+
+  transition: background 0.3s ease;
 }
 
-.login-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2.5rem;
-  width: 100%;
-  max-width: 420px;
-  box-shadow: var(--shadow);
+/* =========================================================
+   FORMAS DECORATIVAS DO FUNDO
+   ========================================================= */
+
+.login-shape {
+  position: absolute;
+
+  pointer-events: none;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.09);
 }
+
+.login-shape-1 {
+  width: 400px;
+  height: 400px;
+
+  left: -190px;
+  top: -140px;
+}
+
+.login-shape-2 {
+  width: 310px;
+  height: 310px;
+
+  right: -100px;
+  top: 9%;
+}
+
+.login-shape-3 {
+  width: 190px;
+  height: 190px;
+
+  left: 8%;
+  bottom: -100px;
+}
+
+.login-shape-4 {
+  width: 260px;
+  height: 260px;
+
+  right: 18%;
+  bottom: -130px;
+}
+
+/* =========================================================
+   BOTÃO DE TEMA
+   ========================================================= */
+
+.theme-toggle {
+  position: fixed;
+
+  top: 24px;
+  right: 28px;
+
+  z-index: 100;
+
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 0 13px;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.14);
+
+  color: #ffffff;
+
+  backdrop-filter: blur(12px);
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.08);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.23);
+  transform: translateY(-1px);
+}
+
+.theme-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.theme-label {
+  font-size: 11px;
+}
+
+/* =========================================================
+   CARD PRINCIPAL
+   ========================================================= */
+
+.login-card {
+  position: relative;
+
+  z-index: 10;
+
+  width: 100%;
+  max-width: 400px;
+
+  max-height: calc(100vh - 50px);
+
+  overflow-y: auto;
+
+  box-sizing: border-box;
+
+  padding: 30px 34px 22px;
+
+  border-radius: 23px;
+
+  background: rgba(255, 255, 255, 0.98);
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+
+  box-shadow:
+    0 30px 70px rgba(23, 18, 70, 0.25),
+    0 8px 25px rgba(23, 18, 70, 0.12);
+
+  color: #172033;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+/* =========================================================
+   LOGO / IDENTIDADE
+   ========================================================= */
+
+.login-brand {
+  text-align: center;
+}
+
+.text-logo {
+  width: 66px;
+  height: 66px;
+
+  margin: 0 auto 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 17px;
+
+  background: linear-gradient(
+    135deg,
+    #137f9b,
+    #4566d1
+  );
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+
+  box-shadow:
+    0 8px 20px rgba(42, 103, 190, 0.25);
+}
+
+.company-name {
+  margin-bottom: 9px;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: #27344b;
+}
+
+.login-brand h2 {
+  max-width: 330px;
+
+  margin: 0 auto 8px;
+
+  font-size: 20px;
+  line-height: 1.22;
+
+  font-weight: 750;
+
+  letter-spacing: -0.5px;
+
+  color: #101828;
+}
+
+.company-description {
+  max-width: 330px;
+
+  margin: 0 auto;
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  color: #6c788c;
+}
+
+/* =========================================================
+   SEPARADOR
+   ========================================================= */
+
+.login-separator {
+  width: 100%;
+  height: 1px;
+
+  margin: 20px 0 18px;
+
+  background: #e8ebf0;
+}
+
+/* =========================================================
+   CABEÇALHO DO LOGIN
+   ========================================================= */
 
 .login-header {
   text-align: center;
-  margin-bottom: 2rem;
-}
 
-.login-icon {
-  font-size: 3rem;
-  display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 19px;
 }
 
 .login-header h1 {
-  font-size: 1.5rem;
-  color: var(--text-primary);
+  margin: 0 0 5px;
+
+  font-size: 23px;
+
+  line-height: 1.2;
+
+  font-weight: 750;
+
+  letter-spacing: -0.5px;
+
+  color: #111827;
 }
 
-.login-subtitle {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-top: 0.25rem;
+.login-header p {
+  margin: 0;
+
+  font-size: 12.5px;
+
+  color: #758196;
 }
+
+/* =========================================================
+   FORMULÁRIO
+   ========================================================= */
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+
+  gap: 15px;
+
+  width: 100%;
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+  width: 100%;
+
+  box-sizing: border-box;
 }
+
+/* =========================================================
+   LABELS — E-MAIL E SENHA ALINHADOS
+   ========================================================= */
 
 .form-group label {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
+  display: block;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  margin: 0 0 6px 0;
+
+  padding: 0;
+
+  font-size: 12px;
+
+  font-weight: 650;
+
+  line-height: 1.2;
+
+  text-align: left;
+
+  color: #344054;
 }
 
+/* Linha da senha */
+
+.password-label-row {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  margin: 0;
+  padding: 0;
+}
+
+.password-label-row label {
+  width: auto;
+
+  margin: 0 0 6px 0;
+
+  padding: 0;
+
+  text-align: left;
+}
+
+/* Esqueci minha senha */
+
+.forgot-password {
+  padding: 0;
+
+  margin: 0 0 6px 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #347ca4;
+
+  font-family: inherit;
+
+  font-size: 10.5px;
+
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  cursor: pointer;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
 .form-group input {
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0.75rem 1rem;
-  color: var(--text-primary);
-  font-size: 0.95rem;
-  transition: border-color 0.2s;
+  display: block;
+
+  width: 100%;
+  height: 44px;
+
+  box-sizing: border-box;
+
+  padding: 0 13px;
+
+  border: 1px solid #d8dee7;
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #f9fafb;
+
+  color: #172033;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #9aa5b5;
+}
+
+.form-group input:hover {
+  border-color: #c6ced9;
 }
 
 .form-group input:focus {
-  outline: none;
-  border-color: var(--border-focus);
+  background: #ffffff;
+
+  border-color: #3983aa;
+
+  box-shadow:
+    0 0 0 3px rgba(57, 131, 170, 0.11);
 }
+
+/* =========================================================
+   CAMPO DE SENHA
+   ========================================================= */
+
+.password-wrapper {
+  position: relative;
+
+  width: 100%;
+}
+
+.password-wrapper input {
+  padding-right: 42px;
+}
+
+/* Olho */
+
+.btn-eye {
+  position: absolute;
+
+  right: 8px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+
+  border-radius: 7px;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  opacity: 0.65;
+}
+
+.btn-eye:hover {
+  background: #eef2f6;
+
+  opacity: 1;
+}
+
+/* =========================================================
+   MENSAGEM DE ERRO
+   ========================================================= */
 
 .login-error {
-  color: var(--danger);
-  font-size: 0.85rem;
+  padding: 8px 10px;
+
+  border-radius: 8px;
+
+  background: #fff1f2;
+
+  border: 1px solid #fecdd3;
+
+  color: #be123c;
+
   text-align: center;
+
+  font-size: 11px;
+
+  line-height: 1.4;
 }
+
+/* =========================================================
+   BOTÃO ENTRAR
+   ========================================================= */
 
 .btn-primary {
-  background: var(--accent);
-  color: #000;
+  width: 100%;
+  height: 44px;
+
+  margin-top: 1px;
+
   border: none;
-  padding: 0.75rem;
-  border-radius: var(--radius);
-  font-size: 0.95rem;
+
+  border-radius: 9px;
+
+  background: linear-gradient(
+    135deg,
+    #147f9c,
+    #356fc1
+  );
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 13.5px;
+
   font-weight: 700;
+
   cursor: pointer;
-  transition: background 0.2s;
+
+  box-shadow:
+    0 6px 15px rgba(45, 111, 168, 0.2);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.btn-primary:hover {
-  background: var(--accent-hover);
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 9px 20px rgba(45, 111, 168, 0.28);
 }
 
 .btn-primary:disabled {
   opacity: 0.6;
+
   cursor: not-allowed;
 }
 
+/* =========================================================
+   DIVISOR "OU"
+   ========================================================= */
+
 .login-divider {
-  text-align: center;
-  margin: 1.5rem 0;
-  position: relative;
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  margin: 17px 0 14px;
+
+  color: #98a2b3;
+
+  font-size: 10.5px;
 }
 
 .login-divider::before,
 .login-divider::after {
   content: '';
-  position: absolute;
-  top: 50%;
-  width: 40%;
-  height: 1px;
-  background: var(--border);
-}
 
-.login-divider::before { left: 0; }
-.login-divider::after { right: 0; }
+  flex: 1;
+
+  height: 1px;
+
+  background: #e5e8ed;
+}
 
 .login-divider span {
-  background: var(--bg-card);
-  padding: 0 0.75rem;
-  color: var(--text-muted);
-  font-size: 0.85rem;
+  flex-shrink: 0;
 }
+
+/* =========================================================
+   BOTÃO DEMONSTRAÇÃO
+   ========================================================= */
 
 .btn-demo {
   width: 100%;
-  background: var(--bg-input);
-  border: 1px dashed var(--accent);
-  color: var(--accent);
-  padding: 0.75rem;
-  border-radius: var(--radius);
-  font-size: 0.95rem;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  border: 1px solid #b8d9e7;
+
+  border-radius: 9px;
+
+  background: #f7fbfd;
+
+  color: #267397;
+
+  font-family: inherit;
+
+  font-size: 12.5px;
+
+  font-weight: 650;
+
   cursor: pointer;
-  transition: all 0.2s;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.btn-demo:hover {
-  background: var(--accent-dim);
-  border-style: solid;
+.btn-demo:hover:not(:disabled) {
+  background: #eef8fb;
+
+  border-color: #8fc4d9;
+
+  transform: translateY(-1px);
 }
 
 .btn-demo:disabled {
   opacity: 0.6;
+
   cursor: not-allowed;
 }
 
-.demo-badge {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  background: var(--accent-dim);
-  border: 1px solid var(--accent);
-  border-radius: var(--radius);
-  color: var(--accent);
-  font-size: 0.8rem;
+/* =========================================================
+   DESCRIÇÃO DEMONSTRAÇÃO
+   ========================================================= */
+
+.demo-description {
+  max-width: 290px;
+
+  margin: 8px auto 0;
+
   text-align: center;
+
+  font-size: 10px;
+
   line-height: 1.4;
+
+  color: #8a95a5;
+}
+
+/* =========================================================
+   CRIAR CONTA
+   ========================================================= */
+
+.create-account {
+  margin: 17px 0 0;
+
+  text-align: center;
+
+  font-size: 11px;
+
+  color: #7b8798;
+}
+
+.create-account button {
+  margin-left: 4px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #2d759d;
+
+  font-family: inherit;
+
+  font-size: inherit;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.create-account button:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   NOME DO SISTEMA
+   ========================================================= */
+
+.product-name {
+  margin-top: 17px;
+
+  text-align: center;
+
+  font-size: 9px;
+
+  color: #a0a9b6;
+}
+
+/* =========================================================
+   WHATSAPP + INSTAGRAM
+   ÍCONES CENTRALIZADOS ABAIXO DO CARD
+   ========================================================= */
+
+.social-buttons {
+  position: fixed;
+
+  left: 50%;
+  bottom: 28px;
+
+  transform: translateX(-50%);
+
+  z-index: 100;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  width: max-content;
+}
+
+.social-button {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  background: rgba(255, 255, 255, 0.14);
+
+  color: #ffffff;
+
+  backdrop-filter: blur(12px);
+
+  text-decoration: none;
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.12);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.social-button:hover {
+  transform: translateY(-3px);
+
+  background: rgba(255, 255, 255, 0.25);
+
+  box-shadow:
+    0 9px 22px rgba(0, 0, 0, 0.18);
+}
+
+.social-svg {
+  width: 21px;
+  height: 21px;
+
+  display: block;
+}
+
+.whatsapp-svg {
+  width: 22px;
+  height: 22px;
+}
+
+.instagram-svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* =========================================================
+   DARK MODE — REDES SOCIAIS
+   ========================================================= */
+
+[data-theme="dark"] .social-button {
+  background: rgba(255, 255, 255, 0.10);
+
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+[data-theme="dark"] .social-button:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* =========================================================
+   RESPONSIVIDADE — REDES SOCIAIS
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .social-buttons {
+    left: 50%;
+
+    bottom: 18px;
+
+    transform: translateX(-50%);
+
+    gap: 10px;
+  }
+
+  .social-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .social-svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 380px) {
+
+  .social-buttons {
+    bottom: 12px;
+
+    gap: 9px;
+  }
+
+  .social-button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .social-svg {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+[data-theme="dark"] .login-container {
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(0, 195, 255, 0.14),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 85%,
+      rgba(142, 72, 255, 0.22),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #071c2b 0%,
+      #122d4a 40%,
+      #29225c 70%,
+      #321d54 100%
+    );
+}
+
+[data-theme="dark"] .login-card {
+  background: rgba(20, 25, 37, 0.97);
+
+  border-color: rgba(255, 255, 255, 0.08);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.42);
+}
+
+[data-theme="dark"] .company-name,
+[data-theme="dark"] .login-brand h2,
+[data-theme="dark"] .login-header h1 {
+  color: #f5f7fa;
+}
+
+[data-theme="dark"] .company-description,
+[data-theme="dark"] .login-header p,
+[data-theme="dark"] .demo-description,
+[data-theme="dark"] .create-account {
+  color: #aab4c5;
+}
+
+[data-theme="dark"] .login-separator,
+[data-theme="dark"] .login-divider::before,
+[data-theme="dark"] .login-divider::after {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .form-group label {
+  color: #d6dce6;
+}
+
+[data-theme="dark"] .form-group input {
+  background: #111827;
+
+  border-color: #303b4d;
+
+  color: #f5f7fa;
+}
+
+[data-theme="dark"] .form-group input::placeholder {
+  color: #778397;
+}
+
+[data-theme="dark"] .form-group input:focus {
+  background: #151d2b;
+}
+
+[data-theme="dark"] .btn-eye:hover {
+  background: #263142;
+}
+
+[data-theme="dark"] .btn-demo {
+  background: rgba(30, 80, 105, 0.25);
+
+  border-color: #32657a;
+
+  color: #70c5e5;
+}
+
+[data-theme="dark"] .product-name {
+  color: #68758a;
+}
+
+/* =========================================================
+   RESPONSIVIDADE — TABLETS
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .login-container {
+    padding: 18px;
+  }
+
+  .theme-toggle {
+    top: 15px;
+    right: 15px;
+  }
+
+  .login-card {
+    max-width: 410px;
+
+    padding: 27px 24px 20px;
+
+    max-height: calc(100vh - 75px);
+
+    border-radius: 20px;
+  }
+
+  .social-buttons {
+    left: 50%;
+
+    bottom: 10px;
+
+    transform: translateX(-50%);
+
+    width: max-content;
+  }
+
+  .social-button {
+    height: 35px;
+
+    padding: 0 11px;
+  }
+
+  .login-card {
+    margin-bottom: 38px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVIDADE — CELULARES PEQUENOS
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .login-container {
+    padding: 9px;
+  }
+
+  .login-card {
+    padding: 22px 19px 17px;
+
+    border-radius: 17px;
+
+    max-height: calc(100vh - 65px);
+  }
+
+  .text-logo {
+    width: 58px;
+    height: 58px;
+  }
+
+  .login-brand h2 {
+    font-size: 18px;
+  }
+
+  .login-form {
+    gap: 12px;
+  }
+
+  .social-buttons {
+    bottom: 8px;
+
+    gap: 7px;
+  }
+
+  .social-button {
+    width: 40px;
+
+    height: 36px;
+
+    padding: 0;
+  }
+
+  .social-button span:last-child {
+    display: none;
+  }
+}
+
+/* =========================================================
+   TELAS COM POUCA ALTURA
+   ========================================================= */
+
+@media (max-height: 720px) and (min-width: 601px) {
+
+  .login-container {
+    padding: 12px;
+  }
+
+  .login-card {
+    padding-top: 22px;
+    padding-bottom: 17px;
+
+    max-height: calc(100vh - 45px);
+  }
+
+  .text-logo {
+    width: 53px;
+    height: 53px;
+
+    margin-bottom: 8px;
+  }
+
+  .company-name {
+    margin-bottom: 5px;
+  }
+
+  .login-brand h2 {
+    font-size: 18px;
+  }
+
+  .company-description {
+    font-size: 11px;
+  }
+
+  .login-separator {
+    margin: 14px 0;
+  }
+
+  .login-header {
+    margin-bottom: 13px;
+  }
+
+  .login-form {
+    gap: 11px;
+  }
+
+  .login-divider {
+    margin: 12px 0 10px;
+  }
+
+  .create-account {
+    margin-top: 11px;
+  }
+
+  .product-name {
+    margin-top: 11px;
+  }
+
+  .social-buttons {
+    bottom: 8px;
+  }
+}
+
+
+/* =========================================================
+   COR DO ÍCONE DE MOSTRAR/OCULTAR SENHA
+   ========================================================= */
+
+.btn-eye {
+  color: var(--text-secondary) !important;
+  opacity: 1;
+  z-index: 2;
+}
+
+.btn-eye:hover {
+  color: var(--accent) !important;
+}
+
+/* Dark mode: garante contraste do olho */
+[data-theme="dark"] .btn-eye {
+  color: #e5e7eb !important;
+}
+
+[data-theme="dark"] .btn-eye:hover {
+  color: var(--accent) !important;
 }

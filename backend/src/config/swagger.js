@@ -5,7 +5,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Controle de Estoque',
+      title: 'API Gestão de estoque para sua empresa',
       version: '1.0.0',
       description: 'API REST do Sistema de Controle de Estoque — Projeto 04 do Portfólio Max Campos',
       contact: {

@@ -1,15 +1,12 @@
 // components/Footer.jsx — Rodapé com contatos reais (Regras 6)
-import { useTranslation } from 'react-i18next';
 import './Footer.css';
 
 export default function Footer() {
-  const { t } = useTranslation();
-
   return (
     <footer className="footer">
       <div className="footer-content">
         <p className="footer-text">
-          &copy; {new Date().getFullYear()} Max Campos — {t('footer.rights')}
+          &copy; {new Date().getFullYear()} Max Campos — Todos os direitos reservados.
         </p>
         <div className="footer-links">
           {/* WhatsApp real — Regra 6: link com ?text= de origem */}

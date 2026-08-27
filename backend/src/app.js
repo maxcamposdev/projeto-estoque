@@ -14,14 +14,17 @@ const app = express();
 app.use(helmet());
 app.use(cors({ origin: process.env.WEB_URL || '*', credentials: true }));
 
-// Parse de JSON (limite 10mb, útil para fotos em base64 no futuro)
-app.use(express.json({ limit: '10mb' }));
+// Parse de JSON com captura do corpo cru (para assinatura do webhook WhatsApp)
+app.use(express.json({
+  limit: '10mb',
+  verify: (req, res, buf) => { req.rawBody = buf; },
+}));
 app.use(express.urlencoded({ extended: true }));
 
 // Swagger — documentação da API
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: 'Controle de Estoque — API Docs',
+  customSiteTitle: 'Gestão de estoque para sua empresa — API Docs',
 }));
 
 // Rotas da API

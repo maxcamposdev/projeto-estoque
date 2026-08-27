@@ -1,4 +1,5 @@
 // controllers/whatsappController.js — Webhook do WhatsApp (Regras 5 e 6)
+const crypto = require('crypto');
 const db = require('../config/db');
 
 // Verificação do webhook (GET) — Meta exige na configuração
@@ -14,6 +15,33 @@ function verify(req, res) {
 
   console.warn('⚠️ Tentativa de verificação do webhook com token inválido.');
   res.sendStatus(403);
+}
+
+// Valida a assinatura HMAC enviada pela Meta (segurança)
+function isValidSignature(req, rawBody) {
+  const signature = req.headers['x-hub-signature-256'];
+  const appSecret = process.env.WHATSAPP_APP_SECRET;
+
+  // Se não configurou o secret, aceita (modo dev) — mas LOGA o aviso
+  if (!appSecret) {
+    console.warn('⚠️ WHATSAPP_APP_SECRET não configurado — validação de assinatura DESATIVADA.');
+    return true;
+  }
+
+  if (!signature) {
+    console.warn('⚠️ Requisição sem header X-Hub-Signature-256 — bloqueada.');
+    return false;
+  }
+
+  const expected = 'sha256=' + crypto
+    .createHmac('sha256', appSecret)
+    .update(rawBody)
+    .digest('hex');
+
+  return crypto.timingSafeEqual(
+    Buffer.from(signature),
+    Buffer.from(expected)
+  );
 }
 
 // Receber mensagens (POST) — Meta envia as mensagens aqui

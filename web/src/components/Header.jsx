@@ -1,69 +1,53 @@
-// components/Header.jsx — Cabeçalho fixo com botão de idioma
-import { useTranslation } from 'react-i18next';
+// components/Header.jsx — Cabeçalho com logo, menu e botão de tema
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Logo from './Logo';
 import './Header.css';
 
 export default function Header() {
-  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
 
-  const toggleLang = () => {
-    const newLang = i18n.language === 'pt-BR' ? 'en' : 'pt-BR';
-    i18n.changeLanguage(newLang);
-    localStorage.setItem('lang', newLang);
-  };
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
-  const isActive = (path) => location.pathname === path ? 'active' : '';
-
+  const toggleTheme = () => setTheme((p) => (p === 'dark' ? 'light' : 'dark'));
+  const isActive = (path) => (location.pathname === path ? 'active' : '');
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     navigate('/');
   };
 
-  // Só mostra a navegação se estiver logado
   const token = localStorage.getItem('token');
-
-  if (!token) {
-    return (
-      <header className="header">
-        <div className="header-content">
-          <span className="header-logo">📦 {t('app.title')}</span>
-          <button className="btn-lang" onClick={toggleLang}>
-            {i18n.language === 'pt-BR' ? '🇺🇸 EN' : '🇧🇷 PT-BR'}
-          </button>
-        </div>
-      </header>
-    );
-  }
+  const isLoginPage = location.pathname === '/';
+  const showNav = token && !isLoginPage;
 
   return (
     <header className="header">
       <div className="header-content">
-        <span className="header-logo" onClick={() => navigate('/dashboard')}>
-          📦 {t('app.title')}
+        <span className="header-logo" onClick={() => navigate(showNav ? '/dashboard' : '/')}>
+          <Logo size={28} /> Sistema de Gestão de Estoque
         </span>
 
-        <nav className="header-nav">
-          <button className={`nav-btn ${isActive('/dashboard')}`} onClick={() => navigate('/dashboard')}>
-            {t('nav.dashboard')}
-          </button>
-          <button className={`nav-btn ${isActive('/produtos')}`} onClick={() => navigate('/produtos')}>
-            {t('nav.produtos')}
-          </button>
-          <button className={`nav-btn ${isActive('/movimentacoes')}`} onClick={() => navigate('/movimentacoes')}>
-            {t('nav.movimentacoes')}
-          </button>
-        </nav>
+        {showNav && (
+          <nav className="header-nav">
+            <button className={`nav-btn ${isActive('/dashboard')}`} onClick={() => navigate('/dashboard')}>Dashboard</button>
+            <button className={`nav-btn ${isActive('/produtos')}`} onClick={() => navigate('/produtos')}>Produtos</button>
+            <button className={`nav-btn ${isActive('/movimentacoes')}`} onClick={() => navigate('/movimentacoes')}>Movimentações</button>
+          </nav>
+        )}
 
         <div className="header-right">
-          <button className="btn-lang" onClick={toggleLang}>
-            {i18n.language === 'pt-BR' ? '🇺🇸 EN' : '🇧🇷 PT-BR'}
+          <button className="btn-lang" onClick={toggleTheme} title={theme === 'dark' ? 'Tema claro' : 'Tema escuro'}>
+            {theme === 'dark' ? '☀️' : '🌙'}
           </button>
-          <button className="btn-logout" onClick={handleLogout}>
-            {t('nav.sair')}
-          </button>
+          {showNav && (
+            <button className="btn-logout" onClick={handleLogout}>Sair</button>
+          )}
         </div>
       </div>
     </header>

@@ -1,9 +1,10 @@
-// App.jsx — Rotas da aplicação
+// App.jsx — Rotas da aplicação (apenas português)
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import './locales/i18n';
+import Produtos from './pages/Produtos';
+import Movimentacoes from './pages/Movimentacoes';
 import './styles/theme.css';
 
 function PrivateRoute({ children }) {
@@ -16,14 +17,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout><Login /></Layout>} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Layout><Dashboard /></Layout>
-            </PrivateRoute>
-          }
-        />
+        <Route path="/dashboard" element={<PrivateRoute><Layout><Dashboard /></Layout></PrivateRoute>} />
+        <Route path="/produtos" element={<PrivateRoute><Layout><Produtos /></Layout></PrivateRoute>} />
+        <Route path="/movimentacoes" element={<PrivateRoute><Layout><Movimentacoes /></Layout></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

@@ -1,0 +1,156 @@
+// pages/Login.jsx — Tela de login SaaS moderna e elegante
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
+import Logo from '../components/Logo'; // Assumindo que Logo.jsx já existe
+import './Login.css';
+
+export default function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Tema (claro/escuro) — persiste no localStorage
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  // Funcionalidade de alternar tema (mantida para não quebrar outras partes)
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailValido) {
+      setError('Informe um e-mail válido.');
+      return;
+    }
+    if (!password) {
+      setError('Informe sua senha.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data } = await api.post('/auth/login', { email, password });
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      navigate('/dashboard');
+    } catch (err) {
+      const status = err.response?.status;
+      if (status === 401) setError('E-mail ou senha incorretos.');
+      else if (status === 400) setError('Informe e-mail e senha.');
+      else setError('Erro ao conectar com o servidor. Verifique se a API está no ar.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoAccess = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const { data } = await api.post('/auth/login', {
+        email: 'maxcamposdev@gmail.com', // Credenciais fixas para demo
+        password: '123456',
+      });
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      navigate('/dashboard');
+    } catch (err) {
+      setError('Erro ao conectar com o servidor. Verifique se a API está no ar.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <div className="presentation-panel"> {/* Esta área é o fundo gradiente + abstrato */}
+        <div className="presentation-content">
+          <div className="logo-placeholder"><Logo size={72} /></div> {/* Placeholder da Logo */}
+          <h2 className="company-name">[NOME DA EMPRESA]</h2> {/* Placeholder */}
+          <h1 className="main-title">Gestão inteligente para o crescimento da sua empresa</h1>
+          <p className="description">Tenha mais controle, organização e eficiência para administrar seus processos em um único lugar.</p>
+          <p className="highlight-phrase">Mais organização. Mais produtividade. Mais resultados.</p>
+          {/* Elementos geométricos e gradientes no CSS */}
+        </div>
+      </div>
+
+      <div className="login-panel"> {/* O card centralizado */}
+        <div className="login-card">
+          <div className="login-header">
+            <h1>Bem-vindo!</h1>
+            <p>Acesse sua conta para continuar.</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="login-form">
+            <div className="form-group">
+              <label htmlFor="email">E-mail</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Digite seu e-mail"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Senha</label>
+              <div className="password-wrapper">
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Digite sua senha"
+                  required
+                />
+                <button
+                  type="button"
+                  className="btn-eye"
+                  onClick={() => setShowPassword((v) => !v)}
+                  title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                >
+                  {showPassword ? '🙈' : '👁️'}
+                </button>
+              </div>
+              <div className="forgot-password">
+                <a href="#recuperar" onClick={(e) => e.preventDefault()}>Esqueceu sua senha?</a>
+              </div>
+            </div>
+
+            {error && <p className="login-error">{error}</p>}
+
+            <button type="submit" className="btn-primary" disabled={loading}>
+              {loading ? 'Entrando...' : 'Entrar'}
+            </button>
+          </form>
+
+          <div className="login-divider"><span>ou</span></div>
+
+          <button className="btn-demo" onClick={handleDemoAccess} disabled={loading}>
+            🚀 Acessar demonstração
+          </button>
+          <p className="demo-description">Explore os recursos do sistema utilizando dados fictícios.</p>
+
+          <p className="create-account">
+            Ainda não possui uma conta? <a href="#criar" onClick={(e) => e.preventDefault()}>Criar conta</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}

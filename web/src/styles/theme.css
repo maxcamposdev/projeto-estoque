@@ -1,4 +1,6 @@
-/* styles/theme.css — Design System do Portfólio (tema escuro, tech) */
+/* styles/theme.css — Design System do Portfólio (tema escuro + claro) */
+
+/* ===== TEMA PADRÃO: ESCURO ===== */
 :root {
   /* Cores base */
   --bg-primary: #0a0e17;
@@ -7,38 +9,70 @@
   --bg-input: #1e2433;
 
   /* Cor de destaque do Projeto 04 — Estoque (azul ciano) */
-  --accent: #06b6d4;
-  --accent-hover: #22d3ee;
-  --accent-dim: rgba(6, 182, 212, 0.15);
+  --accent: #06b6d4; /* Azul ciano */
+  --accent-hover: #22d3ee; /* Mais claro para hover */
+  --accent-dim: rgba(6, 182, 212, 0.15); /* Sutil para fundos */
+  --accent-text: #000000; /* Texto escuro sobre fundo accent claro */
 
   /* Texto */
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #f1f5f9; /* Branco quase puro */
+  --text-secondary: #94a3b8; /* Cinza claro */
+  --text-muted: #64748b; /* Cinza mais escuro */
 
   /* Bordas */
-  --border: #1e293b;
-  --border-focus: #06b6d4;
+  --border: #1e293b; /* Cinza escuro */
+  --border-focus: var(--accent); /* Destaca o foco */
 
-  /* Erro / Alerta / Sucesso */
-  --danger: #ef4444;
+  /* Estados e Alertas */
+  --danger: #ef4444; /* Vermelho */
   --danger-bg: rgba(239, 68, 68, 0.1);
-  --warning: #f59e0b;
-  --warning-bg: rgba(245, 158, 11, 0.1);
-  --success: #22c55e;
+  --warning: #f59e0b; /* Amarelo/Laranja */
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  --warning-text: #000000; /* Texto escuro sobre fundo amarelo */
+  --success: #22c55e; /* Verde */
   --success-bg: rgba(34, 197, 94, 0.1);
 
   /* Fontes */
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Tamanhos */
-  --radius: 8px;
-  --radius-lg: 12px;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  /* Tamanhos e Espaçamentos */
+  --radius: 8px; /* Raio padrão para cantos */
+  --radius-lg: 12px; /* Raio maior para cards */
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.3); /* Sombra padrão */
 }
 
-/* Reset e base */
+/* ===== TEMA CLARO ===== */
+[data-theme="light"] {
+  --bg-primary: #f1f5f9; /* Fundo claro principal */
+  --bg-secondary: #e2e8f0; /* Fundo secundário claro */
+  --bg-card: #ffffff; /* Fundo do card branco */
+  --bg-input: #f8fafc; /* Fundo dos inputs claro */
+
+  --accent: #0891b2; /* Azul mais escuro/corporativo para tema claro */
+  --accent-hover: #06b6d4; /* Azul mais claro para hover */
+  --accent-dim: rgba(8, 145, 178, 0.1); /* Sutil para fundos claros */
+  --accent-text: #ffffff; /* Texto branco sobre fundo accent claro */
+
+  --text-primary: #0f172a; /* Texto escuro principal */
+  --text-secondary: #334155; /* Texto secundário escuro */
+  --text-muted: #64748b; /* Texto atenuado escuro */
+
+  --border: #cbd5e1; /* Borda clara */
+  --border-focus: var(--accent); /* Destaca o foco */
+
+  --danger: #b91c1c; /* Vermelho escuro */
+  --danger-bg: rgba(185, 28, 28, 0.1);
+  --warning: #b45309; /* Amarelo/Laranja escuro */
+  --warning-bg: rgba(180, 83, 9, 0.12);
+  --warning-text: #ffffff; /* Texto branco sobre fundo amarelo */
+  --success: #15803d; /* Verde escuro */
+  --success-bg: rgba(21, 128, 61, 0.1);
+
+  --shadow: 0 4px 24px rgba(15, 23, 42, 0.08); /* Sombra mais suave em fundo claro */
+}
+
+/* ===== Reset e Base ===== */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -56,13 +90,26 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { color: var(--accent-hover); }
+/* Aplica as variáveis do tema ao body também */
+[data-theme="light"] body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--accent-hover);
+}
 
 /* Scrollbar customizada (Webkit) */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
