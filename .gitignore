@@ -23,3 +23,14 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+# Backups
+*.bak*
+# Scripts temporários
+backend/scripts/migrate-*.js
+backend/scripts/verify-*.js
+backend/scripts/fix-*.js
+backend/scripts/delete-*.js
+backend/scripts/generate-*.js
+backend/scripts/match-*.js
+backend/scripts/seed-images-*.js
+backend/scripts/set-*.js
