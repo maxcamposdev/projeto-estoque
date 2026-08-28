@@ -150,3 +150,185 @@
     gap: 6px;
   }
 }
+
+/* ============================================================
+   CONSULTA DE ESTOQUE ENTRE LOJAS
+   ============================================================ */
+
+.dashboard-consulta-rede {
+  width: 100%;
+  margin-top: 20px;
+  padding: 18px 20px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  background: var(--bg-card);
+
+  cursor: pointer;
+
+  transition:
+    border-color .18s ease,
+    transform .18s ease,
+    background .18s ease;
+}
+
+.dashboard-consulta-rede:hover {
+  border-color: var(--accent);
+  background: rgba(37, 99, 235, .035);
+  transform: translateY(-1px);
+}
+
+.dashboard-consulta-icone {
+  width: 42px;
+  height: 42px;
+
+  flex: 0 0 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(37, 99, 235, .10);
+
+  font-size: 20px;
+}
+
+.dashboard-consulta-conteudo {
+  min-width: 0;
+  flex: 1;
+}
+
+.dashboard-consulta-conteudo strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.dashboard-consulta-conteudo p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.dashboard-consulta-arrow {
+  flex: 0 0 auto;
+
+  color: var(--accent);
+
+  font-size: 22px;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+
+  .dashboard-consulta-rede {
+    padding: 15px;
+  }
+
+  .dashboard-consulta-conteudo p {
+    display: none;
+  }
+}
+
+/* ============================================================
+   CONSULTA DE ESTOQUE ENTRE LOJAS
+   ============================================================ */
+
+.dashboard-consulta-rede {
+  width: 100%;
+  margin-top: 20px;
+  padding: 18px 20px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  background: var(--bg-card);
+
+  cursor: pointer;
+
+  transition:
+    border-color .18s ease,
+    transform .18s ease,
+    background .18s ease;
+}
+
+.dashboard-consulta-rede:hover {
+  border-color: var(--accent);
+  background: rgba(37, 99, 235, .035);
+  transform: translateY(-1px);
+}
+
+.dashboard-consulta-icone {
+  width: 42px;
+  height: 42px;
+
+  flex: 0 0 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(37, 99, 235, .10);
+
+  font-size: 20px;
+}
+
+.dashboard-consulta-conteudo {
+  min-width: 0;
+  flex: 1;
+}
+
+.dashboard-consulta-conteudo strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.dashboard-consulta-conteudo p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.dashboard-consulta-arrow {
+  flex: 0 0 auto;
+
+  color: var(--accent);
+
+  font-size: 22px;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+
+  .dashboard-consulta-rede {
+    padding: 15px;
+  }
+
+  .dashboard-consulta-conteudo p {
+    display: none;
+  }
+}

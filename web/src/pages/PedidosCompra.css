@@ -868,3 +868,187 @@
     width: auto;
   }
 }
+
+/* ============================================================
+   CORREÇÃO DEFINITIVA — AÇÕES LADO A LADO
+   ============================================================ */
+
+.acoes-pedido {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  width: max-content !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+.acoes-pedido .acao-btn {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: max-content !important;
+  min-height: 30px;
+  padding: 5px 8px;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap !important;
+  line-height: 1;
+}
+
+.pedidos-tabela td:last-child {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.pedidos-tabela th:last-child {
+  white-space: nowrap;
+}
+
+.pedidos-tabela-wrapper {
+  overflow-x: auto;
+}
+
+/* Mesmo em telas menores, os botões continuam agrupados */
+@media (max-width: 1100px) {
+  .acoes-pedido {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    width: max-content !important;
+    max-width: none !important;
+  }
+
+  .acoes-pedido .acao-btn {
+    width: auto !important;
+    flex: 0 0 auto !important;
+  }
+}
+
+/* ============================================================
+   PEDIDOS DE COMPRA — GRUPO DE AÇÕES
+   ============================================================ */
+
+/*
+ * As versões anteriores deste arquivo tinham vários blocos
+ * .acoes-pedido acumulados.
+ *
+ * Estas regras finais passam a ser a referência visual definitiva.
+ */
+
+.acoes-pedido {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+
+  gap: 0 !important;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border-color, #e5e7eb) !important;
+  border-radius: 8px !important;
+
+  background: var(--card-bg, #fff) !important;
+
+  box-shadow: none !important;
+}
+
+.acoes-pedido .acao-btn {
+  display: inline-flex !important;
+
+  flex: 0 0 auto !important;
+
+  width: auto !important;
+  min-width: 0 !important;
+
+  height: 31px !important;
+  min-height: 31px !important;
+
+  margin: 0 !important;
+  padding: 0 9px !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+  color: var(--text-primary) !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 4px !important;
+
+  font-size: 11px !important;
+  font-weight: 600 !important;
+
+  line-height: 1 !important;
+
+  white-space: nowrap !important;
+
+  box-shadow: none !important;
+}
+
+.acoes-pedido .acao-btn + .acao-btn {
+  border-left: 1px solid var(--border-color, #e5e7eb) !important;
+}
+
+.acoes-pedido .acao-btn:hover {
+  background: rgba(37, 99, 235, .07) !important;
+  color: var(--primary, #2563eb) !important;
+}
+
+.acoes-pedido .acao-btn.cancelar {
+  color: var(--danger, #dc2626) !important;
+}
+
+.acoes-pedido .acao-btn.cancelar:hover {
+  background: rgba(220, 38, 38, .06) !important;
+  color: var(--danger, #dc2626) !important;
+}
+
+.acoes-pedido .acao-btn.recebido:hover {
+  color: var(--success, #16a34a) !important;
+  background: rgba(22, 163, 74, .06) !important;
+}
+
+/* A coluna fica justa ao conteúdo */
+.pedidos-tabela th:last-child,
+.pedidos-tabela td:last-child {
+  width: 1% !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+}
+
+/* Tabela continua rolável quando a tela for estreita */
+.pedidos-tabela-wrapper {
+  overflow-x: auto !important;
+}
+
+/* Impede quebra dos nomes dos botões */
+.acoes-pedido button {
+  white-space: nowrap !important;
+}
+
+/* Em telas menores, NÃO empilha as ações */
+@media (max-width: 1100px) {
+
+  .acoes-pedido {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    width: max-content !important;
+    max-width: none !important;
+  }
+
+  .acoes-pedido .acao-btn {
+    width: auto !important;
+    flex: 0 0 auto !important;
+  }
+}

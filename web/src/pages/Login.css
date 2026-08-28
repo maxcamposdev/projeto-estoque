@@ -1149,3 +1149,302 @@
 [data-theme="dark"] .btn-eye:hover {
   color: var(--accent) !important;
 }
+
+/* ============================================================
+   LOGIN — ÍCONES SOCIAIS
+   ============================================================ */
+
+.login-social,
+.social-buttons,
+.login-social-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.social-button {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 50% !important;
+
+  box-sizing: border-box;
+
+  text-decoration: none !important;
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    opacity .18s ease;
+}
+
+.social-button:hover {
+  transform: translateY(-2px);
+}
+
+.social-button:active {
+  transform: translateY(0);
+}
+
+.social-svg {
+  width: 19px !important;
+  height: 19px !important;
+  display: block !important;
+}
+
+.whatsapp-button {
+  background: #25d366 !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, .20);
+}
+
+.instagram-button {
+  background:
+    linear-gradient(
+      135deg,
+      #f58529 0%,
+      #dd2a7b 45%,
+      #8134af 75%,
+      #515bd4 100%
+    ) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(221, 42, 123, .20);
+}
+
+.whatsapp-button:hover,
+.instagram-button:hover {
+  opacity: .94;
+}
+
+.whatsapp-svg,
+.instagram-svg {
+  color: #fff !important;
+  fill: none;
+}
+
+/* Mantém os ícones centralizados mesmo em telas menores */
+@media (max-width: 600px) {
+  .social-button {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+
+  .social-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* ============================================================
+   REDES SOCIAIS — AJUSTE FINAL
+   ============================================================ */
+
+.social-buttons {
+  position: fixed !important;
+
+  left: 50% !important;
+  bottom: 18px !important;
+
+  transform: translateX(-50%) !important;
+
+  z-index: 1000 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 12px !important;
+
+  width: max-content !important;
+}
+
+/* Botão base */
+.social-buttons .social-button {
+  width: 42px !important;
+  height: 42px !important;
+
+  min-width: 42px !important;
+  min-height: 42px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  box-sizing: border-box !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border: none !important;
+  border-radius: 50% !important;
+
+  color: #ffffff !important;
+
+  text-decoration: none !important;
+
+  overflow: hidden !important;
+
+  transition:
+    transform .18s ease,
+    filter .18s ease,
+    box-shadow .18s ease !important;
+}
+
+/* ============================================================
+   WHATSAPP
+   ============================================================ */
+
+.social-buttons .whatsapp-button {
+  background: #25D366 !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 5px 14px rgba(37, 211, 102, .28) !important;
+}
+
+/* ============================================================
+   INSTAGRAM
+   ============================================================ */
+
+.social-buttons .instagram-button {
+  background:
+    linear-gradient(
+      135deg,
+      #F58529 0%,
+      #DD2A7B 45%,
+      #8134AF 75%,
+      #515BD4 100%
+    ) !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 5px 14px rgba(129, 52, 175, .25) !important;
+}
+
+/* ============================================================
+   SVG — CORREÇÃO DO ÍCONE
+   ============================================================ */
+
+.social-buttons .social-svg {
+  width: 21px !important;
+  height: 21px !important;
+
+  min-width: 21px !important;
+  min-height: 21px !important;
+
+  display: block !important;
+
+  color: #ffffff !important;
+
+  fill: currentColor !important;
+
+  opacity: 1 !important;
+
+  flex: 0 0 auto !important;
+}
+
+/* Os paths também precisam receber a cor */
+.social-buttons .social-svg path {
+  fill: currentColor !important;
+}
+
+/* ============================================================
+   HOVER
+   ============================================================ */
+
+.social-buttons .social-button:hover {
+  transform: translateY(-2px) !important;
+
+  filter: brightness(1.06) !important;
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+
+[data-theme="dark"] .social-buttons .social-button {
+  color: #ffffff !important;
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  .social-buttons {
+    bottom: 12px !important;
+    gap: 10px !important;
+  }
+
+  .social-buttons .social-button {
+    width: 38px !important;
+    height: 38px !important;
+
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .social-buttons .social-svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+@media (max-width: 380px) {
+
+  .social-buttons {
+    bottom: 8px !important;
+    gap: 8px !important;
+  }
+
+  .social-buttons .social-button {
+    width: 36px !important;
+    height: 36px !important;
+
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+
+  .social-buttons .social-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* ============================================================
+   AJUSTE FINAL — ÍCONES SOCIAIS MAIS BAIXOS
+   ============================================================ */
+
+.social-buttons {
+  bottom: 8px !important;
+}
+
+@media (max-width: 600px) {
+  .social-buttons {
+    bottom: 6px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .social-buttons {
+    bottom: 4px !important;
+  }
+}

@@ -10,6 +10,9 @@ const pedidoCompraRoutes = require('./pedidoCompra.routes');
 const fornecedorRoutes = require('./fornecedor.routes');
 const transferenciaRoutes = require('./transferencia.routes');
 const devolucaoRoutes = require('./devolucao.routes');
+const estoqueRedeRoutes = require('./estoqueRede.routes');
+const comunicacaoRoutes = require('./comunicacao.routes');
+const salesRoutes = require('./sales.routes');
 const router = express.Router();
 
 router.get('/health', async (req, res) => {
@@ -45,4 +48,7 @@ router.use('/pedidos-compra', pedidoCompraRoutes);
 router.use('/fornecedores', fornecedorRoutes);
 router.use('/transferencias', transferenciaRoutes);
 router.use('/devolucoes', devolucaoRoutes);
+router.use('/estoque-rede', estoqueRedeRoutes);
+router.use('/comunicacao', comunicacaoRoutes);
+router.use('/sales', salesRoutes);
 module.exports = router;

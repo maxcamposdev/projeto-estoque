@@ -99,3 +99,97 @@
 .btn-logout:hover {
   background: var(--danger-bg);
 }
+
+/* ============================================================
+   HEADER — MENU PROFISSIONAL
+   ============================================================ */
+
+.header-nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center;
+  gap: 4px !important;
+  flex-wrap: nowrap !important;
+  height: 100%;
+}
+
+.nav-btn {
+  box-sizing: border-box !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  height: 40px !important;
+  min-height: 40px !important;
+
+  padding: 0 11px !important;
+  margin: 0 !important;
+
+  border: 1px solid transparent !important;
+  border-radius: 8px !important;
+
+  background: transparent !important;
+
+  white-space: nowrap !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+
+  line-height: 1 !important;
+
+  color: var(--text-primary) !important;
+
+  transition:
+    background .16s ease,
+    color .16s ease,
+    border-color .16s ease;
+}
+
+.nav-btn:hover {
+  background: rgba(37, 99, 235, .08) !important;
+}
+
+.nav-btn.active {
+  background: rgba(37, 99, 235, .12) !important;
+  border-color: rgba(37, 99, 235, .16) !important;
+  color: var(--primary, #2563eb) !important;
+
+  box-shadow: none !important;
+}
+
+/* O nome não quebra mais em duas linhas */
+.nav-btn:nth-child(4) {
+  white-space: nowrap !important;
+}
+
+/* Header mantém todos os itens centralizados */
+.header-content {
+  align-items: center !important;
+}
+
+.header-nav,
+.header-right {
+  align-self: center !important;
+}
+
+}
+
+
+/* Mesmo max-width e margin do .header-content */
+  max-width: 1280px;
+  margin: 0 auto;
+  /* Mesmo padding lateral do .header (1.5rem) */
+  padding: 0.5rem 1.5rem 0.7rem;
+  display: flex;
+  justify-content: flex-end;   /* alinha à direita (mesmo lado do Sair) */
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-secondary);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 768px) {
+  .header-caixa-row {
+    padding: 0.4rem 1rem 0.6rem;
+  }
+}

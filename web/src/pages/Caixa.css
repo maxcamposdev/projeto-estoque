@@ -1,0 +1,111 @@
+/* pages/Caixa.css — Estilos do PDV */
+
+.caixa, .caixa-fechado { padding: 1.5rem 2rem; max-width: 1400px; margin: 0 auto; }
+.caixa-loading { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 400px; color: var(--text-secondary); }
+
+.caixa-success { padding: 0.8rem 1rem; background: rgba(34, 197, 94, 0.15); border: 1px solid var(--success); border-radius: var(--radius); color: var(--success); margin-bottom: 1rem; }
+.caixa-error { padding: 0.8rem 1rem; background: rgba(239, 68, 68, 0.15); border: 1px solid var(--danger); border-radius: var(--radius); color: var(--danger); margin-bottom: 1rem; }
+
+/* ============================================
+   CAIXA FECHADO
+   ============================================ */
+.caixa-fechado { display: flex; justify-content: center; align-items: center; min-height: 70vh; }
+.caixa-fechado-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 2.5rem; text-align: center; max-width: 500px; box-shadow: var(--shadow);
+}
+.caixa-fechado-card h1 { margin-bottom: 0.8rem; }
+.caixa-fechado-card p { margin-bottom: 1.5rem; color: var(--text-secondary); }
+.abrir-caixa-form { margin-top: 1rem; }
+.abrir-caixa-form label { display: block; margin-bottom: 0.4rem; color: var(--text-secondary); }
+.abrir-caixa-form input { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-input); color: var(--text-primary); margin-bottom: 1rem; }
+.abrir-caixa-actions { display: flex; gap: 0.5rem; }
+.btn-link { background: transparent; border: none; color: var(--accent); cursor: pointer; margin-top: 1rem; padding: 0.5rem; }
+
+/* ============================================
+   CAIXA ABERTO — HEADER
+   ============================================ */
+.caixa-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+.caixa-header h1 { margin-bottom: 0.3rem; }
+.caixa-header p { color: var(--text-secondary); font-size: 0.85rem; margin: 0.1rem 0; }
+.btn-fechar-caixa {
+  padding: 0.7rem 1.2rem; background: var(--danger); color: white; border: none;
+  border-radius: var(--radius); font-weight: 700; cursor: pointer;
+}
+
+/* ============================================
+   PDV LAYOUT (2 colunas)
+   ============================================ */
+.pdv-layout { display: grid; grid-template-columns: 1fr 420px; gap: 1.5rem; }
+
+.pdv-produtos { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; }
+.pdv-busca { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-input); color: var(--text-primary); margin-bottom: 1rem; font-size: 0.95rem; }
+.pdv-produtos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; max-height: 70vh; overflow-y: auto; }
+.pdv-produto-card {
+  background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 0.6rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+  transition: all 0.2s; text-align: center;
+}
+.pdv-produto-card:hover:not(:disabled) { border-color: var(--accent); transform: translateY(-2px); }
+.pdv-produto-card:disabled { opacity: 0.5; cursor: not-allowed; }
+.pdv-produto-card img { width: 100%; height: 70px; object-fit: cover; border-radius: 4px; }
+.pdv-produto-sem-img { width: 100%; height: 70px; display: flex; align-items: center; justify-content: center; background: var(--bg-input); border-radius: 4px; font-size: 2rem; }
+.pdv-produto-nome { font-size: 0.75rem; font-weight: 600; color: var(--text-primary); line-height: 1.2; }
+.pdv-produto-preco { font-size: 0.85rem; font-weight: 700; color: var(--accent); }
+.pdv-produto-estoque { font-size: 0.7rem; color: var(--text-muted); }
+
+/* ============================================
+   CARRINHO
+   ============================================ */
+.pdv-carrinho { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; display: flex; flex-direction: column; max-height: 85vh; }
+.pdv-carrinho h2 { margin-bottom: 1rem; }
+.carrinho-vazio { text-align: center; color: var(--text-muted); padding: 2rem; }
+.carrinho-itens { flex: 1; overflow-y: auto; margin-bottom: 1rem; }
+.carrinho-item { display: grid; grid-template-columns: 1fr auto auto auto; gap: 0.5rem; align-items: center; padding: 0.6rem; border-bottom: 1px solid var(--border); }
+.carrinho-item-info strong { font-size: 0.85rem; display: block; }
+.carrinho-item-info small { color: var(--text-muted); font-size: 0.7rem; }
+.carrinho-item-qtd { display: flex; align-items: center; gap: 0.4rem; }
+.carrinho-item-qtd button { width: 24px; height: 24px; border: 1px solid var(--border); background: var(--bg-input); color: var(--text-primary); border-radius: 4px; cursor: pointer; font-weight: 700; }
+.carrinho-item-qtd span { min-width: 20px; text-align: center; font-weight: 600; }
+.carrinho-item-subtotal { font-weight: 700; color: var(--accent); font-size: 0.85rem; }
+.carrinho-item-remover { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 1.1rem; }
+
+.carrinho-totais { border-top: 1px solid var(--border); padding-top: 1rem; }
+.campo-grupo { margin-bottom: 0.7rem; }
+.campo-grupo label { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.2rem; }
+.campo-grupo input, .campo-grupo select { width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-input); color: var(--text-primary); font-size: 0.9rem; }
+.totais-linha { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.9rem; color: var(--text-secondary); }
+.totais-linha.total-final { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); border-top: 2px solid var(--border); padding-top: 0.6rem; margin-top: 0.4rem; }
+.totais-linha.troco { color: var(--success); font-weight: 700; font-size: 1.1rem; }
+
+.btn-finalizar { width: 100%; padding: 1rem; background: var(--success); color: white; border: none; border-radius: var(--radius); font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 0.6rem; }
+.btn-finalizar:hover { background: #16a34a; }
+.btn-cancelar { width: 100%; padding: 0.7rem; background: transparent; border: 1px solid var(--border); color: var(--text-secondary); border-radius: var(--radius); cursor: pointer; margin-top: 0.4rem; }
+
+/* ============================================
+   MODAL
+   ============================================ */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; }
+.modal-content { background: var(--bg-card); border-radius: var(--radius-lg); padding: 2rem; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; }
+.modal-content h2 { margin-bottom: 1rem; }
+.modal-content input { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-input); color: var(--text-primary); margin: 0.8rem 0; }
+.modal-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.modal-content ul { list-style: none; padding: 0; }
+.modal-content ul li { padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+
+.btn-primary { padding: 0.7rem 1.2rem; background: var(--accent); color: var(--accent-text); border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer; }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-cancel { padding: 0.7rem 1.2rem; background: transparent; border: 1px solid var(--border); color: var(--text-secondary); border-radius: var(--radius); cursor: pointer; }
+.btn-cancel:hover { border-color: var(--accent); color: var(--accent); }
+
+.vendas-list { max-height: 50vh; overflow-y: auto; margin: 1rem 0; }
+.venda-item { padding: 0.6rem; border-bottom: 1px solid var(--border); }
+
+/* ============================================
+   RESPONSIVO
+   ============================================ */
+@media (max-width: 1024px) {
+  .pdv-layout { grid-template-columns: 1fr; }
+  .pdv-carrinho { max-height: none; }
+  .pdv-produtos-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+}

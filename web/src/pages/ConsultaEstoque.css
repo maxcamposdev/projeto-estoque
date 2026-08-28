@@ -1,0 +1,135 @@
+.consulta-estoque {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+.consulta-header {
+  margin-bottom: 24px;
+}
+
+.consulta-header h1 {
+  margin: 0 0 6px;
+  color: var(--text-primary);
+  font-size: 30px;
+}
+
+.consulta-header p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.consulta-card {
+  padding: 22px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.consulta-busca {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.consulta-busca input {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  padding: 0 13px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+.consulta-busca button {
+  height: 42px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.consulta-busca button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.consulta-erro {
+  margin-bottom: 15px;
+  padding: 12px 14px;
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  color: var(--danger);
+}
+
+.consulta-vazio {
+  padding: 45px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.consulta-tabela-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.consulta-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.consulta-tabela th,
+.consulta-tabela td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.consulta-tabela th {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.consulta-tabela td {
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.consulta-barcode {
+  font-family: monospace;
+  font-size: 13px !important;
+}
+
+.consulta-solicitar {
+  padding: 7px 11px;
+  border: 1px solid var(--accent);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.consulta-solicitar:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.consulta-solicitar:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}

@@ -30,6 +30,19 @@ export default function Transferencias() {
   const [erro, setErro] = useState('');
   const [sucesso, setSucesso] = useState('');
 
+  const usuarioAtual = (() => {
+    try {
+      return JSON.parse(
+        localStorage.getItem('user') || 'null'
+      );
+    } catch {
+      return null;
+    }
+  })();
+
+  const minhaUnidadeId =
+    Number(usuarioAtual?.unit_id) || null;
+
   useEffect(() => {
     carregar();
   }, []);
@@ -188,6 +201,37 @@ export default function Transferencias() {
       );
     } finally {
       setSalvando(false);
+    }
+  }
+
+  async function cancelarTransferencia(id) {
+    const confirmar = window.confirm(
+      'Tem certeza que deseja cancelar?'
+    );
+
+    if (!confirmar) return;
+
+    try {
+      setProcessando(`cancelar-${id}`);
+      setErro('');
+      setSucesso('');
+
+      await api.patch(
+        `/transferencias/${id}/cancelar`
+      );
+
+      await carregar();
+
+      setSucesso(
+        'Solicitação de transferência cancelada.'
+      );
+    } catch (err) {
+      setErro(
+        err.response?.data?.message ||
+        'Não foi possível cancelar a solicitação.'
+      );
+    } finally {
+      setProcessando(null);
     }
   }
 
@@ -568,130 +612,165 @@ export default function Transferencias() {
 
                           {pedido.status === 'PENDING' && (
                             <>
-                              <button
-                                className="btn-action btn-approve"
-                                onClick={() =>
-                                  executar(
-                                    pedido.id,
-                                    'aprovar'
-                                  )
-                                }
-                                disabled={
-                                  processando ===
-                                  `aprovar-${pedido.id}`
-                                }
-                              >
-                                Aprovar
-                              </button>
+                              {Number(pedido.destination_unit_id) === minhaUnidadeId && (
+                                <>
+                                  <span className="transfer-action-info">
+                                    Aguardando loja aprovar
+                                  </span>
 
-                              <button
-                                className="btn-action btn-reject"
-                                onClick={() =>
-                                  executar(
-                                    pedido.id,
-                                    'recusar'
-                                  )
-                                }
-                                disabled={
-                                  processando ===
-                                  `recusar-${pedido.id}`
-                                }
-                              >
-                                Recusar
-                              </button>
-
-                              <button
-                                className="btn-action btn-cancel-transfer"
-                                onClick={async () => {
-                                  if (
-                                    !window.confirm(
-                                      'Cancelar esta solicitação de transferência?'
-                                    )
-                                  ) {
-                                    return;
-                                  }
-
-                                  try {
-                                    setProcessando(
+                                  <button
+                                    className="btn-action btn-cancel-transfer"
+                                    onClick={() =>
+                                      cancelarTransferencia(pedido.id)
+                                    }
+                                    disabled={
+                                      processando ===
                                       `cancelar-${pedido.id}`
-                                    );
-                                    setErro('');
+                                    }
+                                  >
+                                    Cancelar
+                                  </button>
+                                </>
+                              )}
 
-                                    await api.patch(
-                                      `/transferencias/${pedido.id}/cancelar`
-                                    );
+                              {Number(pedido.origin_unit_id) === minhaUnidadeId && (
+                                <>
+                                  <button
+                                    className="btn-action btn-approve"
+                                    onClick={() =>
+                                      executar(
+                                        pedido.id,
+                                        'aprovar'
+                                      )
+                                    }
+                                    disabled={
+                                      processando ===
+                                      `aprovar-${pedido.id}`
+                                    }
+                                  >
+                                    Aprovar
+                                  </button>
 
-                                    await carregar();
-                                    setSucesso(
-                                      'Solicitação de transferência cancelada.'
-                                    );
-                                  } catch (err) {
-                                    setErro(
-                                      err.response?.data?.message ||
-                                      'Não foi possível cancelar a solicitação.'
-                                    );
-                                  } finally {
-                                    setProcessando(null);
-                                  }
-                                }}
-                                disabled={
-                                  processando ===
-                                  `cancelar-${pedido.id}`
-                                }
-                              >
-                                Cancelar
-                              </button>
+                                  <button
+                                    className="btn-action btn-reject"
+                                    onClick={() =>
+                                      executar(
+                                        pedido.id,
+                                        'recusar'
+                                      )
+                                    }
+                                    disabled={
+                                      processando ===
+                                      `recusar-${pedido.id}`
+                                    }
+                                  >
+                                    Recusar
+                                  </button>
+                                </>
+                              )}
                             </>
                           )}
 
                           {pedido.status === 'APPROVED' && (
-                            <button
-                              className="btn-action btn-send"
-                              onClick={() =>
-                                executar(
-                                  pedido.id,
-                                  'enviar'
-                                )
-                              }
-                            >
-                              Marcar como enviada
-                            </button>
+                            <>
+                              {Number(pedido.destination_unit_id) === minhaUnidadeId && (
+                                <>
+                                  <span className="transfer-action-info transfer-approved-info">
+                                    Transferência aprovada
+                                  </span>
+
+                                  <button
+                                    className="btn-action btn-cancel-transfer"
+                                    onClick={() =>
+                                      cancelarTransferencia(pedido.id)
+                                    }
+                                    disabled={
+                                      processando ===
+                                      `cancelar-${pedido.id}`
+                                    }
+                                  >
+                                    Cancelar
+                                  </button>
+                                </>
+                              )}
+
+                              {Number(pedido.origin_unit_id) === minhaUnidadeId && (
+                                <button
+                                  className="btn-action btn-send"
+                                  onClick={() =>
+                                    executar(
+                                      pedido.id,
+                                      'enviar'
+                                    )
+                                  }
+                                  disabled={
+                                    processando ===
+                                    `enviar-${pedido.id}`
+                                  }
+                                >
+                                  Enviar transferência
+                                </button>
+                              )}
+                            </>
                           )}
 
                           {pedido.status === 'SHIPPED' && (
-                            <button
-                              className="btn-action btn-receive"
-                              onClick={() =>
-                                executar(
-                                  pedido.id,
-                                  'receber'
-                                )
-                              }
-                              disabled={
-                                processando ===
-                                `receber-${pedido.id}`
-                              }
-                            >
-                              Confirmar recebimento
-                            </button>
+                            <>
+                              {Number(pedido.destination_unit_id) === minhaUnidadeId && (
+                                <button
+                                  className="btn-action btn-receive"
+                                  onClick={() =>
+                                    executar(
+                                      pedido.id,
+                                      'receber'
+                                    )
+                                  }
+                                  disabled={
+                                    processando ===
+                                    `receber-${pedido.id}`
+                                  }
+                                >
+                                  Confirmar recebimento
+                                </button>
+                              )}
+
+                              {Number(pedido.origin_unit_id) === minhaUnidadeId && (
+                                <span className="transfer-action-info">
+                                  Aguardando recebimento
+                                </span>
+                              )}
+                            </>
                           )}
 
-                          {(pedido.status === 'PARTIAL') && (
-                            <button
-                              className="btn-action btn-receive"
-                              onClick={() =>
-                                executar(
-                                  pedido.id,
-                                  'receber'
-                                )
-                              }
-                            >
-                              Continuar recebimento
-                            </button>
+                          {pedido.status === 'PARTIAL' && (
+                            <>
+                              {Number(pedido.destination_unit_id) === minhaUnidadeId && (
+                                <button
+                                  className="btn-action btn-receive"
+                                  onClick={() =>
+                                    executar(
+                                      pedido.id,
+                                      'receber'
+                                    )
+                                  }
+                                  disabled={
+                                    processando ===
+                                    `receber-${pedido.id}`
+                                  }
+                                >
+                                  Continuar recebimento
+                                </button>
+                              )}
+
+                              {Number(pedido.origin_unit_id) === minhaUnidadeId && (
+                                <span className="transfer-action-info">
+                                  Aguardando recebimento
+                                </span>
+                              )}
+                            </>
                           )}
 
-                        </div>
-                      </td>
+                        </div>                      </td>
 
                     </tr>
                   );
