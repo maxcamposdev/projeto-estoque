@@ -34,3 +34,12 @@ backend/scripts/generate-*.js
 backend/scripts/match-*.js
 backend/scripts/seed-images-*.js
 backend/scripts/set-*.js
+
+# Backups locais
+*.backup
+*.backup-*
+*.pre-funcional
+backend.backup-*/
+
+# Build do frontend
+web/dist/
