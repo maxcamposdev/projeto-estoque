@@ -1,27 +1,7 @@
-// pages/Produtos.jsx — CRUD de produtos com upload de imagem
-import { useState, useEffect, useCallback, useRef } from 'react';
+// pages/Produtos.jsx — CRUD de produtos (sem i18n)
+import { useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
 import './Produtos.css';
-
-const TAMANHO_MAX_MB = 2; // Limite de upload em MB
-
-// Converte um File em string base64 (data:image/...)
-function arquivoParaBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-// Decide o que mostrar no preview: data (base64), URL externa, ou nada
-function resolverImagemPreview(produtoOuForm) {
-  if (!produtoOuForm) return null;
-  if (produtoOuForm.image_data) return produtoOuForm.image_data;
-  if (produtoOuForm.image_url && produtoOuForm.image_url.trim()) return produtoOuForm.image_url.trim();
-  return null;
-}
 
 export default function Produtos() {
   const [produtos, setProdutos] = useState([]);
@@ -36,18 +16,10 @@ export default function Produtos() {
   const [pagina, setPagina] = useState(1);
   const ITEMSPORPAGINA = 10;
 
-  // Estado do formulário (incluindo imagens)
   const [form, setForm] = useState({
     name: '', sku: '', description: '', category_id: '',
-    quantity: 0, min_quantity: 0, price: 0, barcode: '',
-    image_url: '', image_data: ''
+    quantity: 0, min_quantity: 0, price: 0, barcode: ''
   });
-
-  // Estado da UI de imagem
-  const [modoImagem, setModoImagem] = useState('url'); // 'url' ou 'arquivo'
-  const [previewImagem, setPreviewImagem] = useState(null);
-  const [erroImagem, setErroImagem] = useState('');
-  const inputArquivoRef = useRef(null);
 
   const carregarProdutos = useCallback(async () => {
     try {
@@ -76,75 +48,25 @@ export default function Produtos() {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleImagemUrl = (e) => {
-    const url = e.target.value;
-    setForm({ ...form, image_url: url, image_data: '' });
-    setPreviewImagem(url.trim() || null);
-    setErroImagem('');
-    if (inputArquivoRef.current) inputArquivoRef.current.value = '';
-  };
-
-  const handleArquivoSelecionado = async (e) => {
-    const file = e.target.files?.[0];
-    setErroImagem('');
-    if (!file) {
-      setForm({ ...form, image_data: '', image_url: '' });
-      setPreviewImagem(null);
-      return;
-    }
-    if (!file.type.startsWith('image/')) {
-      setErroImagem('Selecione apenas arquivos de imagem (PNG, JPG, WEBP, GIF).');
-      return;
-    }
-    if (file.size > TAMANHO_MAX_MB * 1024 * 1024) {
-      setErroImagem(`Arquivo muito grande (máx. ${TAMANHO_MAX_MB}MB).`);
-      return;
-    }
-    try {
-      const base64 = await arquivoParaBase64(file);
-      setForm({ ...form, image_data: base64, image_url: '' });
-      setPreviewImagem(base64);
-    } catch {
-      setErroImagem('Erro ao ler o arquivo.');
-    }
-  };
-
-  const removerImagem = () => {
-    setForm({ ...form, image_url: '', image_data: '' });
-    setPreviewImagem(null);
-    setErroImagem('');
-    if (inputArquivoRef.current) inputArquivoRef.current.value = '';
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setMessage('');
     try {
-      // Envia somente o que foi definido (image_url ou image_data)
-      const payload = { ...form };
       if (editando) {
-        await api.put(`/produtos/${editando.id}`, payload);
+        await api.put(`/produtos/${editando.id}`, form);
         setMessage('Produto atualizado com sucesso!');
       } else {
-        await api.post('/produtos', payload);
+        await api.post('/produtos', form);
         setMessage('Produto cadastrado com sucesso!');
       }
       setShowForm(false);
       setEditando(null);
-      resetarForm();
+      setForm({ name: '', sku: '', description: '', category_id: '', quantity: 0, min_quantity: 0, price: 0, barcode: '' });
       carregarProdutos();
     } catch (err) {
       setError(err.response?.data?.message || 'Erro ao salvar produto');
     }
-  };
-
-  const resetarForm = () => {
-    setForm({ name: '', sku: '', description: '', category_id: '', quantity: 0, min_quantity: 0, price: 0, barcode: '', image_url: '', image_data: '' });
-    setModoImagem('url');
-    setPreviewImagem(null);
-    setErroImagem('');
-    if (inputArquivoRef.current) inputArquivoRef.current.value = '';
   };
 
   const handleEdit = (produto) => {
@@ -158,21 +80,7 @@ export default function Produtos() {
       min_quantity: produto.min_quantity || 0,
       price: produto.price || 0,
       barcode: produto.barcode || '',
-      image_url: produto.image_url || '',
-      image_data: produto.image_data || ''
     });
-    // Define o modo de imagem baseado no que já existe
-    if (produto.image_data) {
-      setModoImagem('arquivo');
-      setPreviewImagem(produto.image_data);
-    } else if (produto.image_url) {
-      setModoImagem('url');
-      setPreviewImagem(produto.image_url);
-    } else {
-      setModoImagem('url');
-      setPreviewImagem(null);
-    }
-    setErroImagem('');
     setShowForm(true);
     setMessage('');
   };
@@ -190,7 +98,7 @@ export default function Produtos() {
 
   const handleNew = () => {
     setEditando(null);
-    resetarForm();
+    setForm({ name: '', sku: '', description: '', category_id: '', quantity: 0, min_quantity: 0, price: 0, barcode: '' });
     setShowForm(true);
     setMessage('');
   };
@@ -209,7 +117,7 @@ export default function Produtos() {
     <div className="produtos">
       <div className="produtos-header">
         <h1>Produtos</h1>
-        <button className="btn-primary" onClick={handleNew}>＋ Novo Produto</button>
+        <button className="btn-primary" onClick={handleNew}>＋ Cadastrar Produto</button>
       </div>
 
       {message && <p className="msg-success">{message}</p>}
@@ -269,47 +177,7 @@ export default function Produtos() {
               <label>Descrição</label>
               <input name="description" value={form.description} onChange={handleChange} />
             </div>
-
-            {/* CAMPO DE IMAGEM */}
-            <div className="form-group form-full">
-              <label>Imagem do Produto</label>
-
-              <div className="img-tabs">
-                <button
-                  type="button"
-                  className="img-tab img-tab-active"
-                  onClick={() => { setErroImagem(''); }}
-                >
-                  📁 Enviar arquivo
-                </button>
-              </div>
-
-              <input
-                  ref={inputArquivoRef}
-                  type="file"
-                  accept="image/png,image/jpeg,image/webp,image/gif"
-                  onChange={handleArquivoSelecionado}
-                />
-
-              {erroImagem && <p className="img-erro">{erroImagem}</p>}
-
-              {/* Preview */}
-              {previewImagem && (
-                <div className="img-preview-box">
-                  <img
-                    src={previewImagem}
-                    alt="Preview"
-                    className="img-preview"
-                    onError={() => setErroImagem('Não foi possível carregar a imagem desta URL.')}
-                  />
-                  <button type="button" className="btn-remover-img" onClick={removerImagem}>
-                    ✕ Remover
-                  </button>
-                </div>
-              )}
-            </div>
           </div>
-
           <div className="form-actions">
             <button type="submit" className="btn-primary">Salvar</button>
             <button type="button" className="btn-cancel" onClick={() => setShowForm(false)}>Cancelar</button>
@@ -329,7 +197,6 @@ export default function Produtos() {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Imagem</th>
                   <th>Nome</th>
                   <th>SKU</th>
                   <th>Categoria</th>
@@ -341,16 +208,8 @@ export default function Produtos() {
               <tbody>
                 {produtosPagina.map((p) => {
                   const baixo = Number(p.quantity) <= Number(p.min_quantity);
-                  const imgSrc = resolverImagemPreview(p);
                   return (
                     <tr key={p.id} className={baixo ? 'row-baixo' : ''}>
-                      <td className="cell-img">
-                        {imgSrc ? (
-                          <img src={imgSrc} alt={p.name} className="thumb-produto" />
-                        ) : (
-                          <div className="thumb-vazio">—</div>
-                        )}
-                      </td>
                       <td className="cell-nome">
                         {p.name}
                         {baixo && <span className="badge-baixo">⚠ Estoque baixo</span>}
@@ -360,8 +219,8 @@ export default function Produtos() {
                       <td className="cell-qtd">{Number(p.quantity)}</td>
                       <td>R$ {Number(p.price).toFixed(2)}</td>
                       <td className="cell-acoes">
-                        <button className="btn-mini" onClick={() => handleEdit(p)} title="Editar">✏️</button>
-                        <button className="btn-mini btn-mini-danger" onClick={() => handleDelete(p.id)} title="Excluir">🗑️</button>
+                        <button className="btn-mini" onClick={() => handleEdit(p)}>✏️</button>
+                        <button className="btn-mini btn-mini-danger" onClick={() => handleDelete(p.id)}>🗑️</button>
                       </td>
                     </tr>
                   );
@@ -370,11 +229,12 @@ export default function Produtos() {
             </table>
           </div>
 
+          {/* Paginação */}
           {totalPaginas > 1 && (
             <div className="paginacao">
-              <button className="btn-page" disabled={pagina <= 1} onClick={() => setPagina((p) => Math.max(1, p - 1))}>« Anterior</button>
-              <span className="page-info">Página <strong>{pagina}</strong> de <strong>{totalPaginas}</strong> — {produtos.length} produto(s) no total</span>
-              <button className="btn-page" disabled={pagina >= totalPaginas} onClick={() => setPagina((p) => Math.min(totalPaginas, p + 1))}>Próxima »</button>
+              <button className="btn-page" disabled={pagina === 1} onClick={() => setPagina((p) => p - 1)}>« Anterior</button>
+              <span className="page-info">Página {pagina} de {totalPaginas} ({produtos.length} produtos)</span>
+              <button className="btn-page" disabled={pagina === totalPaginas} onClick={() => setPagina((p) => p + 1)}>Próxima »</button>
             </div>
           )}
         </>

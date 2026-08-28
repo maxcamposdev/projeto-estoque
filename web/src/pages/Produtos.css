@@ -232,3 +232,94 @@
   color: var(--text-muted);
   padding: 2rem;
 }
+/* ==== IMAGEM DO PRODUTO (formulário) ==== */
+.img-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.img-tab {
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.img-tab:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+.img-tab-active {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+.img-preview-box {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.img-preview {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: #fff;
+}
+.btn-remover-img {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--danger);
+  background: transparent;
+  color: var(--danger);
+  border-radius: var(--radius);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-remover-img:hover {
+  background: var(--danger);
+  color: #fff;
+}
+.img-erro {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--danger);
+}
+
+/* ==== THUMBNAIL NA TABELA ==== */
+.cell-img {
+  width: 64px;
+  padding: 0.4rem;
+}
+.thumb-produto {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #fff;
+  display: block;
+}
+.thumb-vazio {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}

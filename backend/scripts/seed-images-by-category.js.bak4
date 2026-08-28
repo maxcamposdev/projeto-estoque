@@ -1,0 +1,95 @@
+// scripts/seed-images-by-category.js — Imagens ilustrativas reais por categoria (LoremFlickr)
+require('dotenv').config();
+const db = require('../src/config/db');
+
+// Mapeamento: nome da categoria (PT) → tags em inglês para LoremFlickr
+// Você pode ajustar à vontade!
+const MAPA_CATEGORIAS = {
+  'eletrônicos': 'electronics,smartphone',
+  'eletronicos': 'electronics,smartphone',
+  'informática': 'computer,laptop',
+  'informatica': 'computer,laptop',
+  'escritório': 'office,stationery',
+  'escritorio': 'office,stationery',
+  'papelaria': 'office,stationery',
+  'limpeza': 'cleaning,household',
+  'alimentação': 'food,grocery',
+  'alimentacao': 'food,grocery',
+  'bebidas': 'beverage,drink',
+  'ferramentas': 'tools,hardware',
+  'saúde': 'health,medical',
+  'saude': 'health,medical',
+  'higiene': 'hygiene,soap',
+  'automotivo': 'automotive,car',
+  'pet': 'pet,dog',
+  'pets': 'pet,dog',
+  'utilidades': 'household,kitchen',
+  'cozinha': 'kitchen,cooking',
+  'roupas': 'clothing,fashion',
+  'vestuário': 'clothing,fashion',
+  'vestuario': 'clothing,fashion',
+  'calçados': 'shoes,footwear',
+  'calcados': 'shoes,footwear',
+  'brinquedos': 'toys,children',
+  'esportes': 'sports,fitness',
+  'livros': 'books,reading',
+  'música': 'music,instrument',
+  'musica': 'music,instrument',
+  'jardinagem': 'garden,plants',
+  'beleza': 'beauty,cosmetics',
+  'construção': 'construction,tools',
+  'construcao': 'construction,tools',
+};
+
+function tagDaCategoria(nomeCategoria) {
+  if (!nomeCategoria) return 'product,item';
+  const chave = nomeCategoria.toLowerCase().trim();
+  return MAPA_CATEGORIAS[chave] || 'product,item';
+}
+
+(async () => {
+  try {
+    console.log('⏳ Buscando produtos + categorias...');
+
+    const { rows: produtos } = await db.query(`
+      SELECT p.id, p.name, c.name AS categoria_nome
+      FROM products p
+      LEFT JOIN categories c ON c.id = p.category_id
+      ORDER BY p.id
+    `);
+
+    console.log(`📦 ${produtos.length} produtos encontrados.\n`);
+
+    // Estatísticas por categoria (para conferência)
+    const stats = {};
+    let atualizados = 0;
+
+    for (const p of produtos) {
+      const tag = tagDaCategoria(p.categoria_nome);
+      const url = `https://loremflickr.com/600/400/${encodeURIComponent(tag)}?lock=${p.id}`;
+
+      await db.query(
+        'UPDATE products SET image_url = $1 WHERE id = $2',
+        [url, p.id]
+      );
+
+      stats[p.categoria_nome || 'SEM_CATEGORIA'] = (stats[p.categoria_nome || 'SEM_CATEGORIA'] || 0) + 1;
+      atualizados++;
+
+      if (atualizados % 10 === 0) process.stdout.write(`   ... ${atualizados}/${produtos.length}\n`);
+    }
+
+    console.log(`\n✅ ${atualizados} produtos atualizados!\n`);
+    console.log('📊 Distribuição por categoria:');
+    Object.entries(stats).sort().forEach(([cat, qty]) => {
+      const tag = tagDaCategoria(cat);
+      console.log(`   • ${cat}: ${qty} → ${tag}`);
+    });
+
+    console.log('\n🌐 Fonte: https://loremflickr.com (fotos reais por categoria, estáveis por ID)');
+    process.exit(0);
+  } catch (e) {
+    console.error('❌ Erro:', e.message);
+    process.exit(1);
+  }
+})();

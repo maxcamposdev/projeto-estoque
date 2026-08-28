@@ -91,3 +91,62 @@
   font-size: 0.7rem;
   font-weight: 600;
 }
+/* ==== CARD CLICÁVEL ==== */
+.card-clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+.card-clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover, 0 8px 24px rgba(0,0,0,0.12));
+  border-color: var(--accent);
+}
+
+.card-clickable:active {
+  transform: translateY(-1px);
+}
+
+.card-arrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.card-clickable:hover .card-arrow {
+  opacity: 1;
+  color: var(--accent);
+}
+
+/* ==== AVISO ADMIN ==== */
+.dashboard-notice {
+  margin-top: 2rem;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.notice-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .dashboard-notice {
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+  }
+}
