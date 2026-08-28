@@ -218,7 +218,7 @@ export default function Produtos() {
       <div className="produtos-filters">
         <input
           className="input-search"
-          placeholder="Buscar por nome ou SKU..."
+          placeholder="Buscar por nome, SKU ou código de barras..."
           value={busca}
           onChange={(e) => { setBusca(e.target.value); setPagina(1); }}
         />
@@ -240,6 +240,18 @@ export default function Produtos() {
               <label>SKU *</label>
               <input name="sku" value={form.sku} onChange={handleChange} required />
             </div>
+
+            <div className="form-group">
+              <label>Código de Barras</label>
+              <input
+                name="barcode"
+                value={form.barcode}
+                onChange={handleChange}
+                placeholder="Ex.: 7891234567890"
+                inputMode="numeric"
+              />
+            </div>
+
             <div className="form-group">
               <label>Categoria</label>
               <select name="category_id" value={form.category_id} onChange={handleChange}>
@@ -260,10 +272,6 @@ export default function Produtos() {
             <div className="form-group">
               <label>Preço (R$)</label>
               <input type="number" step="0.01" min="0" name="price" value={form.price} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label>Código de Barras</label>
-              <input name="barcode" value={form.barcode} onChange={handleChange} />
             </div>
             <div className="form-group form-full">
               <label>Descrição</label>
@@ -332,6 +340,7 @@ export default function Produtos() {
                   <th>Imagem</th>
                   <th>Nome</th>
                   <th>SKU</th>
+                  <th>Código de Barras</th>
                   <th>Categoria</th>
                   <th>Quantidade</th>
                   <th>Preço</th>
@@ -356,6 +365,9 @@ export default function Produtos() {
                         {baixo && <span className="badge-baixo">⚠ Estoque baixo</span>}
                       </td>
                       <td className="cell-sku">{p.sku}</td>
+                      <td className="cell-barcode">
+                        {p.barcode || '—'}
+                      </td>
                       <td>{p.categoria_nome || '—'}</td>
                       <td className="cell-qtd">{Number(p.quantity)}</td>
                       <td>R$ {Number(p.price).toFixed(2)}</td>

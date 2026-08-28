@@ -25,8 +25,24 @@ async function register(req, res, next) {
     const passwordHash = await bcrypt.hash(password, 12);
 
     const { rows } = await db.query(
-      'INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role, created_at',
-      [name, email.toLowerCase(), passwordHash, 'admin']
+      `INSERT INTO users
+        (name, email, password_hash, role, unit_id)
+       VALUES
+        ($1, $2, $3, $4, $5)
+       RETURNING
+        id,
+        name,
+        email,
+        role,
+        unit_id,
+        created_at`,
+      [
+        name,
+        email.toLowerCase(),
+        passwordHash,
+        'admin',
+        1
+      ]
     );
 
     res.status(201).json({ success: true, message: 'Usuário cadastrado com sucesso!', user: rows[0] });
@@ -57,7 +73,13 @@ async function login(req, res, next) {
 
     // Gera o token JWT
     const token = jwt.sign(
-      { id: user.id, name: user.name, email: user.email, role: user.role },
+      {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        unit_id: user.unit_id
+      },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
@@ -66,7 +88,13 @@ async function login(req, res, next) {
       success: true,
       message: 'Login realizado com sucesso!',
       token,
-      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        unit_id: user.unit_id
+      },
     });
   } catch (error) {
     next(error);

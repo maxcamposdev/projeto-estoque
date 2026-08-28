@@ -7,6 +7,10 @@ import Produtos from './pages/Produtos';
 import Movimentacoes from './pages/Movimentacoes';
 import Relatorios from './pages/Relatorios';
 import EstoqueBaixo from './pages/EstoqueBaixo';
+import PedidosCompra from './pages/PedidosCompra';
+import Fornecedores from './pages/Fornecedores';
+import Transferencias from './pages/Transferencias';
+import Devolucoes from './pages/Devolucoes';
 import './styles/theme.css';
 
 function PrivateRoute({ children }) {
@@ -24,6 +28,10 @@ export default function App() {
         <Route path="/movimentacoes" element={<PrivateRoute><Layout><Movimentacoes /></Layout></PrivateRoute>} />
         <Route path="/relatorios" element={<PrivateRoute><Layout><Relatorios /></Layout></PrivateRoute>} />
         <Route path="/estoque-baixo" element={<PrivateRoute><Layout><EstoqueBaixo /></Layout></PrivateRoute>} />
+        <Route path="/pedidos-compra" element={<PrivateRoute><Layout><PedidosCompra /></Layout></PrivateRoute>} />
+        <Route path="/fornecedores" element={<PrivateRoute><Layout><Fornecedores /></Layout></PrivateRoute>} />
+        <Route path="/transferencias" element={<PrivateRoute><Layout><Transferencias /></Layout></PrivateRoute>} />
+        <Route path="/devolucoes" element={<PrivateRoute><Layout><Devolucoes /></Layout></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

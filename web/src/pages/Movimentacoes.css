@@ -48,3 +48,11 @@
   font-size: 0.85rem;
   font-family: var(--font-mono);
 }
+.cell-barcode {
+  min-width: 145px;
+  white-space: nowrap;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}

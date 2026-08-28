@@ -33,7 +33,12 @@ export default function Movimentacoes() {
             const movComData = new Date(m.created_at);
             const trintaDiasAtras = Date.now() - 30 * 86400000;
             if (movComData.getTime() > trintaDiasAtras) {
-              recentes.push({ ...m, produto_nome: p.name });
+              recentes.push({
+              ...m,
+              produto_nome: p.name,
+              produto_sku: p.sku,
+              produto_barcode: p.barcode
+            });
             }
           }
         } catch { /* ignora erros individuais */ }
@@ -112,7 +117,9 @@ export default function Movimentacoes() {
             <select name="product_id" value={form.product_id} onChange={(e) => setForm({ ...form, product_id: e.target.value })} required>
               <option value="">Selecione um produto</option>
               {produtos.map((p) => (
-                <option key={p.id} value={p.id}>{p.name} (estoque: {Number(p.quantity)})</option>
+                <option key={p.id} value={p.id}>
+                  {p.name} · SKU: {p.sku || '—'} · Código: {p.barcode || '—'} · Estoque: {Number(p.quantity)}
+                </option>
               ))}
             </select>
           </div>
@@ -141,7 +148,11 @@ export default function Movimentacoes() {
           </select>
           <select className="input-select" value={filtroProduto} onChange={(e) => setFiltroProduto(e.target.value)}>
             <option value="">Todos os produtos</option>
-            {produtos.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+            {produtos.map(p => (
+              <option key={p.id} value={p.id}>
+                {p.name} · SKU: {p.sku || '—'} · Código: {p.barcode || '—'}
+              </option>
+            ))}
           </select>
         </div>
       </div>
@@ -158,6 +169,8 @@ export default function Movimentacoes() {
               <tr>
                 <th>Data</th>
                 <th>Produto</th>
+                <th>SKU</th>
+                <th>Código de barras</th>
                 <th>Tipo</th>
                 <th>Quantidade</th>
                 <th>Observação</th>
@@ -169,6 +182,8 @@ export default function Movimentacoes() {
                 <tr key={m.id}>
                   <td className="cell-date">{fmtData(m.created_at)}</td>
                   <td className="cell-nome">{m.produto_nome}</td>
+                  <td className="cell-sku">{m.produto_sku || '—'}</td>
+                  <td className="cell-barcode">{m.produto_barcode || '—'}</td>
                   <td>
                     <span className={`badge-tipo ${m.type === 'IN' ? 'badge-in' : 'badge-out'}`}>
                       {m.type === 'IN' ? '⬆ Entrada' : '⬇ Saída'}

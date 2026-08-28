@@ -89,7 +89,7 @@ export default function Dashboard() {
           <div className="card-icon">📊</div>
           <div className="card-info">
             <span className="card-value">{resumo?.totalUnidades ?? '0'}</span>
-            <span className="card-label">Unidades em Estoque</span>
+            <span className="card-label">Relatório de Estoque</span>
           </div>
           <span className="card-arrow">→</span>
         </div>

@@ -18,8 +18,17 @@ async function list(req, res, next) {
     const params = [];
 
     if (busca) {
-      params.push(`%${busca}%`);
-      sql += ` AND (p.name ILIKE $${params.length} OR p.sku ILIKE $${params.length})`;
+      const termo = String(busca).trim();
+
+      params.push(`%${termo}%`);
+      const buscaParam = params.length;
+
+      sql += ` AND (
+        p.name ILIKE $${buscaParam}
+        OR p.sku ILIKE $${buscaParam}
+        OR p.barcode ILIKE $${buscaParam}
+        OR REGEXP_REPLACE(p.barcode, '[^0-9]', '', 'g') ILIKE $${buscaParam}
+      )`;
     }
     if (categoria) {
       params.push(categoria);

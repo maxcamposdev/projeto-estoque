@@ -1,10 +1,8 @@
 // routes/movimentacao.routes.js
-
 const express = require('express');
 const auth = require('../middlewares/authMiddleware');
 const c = require('../controllers/movimentacaoController');
 const { numeric } = require('../middlewares/validate');
-
 const router = express.Router();
 
 router.post(
@@ -13,12 +11,7 @@ router.post(
   numeric('product_id', 'quantity'),
   c.create
 );
-
-// Histórico geral para relatórios
-router.get('/', auth, c.list);
-
 router.get('/resumo', auth, c.summary);
-
 router.get('/produto/:id', auth, c.listByProduct);
 
 module.exports = router;

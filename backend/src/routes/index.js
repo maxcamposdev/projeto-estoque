@@ -6,6 +6,10 @@ const categoriaRoutes = require('./categoria.routes');
 const produtoRoutes = require('./produto.routes');
 const movimentacaoRoutes = require('./movimentacao.routes');
 const whatsappRoutes = require('./whatsapp.routes');
+const pedidoCompraRoutes = require('./pedidoCompra.routes');
+const fornecedorRoutes = require('./fornecedor.routes');
+const transferenciaRoutes = require('./transferencia.routes');
+const devolucaoRoutes = require('./devolucao.routes');
 const router = express.Router();
 
 router.get('/health', async (req, res) => {
@@ -37,4 +41,8 @@ router.use('/movimentacoes', movimentacaoRoutes);
 
 // Webhook do WhatsApp
 router.use('/whatsapp', whatsappRoutes);
+router.use('/pedidos-compra', pedidoCompraRoutes);
+router.use('/fornecedores', fornecedorRoutes);
+router.use('/transferencias', transferenciaRoutes);
+router.use('/devolucoes', devolucaoRoutes);
 module.exports = router;

@@ -38,6 +38,10 @@ export default function Header() {
             <button className={`nav-btn ${isActive('/dashboard')}`} onClick={() => navigate('/dashboard')}>Dashboard</button>
             <button className={`nav-btn ${isActive('/produtos')}`} onClick={() => navigate('/produtos')}>Produtos</button>
             <button className={`nav-btn ${isActive('/movimentacoes')}`} onClick={() => navigate('/movimentacoes')}>Movimentações</button>
+            <button className={`nav-btn ${isActive('/pedidos-compra')}`} onClick={() => navigate('/pedidos-compra')}>Pedidos de Compra</button>
+            <button className={`nav-btn ${isActive('/fornecedores')}`} onClick={() => navigate('/fornecedores')}>Fornecedores</button>
+            <button className={`nav-btn ${isActive('/transferencias')}`} onClick={() => navigate('/transferencias')}>Transferências</button>
+            <button className={`nav-btn ${isActive('/devolucoes')}`} onClick={() => navigate('/devolucoes')}>Devoluções</button>
           </nav>
         )}
 
