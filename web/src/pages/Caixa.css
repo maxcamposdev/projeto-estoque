@@ -1,111 +1,2752 @@
-/* pages/Caixa.css — Estilos do PDV */
+/* ==== Caixa Fechado (tela de abertura) ==== */
+.caixa-loading {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 60vh; gap: 12px;
+}
+.spinner {
+  width: 36px; height: 36px; border: 4px solid #e2e2e2; border-top-color: #2563eb;
+  border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.caixa, .caixa-fechado { padding: 1.5rem 2rem; max-width: 1400px; margin: 0 auto; }
-.caixa-loading { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 400px; color: var(--text-secondary); }
-
-.caixa-success { padding: 0.8rem 1rem; background: rgba(34, 197, 94, 0.15); border: 1px solid var(--success); border-radius: var(--radius); color: var(--success); margin-bottom: 1rem; }
-.caixa-error { padding: 0.8rem 1rem; background: rgba(239, 68, 68, 0.15); border: 1px solid var(--danger); border-radius: var(--radius); color: var(--danger); margin-bottom: 1rem; }
-
-/* ============================================
-   CAIXA FECHADO
-   ============================================ */
-.caixa-fechado { display: flex; justify-content: center; align-items: center; min-height: 70vh; }
+.caixa-fechado {
+  display: flex; align-items: center; justify-content: center; min-height: 70vh; padding: 20px;
+}
 .caixa-fechado-card {
-  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
-  padding: 2.5rem; text-align: center; max-width: 500px; box-shadow: var(--shadow);
+  background: #fff; border-radius: 12px; padding: 40px; text-align: center; max-width: 420px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
-.caixa-fechado-card h1 { margin-bottom: 0.8rem; }
-.caixa-fechado-card p { margin-bottom: 1.5rem; color: var(--text-secondary); }
-.abrir-caixa-form { margin-top: 1rem; }
-.abrir-caixa-form label { display: block; margin-bottom: 0.4rem; color: var(--text-secondary); }
-.abrir-caixa-form input { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-input); color: var(--text-primary); margin-bottom: 1rem; }
-.abrir-caixa-actions { display: flex; gap: 0.5rem; }
-.btn-link { background: transparent; border: none; color: var(--accent); cursor: pointer; margin-top: 1rem; padding: 0.5rem; }
+.abrir-caixa-form { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+.abrir-caixa-form input {
+  padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; text-align: center;
+}
+.abrir-caixa-actions { display: flex; gap: 10px; justify-content: center; }
 
-/* ============================================
-   CAIXA ABERTO — HEADER
-   ============================================ */
-.caixa-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
-.caixa-header h1 { margin-bottom: 0.3rem; }
-.caixa-header p { color: var(--text-secondary); font-size: 0.85rem; margin: 0.1rem 0; }
+.btn-primary {
+  background: #2563eb; color: #fff; border: none; padding: 12px 24px; border-radius: 6px;
+  font-weight: 600; cursor: pointer; font-size: 15px;
+}
+.btn-cancel {
+  background: #e2e2e2; color: #333; border: none; padding: 12px 24px; border-radius: 6px;
+  font-weight: 600; cursor: pointer; font-size: 15px;
+}
+.btn-link { background: none; border: none; color: #2563eb; margin-top: 16px; cursor: pointer; text-decoration: underline; }
+
+.caixa-success, .caixa-error {
+  padding: 12px 20px; border-radius: 6px; margin-bottom: 12px; font-weight: 600;
+}
+.caixa-success { background: #dcfce7; color: #166534; }
+.caixa-error { background: #fee2e2; color: #991b1b; }
+
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center;
+  justify-content: center; z-index: 1000;
+}
+.modal-content {
+  background: #fff; border-radius: 10px; padding: 28px; max-width: 420px; width: 90%;
+  max-height: 80vh; overflow-y: auto;
+}
+.modal-content input {
+  width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-top: 8px; font-size: 16px;
+}
+.modal-actions { display: flex; gap: 10px; margin-top: 16px; }
+.vendas-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.venda-item { padding: 10px; background: #f5f5f5; border-radius: 6px; }
+.recibo ul { padding-left: 20px; }
+
+/* ==== PDV — layout simplificado ==== */
+
+.caixa-pdv-classic {
+  padding: 16px 20px 40px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.pdv-topbar {
+  background: #1e3a8a;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pdv-topbar > div {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pdv-topbar strong {
+  font-size: 18px;
+}
+
+.pdv-topbar-status {
+  font-size: 13px;
+  color: #bfdbfe;
+  font-weight: 500;
+}
+
+.pdv-topbar-clock {
+  font-size: 13px;
+  color: #dbeafe;
+  font-weight: 600;
+}
+
+.pdv-infobar {
+  background: #fff;
+  border: 1px solid #dbe3ee;
+  border-top: none;
+  padding: 14px 20px;
+  display: grid;
+  grid-template-columns: 150px 220px 1fr 220px;
+  gap: 16px;
+  align-items: end;
+}
+
+.pdv-info-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.pdv-info-campo label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 800;
+}
+
+.pdv-info-campo span,
+.pdv-info-campo input,
+.pdv-info-campo select {
+  height: 36px;
+  box-sizing: border-box;
+}
+
+.pdv-info-campo span {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pdv-info-campo input,
+.pdv-info-campo select {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  background: #fff;
+  font-size: 14px;
+}
+
+.pdv-info-campo input:focus,
+.pdv-info-campo select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.pdv-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.pdv-main-left,
+.pdv-main-right {
+  min-width: 0;
+}
+
+.pdv-main-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.pdv-pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pdv-pedido-header > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pdv-pedido-titulo {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.pdv-pedido-header small {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.btn-novo-pedido {
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-novo-pedido:hover {
+  background: #1d4ed8;
+}
+
+.pdv-bipagem-box {
+  margin-top: 0;
+  position: relative;
+}
+
+.pdv-campo-grande label {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  color: #475569;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.pdv-campo-grande label small {
+  text-transform: none;
+  font-weight: 400;
+  color: #94a3b8;
+  margin-left: 6px;
+}
+
+.pdv-busca {
+  width: 100%;
+  height: 52px;
+  padding: 10px 16px;
+  font-size: 17px;
+  border: 2px solid #cbd5e1;
+  border-radius: 7px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.pdv-busca:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.pdv-produtos-lista {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin-top: 4px;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  max-height: 320px;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+}
+
+.pdv-produto-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 100px 90px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 14px;
+  background: #fff;
+  border: none;
+  border-bottom: 1px solid #f1f5f9;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.pdv-produto-item:hover:not(:disabled) {
+  background: #eff6ff;
+}
+
+.pdv-produto-item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pdv-item-nome {
+  font-weight: 600;
+}
+
+.pdv-item-sku {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.pdv-item-preco {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.pdv-item-estoque {
+  color: #94a3b8;
+  font-size: 12px;
+  text-align: right;
+}
+
+.pdv-item-atual {
+  display: flex;
+  min-height: 58px;
+  margin-top: 12px;
+  background: #f8fafc;
+  border: 1px solid #dbe3ee;
+  border-radius: 7px;
+  overflow: hidden;
+  color: #1e293b;
+}
+
+.pdv-item-atual-qtd {
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0e7ff;
+  color: #1e3a8a;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.pdv-item-atual-desc {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pdv-item-atual-preco {
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #1e3a8a;
+}
+
+.pdv-itens-lista-classic {
+  margin-top: 14px;
+  border: 1px solid #dbe3ee;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.pdv-itens-header,
+.pdv-item-row {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr) 110px 110px 36px;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  font-size: 13px;
+}
+
+.pdv-itens-header {
+  background: #f1f5f9;
+  color: #475569;
+  font-weight: 800;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.pdv-item-row {
+  min-height: 42px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.pdv-item-row:nth-child(even) {
+  background: #fafafa;
+}
+
+.pdv-item-row-qtd {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.pdv-item-row-qtd button {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pdv-item-row-remover {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pdv-lista-pedido-vazio {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #94a3b8;
+}
+
+.pdv-lista-pedido-vazio strong {
+  color: #475569;
+  font-size: 14px;
+}
+
+.pdv-lista-pedido-vazio span {
+  font-size: 12px;
+}
+
+.pdv-pagamento-row {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 150px 180px;
+  gap: 12px;
+}
+
+.campo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.campo-grupo label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.campo-grupo select,
+.campo-grupo input {
+  height: 38px;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 14px;
+  background: #fff;
+}
+
+/* ==== RESUMO ==== */
+
+.pdv-main-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pdv-resumo-card {
+  background: #fff;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.pdv-resumo-titulo {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #1e293b;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.pdv-resumo-linha {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.pdv-resumo-linha strong {
+  color: #1e293b;
+}
+
+.pdv-total-liquido {
+  margin-top: 8px;
+  background: #0f172a;
+  color: #fff;
+  border-radius: 7px;
+  padding: 14px 16px;
+  text-align: right;
+}
+
+.pdv-total-liquido label {
+  display: block;
+  font-size: 10px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.pdv-total-valor {
+  font-size: 28px;
+  font-weight: 800;
+  color: #4ade80;
+}
+
+.pdv-pago-troco {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.pdv-pago-troco > div {
+  background: #f1f5f9;
+  border-radius: 6px;
+  padding: 9px 10px;
+}
+
+.pdv-pago-troco label {
+  display: block;
+  font-size: 9px;
+  color: #64748b;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.pdv-pago-troco div div {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1e3a8a;
+}
+
+.pdv-acoes-classic {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pdv-acoes-classic button {
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn-finalizar-grande {
+  min-height: 52px;
+  font-size: 15px !important;
+}
+
+.btn-secundario {
+  background: #e2e8f0;
+  color: #1e293b;
+  padding: 11px;
+}
+
+.btn-secundario:hover {
+  background: #cbd5e1;
+}
+
+.btn-destaque {
+  background: #16a34a;
+  color: #fff;
+  padding: 11px;
+}
+
+.btn-destaque:hover:not(:disabled) {
+  background: #15803d;
+}
+
+.btn-destaque:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
 .btn-fechar-caixa {
-  padding: 0.7rem 1.2rem; background: var(--danger); color: white; border: none;
-  border-radius: var(--radius); font-weight: 700; cursor: pointer;
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 11px;
 }
 
-/* ============================================
-   PDV LAYOUT (2 colunas)
-   ============================================ */
-.pdv-layout { display: grid; grid-template-columns: 1fr 420px; gap: 1.5rem; }
-
-.pdv-produtos { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; }
-.pdv-busca { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-input); color: var(--text-primary); margin-bottom: 1rem; font-size: 0.95rem; }
-.pdv-produtos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; max-height: 70vh; overflow-y: auto; }
-.pdv-produto-card {
-  background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 0.6rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
-  transition: all 0.2s; text-align: center;
+.btn-fechar-caixa:hover {
+  background: #fecaca;
 }
-.pdv-produto-card:hover:not(:disabled) { border-color: var(--accent); transform: translateY(-2px); }
-.pdv-produto-card:disabled { opacity: 0.5; cursor: not-allowed; }
-.pdv-produto-card img { width: 100%; height: 70px; object-fit: cover; border-radius: 4px; }
-.pdv-produto-sem-img { width: 100%; height: 70px; display: flex; align-items: center; justify-content: center; background: var(--bg-input); border-radius: 4px; font-size: 2rem; }
-.pdv-produto-nome { font-size: 0.75rem; font-weight: 600; color: var(--text-primary); line-height: 1.2; }
-.pdv-produto-preco { font-size: 0.85rem; font-weight: 700; color: var(--accent); }
-.pdv-produto-estoque { font-size: 0.7rem; color: var(--text-muted); }
 
-/* ============================================
-   CARRINHO
-   ============================================ */
-.pdv-carrinho { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; display: flex; flex-direction: column; max-height: 85vh; }
-.pdv-carrinho h2 { margin-bottom: 1rem; }
-.carrinho-vazio { text-align: center; color: var(--text-muted); padding: 2rem; }
-.carrinho-itens { flex: 1; overflow-y: auto; margin-bottom: 1rem; }
-.carrinho-item { display: grid; grid-template-columns: 1fr auto auto auto; gap: 0.5rem; align-items: center; padding: 0.6rem; border-bottom: 1px solid var(--border); }
-.carrinho-item-info strong { font-size: 0.85rem; display: block; }
-.carrinho-item-info small { color: var(--text-muted); font-size: 0.7rem; }
-.carrinho-item-qtd { display: flex; align-items: center; gap: 0.4rem; }
-.carrinho-item-qtd button { width: 24px; height: 24px; border: 1px solid var(--border); background: var(--bg-input); color: var(--text-primary); border-radius: 4px; cursor: pointer; font-weight: 700; }
-.carrinho-item-qtd span { min-width: 20px; text-align: center; font-weight: 600; }
-.carrinho-item-subtotal { font-weight: 700; color: var(--accent); font-size: 0.85rem; }
-.carrinho-item-remover { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 1.1rem; }
+/* ==== ATALHOS ==== */
 
-.carrinho-totais { border-top: 1px solid var(--border); padding-top: 1rem; }
-.campo-grupo { margin-bottom: 0.7rem; }
-.campo-grupo label { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.2rem; }
-.campo-grupo input, .campo-grupo select { width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-input); color: var(--text-primary); font-size: 0.9rem; }
-.totais-linha { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.9rem; color: var(--text-secondary); }
-.totais-linha.total-final { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); border-top: 2px solid var(--border); padding-top: 0.6rem; margin-top: 0.4rem; }
-.totais-linha.troco { color: var(--success); font-weight: 700; font-size: 1.1rem; }
+.pdv-atalhos {
+  background: #0f172a;
+  color: #fff;
+  border-radius: 7px;
+  padding: 11px 12px;
+}
 
-.btn-finalizar { width: 100%; padding: 1rem; background: var(--success); color: white; border: none; border-radius: var(--radius); font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 0.6rem; }
-.btn-finalizar:hover { background: #16a34a; }
-.btn-cancelar { width: 100%; padding: 0.7rem; background: transparent; border: 1px solid var(--border); color: var(--text-secondary); border-radius: var(--radius); cursor: pointer; margin-top: 0.4rem; }
+.pdv-atalhos strong {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #fbbf24;
+}
 
-/* ============================================
-   MODAL
-   ============================================ */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; }
-.modal-content { background: var(--bg-card); border-radius: var(--radius-lg); padding: 2rem; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; }
-.modal-content h2 { margin-bottom: 1rem; }
-.modal-content input { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-input); color: var(--text-primary); margin: 0.8rem 0; }
-.modal-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
-.modal-content ul { list-style: none; padding: 0; }
-.modal-content ul li { padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+.pdv-atalhos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 11px;
+}
 
-.btn-primary { padding: 0.7rem 1.2rem; background: var(--accent); color: var(--accent-text); border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer; }
-.btn-primary:hover { background: var(--accent-hover); }
-.btn-cancel { padding: 0.7rem 1.2rem; background: transparent; border: 1px solid var(--border); color: var(--text-secondary); border-radius: var(--radius); cursor: pointer; }
-.btn-cancel:hover { border-color: var(--accent); color: var(--accent); }
+.pdv-atalhos .atalho {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
 
-.vendas-list { max-height: 50vh; overflow-y: auto; margin: 1rem 0; }
-.venda-item { padding: 0.6rem; border-bottom: 1px solid var(--border); }
+.pdv-atalhos kbd {
+  min-width: 34px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  background: #334155;
+  border: 1px solid #475569;
+  color: #fff;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  text-align: center;
+}
 
-/* ============================================
+.pdv-atalhos .atalho.ativo {
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.pdv-atalhos .atalho.em-breve {
+  color: #64748b;
+}
+
+.pdv-atalhos .atalho.em-breve kbd {
+  background: #1e293b;
+  border-color: #334155;
+  color: #64748b;
+}
+
+.pdv-atalhos .atalho small {
+  margin-left: auto;
+  font-size: 9px;
+  color: #475569;
+}
+
+@media (max-width: 1100px) {
+  .pdv-infobar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pdv-main-grid {
+    grid-template-columns: minmax(0, 1fr) 290px;
+  }
+
+  .pdv-pagamento-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .pdv-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pdv-main-right {
+    order: -1;
+  }
+
+  .pdv-infobar {
+    grid-template-columns: 1fr;
+  }
+
+  .pdv-pagamento-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==== Campo de operador fixo (quando não é gerente/admin) ==== */
+.operador-fixo {
+  padding: 10px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px;
+  text-align: center; font-weight: 600; margin-bottom: 8px;
+}
+
+
+/* ============================================================
+   PDV PROFISSIONAL — NOVO LAYOUT
+   Referência: terminal de caixa profissional
+   Não altera JSX nem lógica.
+   ============================================================ */
+
+.caixa-pdv-classic {
+  --pdv-primary: #1e3a8a;
+  --pdv-primary-hover: #1d4ed8;
+  --pdv-success: #16a34a;
+  --pdv-success-light: #dcfce7;
+  --pdv-bg: #f1f5f9;
+  --pdv-card: #ffffff;
+  --pdv-border: #dbe3ee;
+  --pdv-border-soft: #e2e8f0;
+  --pdv-text: #1e293b;
+  --pdv-text-secondary: #64748b;
+  --pdv-text-muted: #94a3b8;
+  --pdv-dark: #0f172a;
+
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 12px 20px 18px;
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   CABEÇALHO DO CAIXA
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-topbar {
+  min-height: 52px;
+  padding: 10px 18px;
+  box-sizing: border-box;
+  border-radius: 8px 8px 0 0;
+  background: var(--pdv-primary);
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.12);
+}
+
+.caixa-pdv-classic .pdv-topbar strong {
+  font-size: 17px;
+  letter-spacing: 0.2px;
+}
+
+.caixa-pdv-classic .pdv-topbar-status {
+  font-size: 12px;
+}
+
+.caixa-pdv-classic .pdv-topbar-clock {
+  font-size: 12px;
+}
+
+
+/* ============================================================
+   INFORMAÇÕES DA VENDA
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-infobar {
+  padding: 11px 18px;
+  gap: 13px;
+  background: var(--pdv-card);
+  border-color: var(--pdv-border);
+}
+
+.caixa-pdv-classic .pdv-info-campo {
+  gap: 4px;
+}
+
+.caixa-pdv-classic .pdv-info-campo label {
+  font-size: 9px;
+}
+
+.caixa-pdv-classic .pdv-info-campo span,
+.caixa-pdv-classic .pdv-info-campo input,
+.caixa-pdv-classic .pdv-info-campo select {
+  height: 34px;
+}
+
+.caixa-pdv-classic .pdv-info-campo span {
+  font-size: 13px;
+}
+
+.caixa-pdv-classic .pdv-info-campo input,
+.caixa-pdv-classic .pdv-info-campo select {
+  font-size: 13px;
+}
+
+
+/* ============================================================
+   ÁREA PRINCIPAL
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-main-grid {
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 14px;
+  margin-top: 12px;
+  align-items: start;
+}
+
+.caixa-pdv-classic .pdv-main-left,
+.caixa-pdv-classic .pdv-main-right {
+  min-width: 0;
+}
+
+
+/* ============================================================
+   PEDIDO
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-pedido-header {
+  margin-bottom: 8px;
+}
+
+.caixa-pdv-classic .pdv-pedido-titulo {
+  font-size: 17px;
+}
+
+.caixa-pdv-classic .pdv-pedido-header small {
+  font-size: 11px;
+}
+
+.caixa-pdv-classic .btn-novo-pedido {
+  padding: 8px 13px;
+  font-size: 12px;
+}
+
+
+/* ============================================================
+   CAMPO DE BIPAGEM
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-campo-grande label {
+  font-size: 10px;
+  margin-bottom: 4px;
+}
+
+.caixa-pdv-classic .pdv-busca {
+  height: 46px;
+  padding: 9px 14px;
+  font-size: 16px;
+  border-radius: 6px;
+}
+
+
+/* ============================================================
+   LISTA DE PRODUTOS
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-itens-lista-classic {
+  margin-top: 9px;
+  border-radius: 6px;
+}
+
+.caixa-pdv-classic .pdv-itens-header,
+.caixa-pdv-classic .pdv-item-row {
+  padding: 7px 12px;
+  gap: 8px;
+}
+
+.caixa-pdv-classic .pdv-itens-header {
+  font-size: 9px;
+}
+
+.caixa-pdv-classic .pdv-item-row {
+  min-height: 38px;
+  font-size: 12px;
+}
+
+.caixa-pdv-classic .pdv-lista-pedido-vazio {
+  min-height: 105px;
+}
+
+.caixa-pdv-classic .pdv-lista-pedido-vazio strong {
+  font-size: 13px;
+}
+
+.caixa-pdv-classic .pdv-lista-pedido-vazio span {
+  font-size: 11px;
+}
+
+
+/* ============================================================
+   PAGAMENTO
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-pagamento-row {
+  margin-top: 9px;
+  gap: 9px;
+}
+
+.caixa-pdv-classic .campo-grupo {
+  gap: 4px;
+}
+
+.caixa-pdv-classic .campo-grupo label {
+  font-size: 9px;
+}
+
+.caixa-pdv-classic .campo-grupo select,
+.caixa-pdv-classic .campo-grupo input {
+  height: 36px;
+  font-size: 13px;
+  padding: 7px 9px;
+}
+
+
+/* ============================================================
+   RESUMO — ESTILO TERMINAL DE PDV
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-main-right {
+  gap: 8px;
+}
+
+.caixa-pdv-classic .pdv-resumo-card {
+  padding: 13px;
+  border-radius: 7px;
+  background: var(--pdv-card);
+  border-color: var(--pdv-border);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.caixa-pdv-classic .pdv-resumo-titulo {
+  padding-bottom: 8px;
+  font-size: 12px;
+}
+
+.caixa-pdv-classic .pdv-resumo-linha {
+  padding: 6px 0;
+  font-size: 12px;
+}
+
+.caixa-pdv-classic .pdv-total-liquido {
+  margin-top: 5px;
+  padding: 11px 13px;
+  border-radius: 6px;
+  background: var(--pdv-dark);
+}
+
+.caixa-pdv-classic .pdv-total-liquido label {
+  font-size: 9px;
+}
+
+.caixa-pdv-classic .pdv-total-valor {
+  font-size: 26px;
+  line-height: 1.15;
+}
+
+.caixa-pdv-classic .pdv-pago-troco {
+  margin-top: 7px;
+  gap: 6px;
+}
+
+.caixa-pdv-classic .pdv-pago-troco > div {
+  padding: 7px 8px;
+  border-radius: 5px;
+}
+
+.caixa-pdv-classic .pdv-pago-troco label {
+  font-size: 8px;
+}
+
+.caixa-pdv-classic .pdv-pago-troco div div {
+  font-size: 13px;
+}
+
+
+/* ============================================================
+   BOTÕES DE OPERAÇÃO
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-acoes-classic {
+  gap: 6px;
+}
+
+.caixa-pdv-classic .pdv-acoes-classic button {
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.caixa-pdv-classic .btn-finalizar-grande {
+  min-height: 44px;
+  font-size: 14px !important;
+}
+
+.caixa-pdv-classic .btn-secundario,
+.caixa-pdv-classic .btn-destaque,
+.caixa-pdv-classic .btn-fechar-caixa {
+  padding: 9px;
+}
+
+
+/* ============================================================
+   ATALHOS — DUAS COLUNAS
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-atalhos {
+  padding: 9px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.12);
+}
+
+.caixa-pdv-classic .pdv-atalhos strong {
+  margin-bottom: 6px;
+  font-size: 9px;
+}
+
+.caixa-pdv-classic .pdv-atalhos-lista {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  row-gap: 4px;
+  font-size: 10px;
+}
+
+.caixa-pdv-classic .pdv-atalhos .atalho {
+  min-width: 0;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.caixa-pdv-classic .pdv-atalhos kbd {
+  min-width: 32px;
+  padding: 2px 4px;
+  font-size: 9px;
+}
+
+.caixa-pdv-classic .pdv-atalhos .atalho small {
+  font-size: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   TELAS DE NOTEBOOK — 1366x768 / 1440x900
+   ============================================================ */
+
+@media (max-height: 850px) and (min-width: 901px) {
+
+  .caixa-pdv-classic {
+    padding-top: 7px;
+    padding-bottom: 10px;
+  }
+
+  .caixa-pdv-classic .pdv-topbar {
+    min-height: 48px;
+    padding: 8px 16px;
+  }
+
+  .caixa-pdv-classic .pdv-infobar {
+    padding: 9px 16px;
+  }
+
+  .caixa-pdv-classic .pdv-main-grid {
+    margin-top: 9px;
+    gap: 11px;
+  }
+
+  .caixa-pdv-classic .pdv-busca {
+    height: 42px;
+  }
+
+  .caixa-pdv-classic .pdv-itens-lista-classic {
+    margin-top: 7px;
+  }
+
+  .caixa-pdv-classic .pdv-lista-pedido-vazio {
+    min-height: 82px;
+  }
+
+  .caixa-pdv-classic .pdv-pagamento-row {
+    margin-top: 7px;
+  }
+
+  .caixa-pdv-classic .pdv-resumo-card {
+    padding: 10px;
+  }
+
+  .caixa-pdv-classic .pdv-total-liquido {
+    padding: 9px 11px;
+  }
+
+  .caixa-pdv-classic .pdv-total-valor {
+    font-size: 23px;
+  }
+
+  .caixa-pdv-classic .btn-finalizar-grande {
+    min-height: 40px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos {
+    padding: 7px 9px;
+  }
+}
+
+
+/* ============================================================
+   TELAS DE BAIXA ALTURA — 720/768px
+   ============================================================ */
+
+@media (max-height: 740px) and (min-width: 901px) {
+
+  .caixa-pdv-classic {
+    padding: 4px 16px 6px;
+  }
+
+  .caixa-pdv-classic .pdv-topbar {
+    min-height: 44px;
+    padding: 7px 14px;
+  }
+
+  .caixa-pdv-classic .pdv-topbar strong {
+    font-size: 15px;
+  }
+
+  .caixa-pdv-classic .pdv-topbar-status,
+  .caixa-pdv-classic .pdv-topbar-clock {
+    font-size: 11px;
+  }
+
+  .caixa-pdv-classic .pdv-infobar {
+    padding: 7px 14px;
+    gap: 9px;
+  }
+
+  .caixa-pdv-classic .pdv-info-campo label {
+    font-size: 8px;
+  }
+
+  .caixa-pdv-classic .pdv-info-campo span,
+  .caixa-pdv-classic .pdv-info-campo input,
+  .caixa-pdv-classic .pdv-info-campo select {
+    height: 31px;
+  }
+
+  .caixa-pdv-classic .pdv-main-grid {
+    margin-top: 6px;
+    gap: 9px;
+  }
+
+  .caixa-pdv-classic .pdv-pedido-header {
+    margin-bottom: 5px;
+  }
+
+  .caixa-pdv-classic .pdv-pedido-titulo {
+    font-size: 15px;
+  }
+
+  .caixa-pdv-classic .pdv-busca {
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .caixa-pdv-classic .pdv-itens-lista-classic {
+    margin-top: 5px;
+  }
+
+  .caixa-pdv-classic .pdv-itens-header,
+  .caixa-pdv-classic .pdv-item-row {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .caixa-pdv-classic .pdv-item-row {
+    min-height: 32px;
+  }
+
+  .caixa-pdv-classic .pdv-lista-pedido-vazio {
+    min-height: 58px;
+  }
+
+  .caixa-pdv-classic .pdv-pagamento-row {
+    margin-top: 5px;
+  }
+
+  .caixa-pdv-classic .campo-grupo select,
+  .caixa-pdv-classic .campo-grupo input {
+    height: 33px;
+  }
+
+  .caixa-pdv-classic .pdv-resumo-card {
+    padding: 8px;
+  }
+
+  .caixa-pdv-classic .pdv-resumo-linha {
+    padding: 4px 0;
+  }
+
+  .caixa-pdv-classic .pdv-total-liquido {
+    padding: 7px 9px;
+  }
+
+  .caixa-pdv-classic .pdv-total-valor {
+    font-size: 21px;
+  }
+
+  .caixa-pdv-classic .pdv-pago-troco {
+    margin-top: 4px;
+  }
+
+  .caixa-pdv-classic .pdv-pago-troco > div {
+    padding: 5px 7px;
+  }
+
+  .caixa-pdv-classic .pdv-acoes-classic {
+    gap: 4px;
+  }
+
+  .caixa-pdv-classic .btn-finalizar-grande {
+    min-height: 36px;
+  }
+
+  .caixa-pdv-classic .btn-secundario,
+  .caixa-pdv-classic .btn-destaque,
+  .caixa-pdv-classic .btn-fechar-caixa {
+    padding: 6px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos {
+    padding: 6px 8px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos strong {
+    margin-bottom: 4px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-lista {
+    row-gap: 3px;
+  }
+}
+
+
+/* ============================================================
    RESPONSIVO
-   ============================================ */
-@media (max-width: 1024px) {
-  .pdv-layout { grid-template-columns: 1fr; }
-  .pdv-carrinho { max-height: none; }
-  .pdv-produtos-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+   ============================================================ */
+
+@media (max-width: 1100px) and (min-width: 901px) {
+
+  .caixa-pdv-classic {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .caixa-pdv-classic .pdv-main-grid {
+    grid-template-columns: minmax(0, 1fr) 290px;
+  }
 }
+
+
+@media (max-width: 900px) {
+
+  .caixa-pdv-classic {
+    padding: 10px 12px 16px;
+  }
+
+  .caixa-pdv-classic .pdv-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .caixa-pdv-classic .pdv-main-right {
+    order: -1;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-lista {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .caixa-pdv-classic .pdv-infobar {
+    grid-template-columns: 1fr;
+  }
+
+  .caixa-pdv-classic .pdv-pagamento-row {
+    grid-template-columns: 1fr;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-lista {
+    grid-template-columns: 1fr;
+  }
+
+  .caixa-pdv-classic .pdv-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
+
+
+/* ============================================================
+   SEGURANÇA CONTRA OVERFLOW
+   ============================================================ */
+
+.caixa-pdv-classic,
+.caixa-pdv-classic * {
+  box-sizing: border-box;
+}
+
+.caixa-pdv-classic input,
+.caixa-pdv-classic select,
+.caixa-pdv-classic button {
+  max-width: 100%;
+}
+
+.caixa-pdv-classic .pdv-main-left,
+.caixa-pdv-classic .pdv-main-right {
+  overflow: visible;
+}
+
+
+
+/* ============================================================
+   NOVO PDV — LAYOUT EM BLOCOS
+   Referência visual: terminal profissional de caixa
+   Mantém a identidade visual atual do sistema.
+   ============================================================ */
+
+
+/* ---------- CONTAINER PRINCIPAL ---------- */
+
+.caixa-pdv-classic {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 10px 18px 14px;
+  box-sizing: border-box;
+}
+
+
+/* ---------- ÁREA PRINCIPAL ---------- */
+
+.caixa-pdv-classic .pdv-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 12px;
+  align-items: start;
+}
+
+
+/* ---------- PAINEL DIREITO ---------- */
+
+.caixa-pdv-classic .pdv-main-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+
+/* ============================================================
+   RESUMO
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-resumo-card {
+  background: #ffffff;
+  border: 1px solid #dbe3ee;
+  border-radius: 7px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+.caixa-pdv-classic .pdv-resumo-titulo {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.caixa-pdv-classic .pdv-resumo-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 12px;
+}
+
+
+/* ---------- TOTAL ---------- */
+
+.caixa-pdv-classic .pdv-total-liquido {
+  background: #0f172a;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-top: 5px;
+}
+
+.caixa-pdv-classic .pdv-total-liquido label {
+  display: block;
+  color: #cbd5e1;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.caixa-pdv-classic .pdv-total-valor {
+  color: #4ade80;
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-top: 2px;
+}
+
+
+/* ============================================================
+   VALOR PAGO / TROCO
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-pago-troco {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 7px;
+}
+
+.caixa-pdv-classic .pdv-pago-troco > div {
+  background: #f1f5f9;
+  border-radius: 5px;
+  padding: 7px 8px;
+}
+
+.caixa-pdv-classic .pdv-pago-troco label {
+  display: block;
+  color: #64748b;
+  font-size: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.caixa-pdv-classic .pdv-pago-troco div div {
+  color: #1e3a8a;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+
+/* ============================================================
+   PAINEL DE BOTÕES
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-acoes-classic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+
+/* Todos os botões */
+
+.caixa-pdv-classic .pdv-acoes-classic button {
+  position: relative;
+  min-height: 67px;
+  padding: 8px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    filter 0.12s ease;
+}
+
+
+/* Ícone visual do botão */
+
+.caixa-pdv-classic .pdv-acoes-classic button::first-line {
+  font-size: 17px;
+}
+
+
+/* Hover */
+
+.caixa-pdv-classic .pdv-acoes-classic button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(0.97);
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
+}
+
+
+/* Clique */
+
+.caixa-pdv-classic .pdv-acoes-classic button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   FINALIZAR VENDA
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-acoes-classic .btn-finalizar-grande {
+  grid-column: 1 / -1;
+
+  min-height: 58px;
+
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #15803d;
+
+  font-size: 14px !important;
+  letter-spacing: 0.2px;
+}
+
+.caixa-pdv-classic .pdv-acoes-classic .btn-finalizar-grande:hover:not(:disabled) {
+  background: #15803d;
+}
+
+.caixa-pdv-classic .pdv-acoes-classic .btn-finalizar-grande:disabled {
+  background: #94a3b8;
+  border-color: #94a3b8;
+  color: #e2e8f0;
+}
+
+
+/* ============================================================
+   VER VENDAS
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-acoes-classic .btn-secundario {
+  background: #e2e8f0;
+  color: #1e293b;
+  border-color: #cbd5e1;
+}
+
+
+/* ============================================================
+   FECHAR CAIXA
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-acoes-classic .btn-fechar-caixa {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+
+/* ============================================================
+   ATALHOS COMO BOTÕES
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-atalhos {
+  background: #0f172a;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 9px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+}
+
+.caixa-pdv-classic .pdv-atalhos > strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #fbbf24;
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+
+/* Grade dos atalhos */
+
+.caixa-pdv-classic .pdv-atalhos-lista {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+
+/* Cada atalho vira um bloco */
+
+.caixa-pdv-classic .pdv-atalhos .atalho {
+  min-height: 38px;
+  padding: 5px 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 5px;
+
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 4px;
+
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+
+  box-sizing: border-box;
+}
+
+
+/* Atalhos funcionando */
+
+.caixa-pdv-classic .pdv-atalhos .atalho.ativo {
+  color: #4ade80;
+  border-color: #365f49;
+}
+
+
+/* Atalhos futuros */
+
+.caixa-pdv-classic .pdv-atalhos .atalho.em-breve {
+  color: #64748b;
+  opacity: 0.75;
+}
+
+
+/* Tecla */
+
+.caixa-pdv-classic .pdv-atalhos kbd {
+  flex: 0 0 auto;
+
+  min-width: 27px;
+  padding: 3px 4px;
+
+  border-radius: 3px;
+
+  background: #334155;
+  border: 1px solid #475569;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 8px;
+  font-weight: 900;
+
+  text-align: center;
+}
+
+
+/* "em breve" */
+
+.caixa-pdv-classic .pdv-atalhos .atalho small {
+  display: none;
+}
+
+
+/* ============================================================
+   PEDIDO — ÁREA MAIOR
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-main-left {
+  min-width: 0;
+}
+
+.caixa-pdv-classic .pdv-busca {
+  height: 45px;
+  font-size: 15px;
+}
+
+.caixa-pdv-classic .pdv-itens-lista-classic {
+  min-height: 145px;
+}
+
+
+/* ============================================================
+   PAGAMENTO
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-pagamento-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px 150px;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+
+/* ============================================================
+   TELAS 1366x768 / 1440x900
+   ============================================================ */
+
+@media (max-height: 850px) and (min-width: 901px) {
+
+  .caixa-pdv-classic {
+    padding-top: 6px;
+    padding-bottom: 8px;
+  }
+
+  .caixa-pdv-classic .pdv-main-grid {
+    grid-template-columns: minmax(0, 1fr) 315px;
+    gap: 9px;
+  }
+
+  .caixa-pdv-classic .pdv-resumo-card {
+    padding: 9px;
+  }
+
+  .caixa-pdv-classic .pdv-resumo-linha {
+    padding: 4px 0;
+  }
+
+  .caixa-pdv-classic .pdv-total-liquido {
+    padding: 8px 10px;
+  }
+
+  .caixa-pdv-classic .pdv-total-valor {
+    font-size: 23px;
+  }
+
+  .caixa-pdv-classic .pdv-pago-troco {
+    margin-top: 5px;
+  }
+
+  .caixa-pdv-classic .pdv-pago-troco > div {
+    padding: 5px 7px;
+  }
+
+  .caixa-pdv-classic .pdv-acoes-classic {
+    gap: 5px;
+  }
+
+  .caixa-pdv-classic .pdv-acoes-classic button {
+    min-height: 57px;
+    padding: 6px;
+  }
+
+  .caixa-pdv-classic .pdv-acoes-classic .btn-finalizar-grande {
+    min-height: 48px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos {
+    padding: 7px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-lista {
+    gap: 4px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos .atalho {
+    min-height: 32px;
+    padding: 4px;
+  }
+
+  .caixa-pdv-classic .pdv-itens-lista-classic {
+    min-height: 110px;
+  }
+
+  .caixa-pdv-classic .pdv-busca {
+    height: 41px;
+  }
+}
+
+
+/* ============================================================
+   TELAS MUITO BAIXAS — 720/768
+   ============================================================ */
+
+@media (max-height: 740px) and (min-width: 901px) {
+
+  .caixa-pdv-classic {
+    padding: 3px 12px 5px;
+  }
+
+  .caixa-pdv-classic .pdv-main-grid {
+    grid-template-columns: minmax(0, 1fr) 295px;
+    gap: 7px;
+  }
+
+  .caixa-pdv-classic .pdv-acoes-classic button {
+    min-height: 48px;
+    font-size: 10px;
+  }
+
+  .caixa-pdv-classic .pdv-acoes-classic .btn-finalizar-grande {
+    min-height: 43px;
+    font-size: 12px !important;
+  }
+
+  .caixa-pdv-classic .pdv-total-valor {
+    font-size: 21px;
+  }
+
+  .caixa-pdv-classic .pdv-itens-lista-classic {
+    min-height: 75px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos .atalho {
+    min-height: 28px;
+    font-size: 8px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos kbd {
+    min-width: 24px;
+    font-size: 7px;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 1100px) and (min-width: 901px) {
+
+  .caixa-pdv-classic .pdv-main-grid {
+    grid-template-columns: minmax(0, 1fr) 285px;
+  }
+
+  .caixa-pdv-classic .pdv-pagamento-row {
+    grid-template-columns: minmax(0, 1fr) 130px 130px;
+  }
+}
+
+
+@media (max-width: 900px) {
+
+  .caixa-pdv-classic .pdv-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .caixa-pdv-classic .pdv-main-right {
+    order: -1;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .caixa-pdv-classic {
+    padding: 8px;
+  }
+
+  .caixa-pdv-classic .pdv-pagamento-row {
+    grid-template-columns: 1fr;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-lista {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+@media (max-width: 420px) {
+
+  .caixa-pdv-classic .pdv-acoes-classic {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-lista {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ============================================================
+   EVITAR ESTOURO HORIZONTAL
+   ============================================================ */
+
+.caixa-pdv-classic,
+.caixa-pdv-classic * {
+  box-sizing: border-box;
+}
+
+.caixa-pdv-classic input,
+.caixa-pdv-classic select,
+.caixa-pdv-classic button {
+  max-width: 100%;
+}
+
+
+
+/* ============================================================
+   TEMA ESCURO — CAIXA
+   Mantém contraste confortável sem deixar cartões brancos.
+   ============================================================ */
+
+html.dark .caixa-pdv-classic,
+body.dark .caixa-pdv-classic,
+[data-theme="dark"] .caixa-pdv-classic {
+  --pdv-bg: #0f172a;
+  --pdv-card: #182235;
+  --pdv-border: #334155;
+  --pdv-border-soft: #334155;
+  --pdv-text: #e5e7eb;
+  --pdv-text-secondary: #cbd5e1;
+  --pdv-text-muted: #94a3b8;
+  --pdv-dark: #020617;
+}
+
+/* Área de informações */
+html.dark .caixa-pdv-classic .pdv-infobar,
+body.dark .caixa-pdv-classic .pdv-infobar,
+[data-theme="dark"] .caixa-pdv-classic .pdv-infobar {
+  background: var(--pdv-card);
+  border-color: var(--pdv-border);
+  color: var(--pdv-text);
+}
+
+/* Textos */
+html.dark .caixa-pdv-classic .pdv-info-campo label,
+body.dark .caixa-pdv-classic .pdv-info-campo label,
+[data-theme="dark"] .caixa-pdv-classic .pdv-info-campo label {
+  color: var(--pdv-text-secondary);
+}
+
+html.dark .caixa-pdv-classic .pdv-info-campo span,
+body.dark .caixa-pdv-classic .pdv-info-campo span,
+[data-theme="dark"] .caixa-pdv-classic .pdv-info-campo span {
+  color: var(--pdv-text);
+}
+
+/* Inputs e selects */
+html.dark .caixa-pdv-classic .pdv-info-campo input,
+html.dark .caixa-pdv-classic .pdv-info-campo select,
+html.dark .caixa-pdv-classic .campo-grupo input,
+html.dark .caixa-pdv-classic .campo-grupo select,
+body.dark .caixa-pdv-classic .pdv-info-campo input,
+body.dark .caixa-pdv-classic .pdv-info-campo select,
+body.dark .caixa-pdv-classic .campo-grupo input,
+body.dark .caixa-pdv-classic .campo-grupo select,
+[data-theme="dark"] .caixa-pdv-classic .pdv-info-campo input,
+[data-theme="dark"] .caixa-pdv-classic .pdv-info-campo select,
+[data-theme="dark"] .caixa-pdv-classic .campo-grupo input,
+[data-theme="dark"] .caixa-pdv-classic .campo-grupo select {
+  background: #0f172a;
+  color: #e5e7eb;
+  border-color: #475569;
+}
+
+/* Campo de bipagem */
+html.dark .caixa-pdv-classic .pdv-busca,
+body.dark .caixa-pdv-classic .pdv-busca,
+[data-theme="dark"] .caixa-pdv-classic .pdv-busca {
+  background: #0f172a;
+  color: #e5e7eb;
+  border-color: #475569;
+}
+
+/* Lista de produtos */
+html.dark .caixa-pdv-classic .pdv-itens-lista-classic,
+body.dark .caixa-pdv-classic .pdv-itens-lista-classic,
+[data-theme="dark"] .caixa-pdv-classic .pdv-itens-lista-classic {
+  background: #182235;
+  border-color: #334155;
+}
+
+html.dark .caixa-pdv-classic .pdv-itens-header,
+body.dark .caixa-pdv-classic .pdv-itens-header,
+[data-theme="dark"] .caixa-pdv-classic .pdv-itens-header {
+  background: #1e293b;
+  color: #cbd5e1;
+}
+
+html.dark .caixa-pdv-classic .pdv-item-row,
+body.dark .caixa-pdv-classic .pdv-item-row,
+[data-theme="dark"] .caixa-pdv-classic .pdv-item-row {
+  color: #e5e7eb;
+  border-color: #334155;
+}
+
+/* Mensagem de pedido vazio */
+html.dark .caixa-pdv-classic .pdv-lista-pedido-vazio,
+body.dark .caixa-pdv-classic .pdv-lista-pedido-vazio,
+[data-theme="dark"] .caixa-pdv-classic .pdv-lista-pedido-vazio {
+  background: #182235;
+  color: #e5e7eb;
+}
+
+html.dark .caixa-pdv-classic .pdv-lista-pedido-vazio span,
+body.dark .caixa-pdv-classic .pdv-lista-pedido-vazio span,
+[data-theme="dark"] .caixa-pdv-classic .pdv-lista-pedido-vazio span {
+  color: #94a3b8;
+}
+
+/* Resumo */
+html.dark .caixa-pdv-classic .pdv-resumo-card,
+body.dark .caixa-pdv-classic .pdv-resumo-card,
+[data-theme="dark"] .caixa-pdv-classic .pdv-resumo-card {
+  background: #182235;
+  border-color: #334155;
+  color: #e5e7eb;
+}
+
+html.dark .caixa-pdv-classic .pdv-resumo-titulo,
+body.dark .caixa-pdv-classic .pdv-resumo-titulo,
+[data-theme="dark"] .caixa-pdv-classic .pdv-resumo-titulo {
+  color: #f8fafc;
+}
+
+html.dark .caixa-pdv-classic .pdv-resumo-linha,
+body.dark .caixa-pdv-classic .pdv-resumo-linha,
+[data-theme="dark"] .caixa-pdv-classic .pdv-resumo-linha {
+  color: #cbd5e1;
+}
+
+/* Área de pagamento */
+html.dark .caixa-pdv-classic .pdv-pagamento-row,
+body.dark .caixa-pdv-classic .pdv-pagamento-row,
+[data-theme="dark"] .caixa-pdv-classic .pdv-pagamento-row {
+  color: #e5e7eb;
+}
+
+/* Botões secundários */
+html.dark .caixa-pdv-classic .btn-secundario,
+body.dark .caixa-pdv-classic .btn-secundario,
+[data-theme="dark"] .caixa-pdv-classic .btn-secundario {
+  background: #1e293b;
+  color: #e5e7eb;
+  border-color: #475569;
+}
+
+/* ============================================================
+   CAIXA — MELHORIA DE LEITURA E APROVEITAMENTO DA TELA
+   Aumenta controles e textos sem alterar a lógica do PDV.
+   ============================================================ */
+
+/* Container aproveita melhor telas grandes */
+.caixa-pdv-classic {
+  max-width: 1500px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* ============================================================
+   CABEÇALHO
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-topbar {
+  min-height: 58px;
+  padding: 12px 20px;
+}
+
+.caixa-pdv-classic .pdv-topbar strong {
+  font-size: 19px;
+}
+
+.caixa-pdv-classic .pdv-topbar-status,
+.caixa-pdv-classic .pdv-topbar-clock {
+  font-size: 13px;
+}
+
+/* ============================================================
+   OPERADOR / VENDEDOR / CLIENTE / CPF
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-infobar {
+  padding: 13px 18px;
+  gap: 14px;
+}
+
+.caixa-pdv-classic .pdv-info-campo {
+  gap: 6px;
+}
+
+.caixa-pdv-classic .pdv-info-campo label {
+  font-size: 11px;
+}
+
+.caixa-pdv-classic .pdv-info-campo span,
+.caixa-pdv-classic .pdv-info-campo input,
+.caixa-pdv-classic .pdv-info-campo select {
+  height: 42px;
+}
+
+.caixa-pdv-classic .pdv-info-campo span {
+  font-size: 16px;
+}
+
+.caixa-pdv-classic .pdv-info-campo input,
+.caixa-pdv-classic .pdv-info-campo select {
+  font-size: 15px;
+  padding: 8px 12px;
+}
+
+/* ============================================================
+   ÁREA PRINCIPAL
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-main-grid {
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+/* ============================================================
+   PEDIDO
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-pedido-header {
+  margin-bottom: 13px;
+}
+
+.caixa-pdv-classic .pdv-pedido-titulo {
+  font-size: 18px;
+}
+
+.caixa-pdv-classic .pdv-pedido-header small {
+  font-size: 12px;
+}
+
+.caixa-pdv-classic .btn-novo-pedido {
+  min-height: 42px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+/* ============================================================
+   CAMPO DE BIPAGEM
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-campo-grande label {
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+.caixa-pdv-classic .pdv-busca {
+  height: 52px;
+  padding: 10px 16px;
+  font-size: 18px;
+}
+
+/* ============================================================
+   LISTA DE PRODUTOS
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-itens-lista-classic {
+  margin-top: 10px;
+}
+
+.caixa-pdv-classic .pdv-itens-header {
+  min-height: 36px;
+  padding: 8px 14px;
+  font-size: 11px;
+}
+
+.caixa-pdv-classic .pdv-item-row {
+  min-height: 46px;
+  padding: 9px 14px;
+  font-size: 14px;
+}
+
+.caixa-pdv-classic .pdv-lista-pedido-vazio {
+  min-height: 145px;
+}
+
+.caixa-pdv-classic .pdv-lista-pedido-vazio strong {
+  font-size: 16px;
+}
+
+.caixa-pdv-classic .pdv-lista-pedido-vazio span {
+  font-size: 13px;
+}
+
+/* ============================================================
+   PAGAMENTO
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-pagamento-row {
+  margin-top: 11px;
+  gap: 11px;
+}
+
+.caixa-pdv-classic .campo-grupo {
+  gap: 5px;
+}
+
+.caixa-pdv-classic .campo-grupo label {
+  font-size: 11px;
+}
+
+.caixa-pdv-classic .campo-grupo select,
+.caixa-pdv-classic .campo-grupo input {
+  height: 42px;
+  font-size: 15px;
+  padding: 8px 11px;
+}
+
+/* ============================================================
+   RESUMO DO PEDIDO
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-main-right {
+  gap: 10px;
+}
+
+.caixa-pdv-classic .pdv-resumo-card {
+  padding: 16px;
+}
+
+.caixa-pdv-classic .pdv-resumo-titulo {
+  padding-bottom: 10px;
+  font-size: 14px;
+}
+
+.caixa-pdv-classic .pdv-resumo-linha {
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.caixa-pdv-classic .pdv-total-liquido {
+  margin-top: 7px;
+  padding: 14px 16px;
+}
+
+.caixa-pdv-classic .pdv-total-liquido label {
+  font-size: 10px;
+}
+
+.caixa-pdv-classic .pdv-total-valor {
+  font-size: 30px;
+}
+
+.caixa-pdv-classic .pdv-pago-troco {
+  margin-top: 9px;
+  gap: 8px;
+}
+
+.caixa-pdv-classic .pdv-pago-troco > div {
+  padding: 9px 10px;
+}
+
+.caixa-pdv-classic .pdv-pago-troco label {
+  font-size: 10px;
+}
+
+.caixa-pdv-classic .pdv-pago-troco div div {
+  font-size: 15px;
+}
+
+/* ============================================================
+   BOTÕES DO CAIXA
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-acoes-classic {
+  gap: 8px;
+}
+
+.caixa-pdv-classic .pdv-acoes-classic button {
+  min-height: 48px;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+.caixa-pdv-classic .btn-finalizar-grande {
+  min-height: 52px;
+  font-size: 16px !important;
+}
+
+.caixa-pdv-classic .btn-secundario,
+.caixa-pdv-classic .btn-destaque,
+.caixa-pdv-classic .btn-fechar-caixa {
+  padding: 11px;
+  font-size: 14px;
+}
+
+/* ============================================================
+   ATALHOS
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-atalhos {
+  padding: 12px;
+  border-radius: 7px;
+}
+
+.caixa-pdv-classic .pdv-atalhos strong {
+  margin-bottom: 9px;
+  font-size: 11px;
+}
+
+.caixa-pdv-classic .pdv-atalhos-lista {
+  column-gap: 10px;
+  row-gap: 7px;
+  font-size: 12px;
+}
+
+.caixa-pdv-classic .pdv-atalhos .atalho {
+  min-height: 38px;
+  gap: 7px;
+}
+
+.caixa-pdv-classic .pdv-atalhos kbd {
+  min-width: 38px;
+  padding: 5px 6px;
+  font-size: 10px;
+}
+
+.caixa-pdv-classic .pdv-atalhos .atalho small {
+  font-size: 10px;
+}
+
+/* ============================================================
+   TELAS COM ALTURA NORMAL
+   Evita que as regras antigas reduzam tudo novamente.
+   ============================================================ */
+
+@media (min-height: 851px) and (min-width: 901px) {
+  .caixa-pdv-classic {
+    padding-top: 16px;
+    padding-bottom: 20px;
+  }
+
+  .caixa-pdv-classic .pdv-lista-pedido-vazio {
+    min-height: 190px;
+  }
+}
+
+/* ============================================================
+   NOTEBOOK / TELA 1366x768
+   Mantém os controles maiores, mas sem estourar a tela.
+   ============================================================ */
+
+@media (max-height: 850px) and (min-width: 901px) {
+  .caixa-pdv-classic {
+    padding-top: 10px;
+    padding-bottom: 12px;
+  }
+
+  .caixa-pdv-classic .pdv-topbar {
+    min-height: 54px;
+    padding: 10px 18px;
+  }
+
+  .caixa-pdv-classic .pdv-infobar {
+    padding: 11px 16px;
+  }
+
+  .caixa-pdv-classic .pdv-main-grid {
+    margin-top: 11px;
+    gap: 13px;
+  }
+
+  .caixa-pdv-classic .pdv-busca {
+    height: 48px;
+  }
+
+  .caixa-pdv-classic .pdv-lista-pedido-vazio {
+    min-height: 120px;
+  }
+
+  .caixa-pdv-classic .pdv-resumo-card {
+    padding: 13px;
+  }
+
+  .caixa-pdv-classic .pdv-total-liquido {
+    padding: 11px 13px;
+  }
+
+  .caixa-pdv-classic .pdv-total-valor {
+    font-size: 28px;
+  }
+
+  .caixa-pdv-classic .pdv-acoes-classic button {
+    min-height: 46px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos {
+    padding: 10px;
+  }
+}
+
+/* ============================================================
+   CAIXA — AJUSTE FINAL DE ALTURA
+   Mantém os textos maiores e faz todos os atalhos caberem.
+   ============================================================ */
+
+@media (max-height: 850px) and (min-width: 901px) {
+
+  .caixa-pdv-classic {
+    padding-top: 6px;
+    padding-bottom: 8px;
+  }
+
+  /* Cabeçalho mais compacto */
+  .caixa-pdv-classic .pdv-topbar {
+    min-height: 48px;
+    padding: 8px 18px;
+  }
+
+  .caixa-pdv-classic .pdv-topbar strong {
+    font-size: 18px;
+  }
+
+  /* Informações superiores */
+  .caixa-pdv-classic .pdv-infobar {
+    padding: 8px 16px;
+    gap: 12px;
+  }
+
+  .caixa-pdv-classic .pdv-info-campo {
+    gap: 3px;
+  }
+
+  .caixa-pdv-classic .pdv-info-campo label {
+    font-size: 10px;
+  }
+
+  .caixa-pdv-classic .pdv-info-campo span,
+  .caixa-pdv-classic .pdv-info-campo input,
+  .caixa-pdv-classic .pdv-info-campo select {
+    height: 38px;
+  }
+
+  .caixa-pdv-classic .pdv-info-campo span {
+    font-size: 15px;
+  }
+
+  .caixa-pdv-classic .pdv-info-campo input,
+  .caixa-pdv-classic .pdv-info-campo select {
+    font-size: 14px;
+  }
+
+  /* Área principal */
+  .caixa-pdv-classic .pdv-main-grid {
+    margin-top: 9px;
+    gap: 14px;
+  }
+
+  /* Pedido */
+  .caixa-pdv-classic .pdv-pedido-header {
+    margin-bottom: 8px;
+  }
+
+  .caixa-pdv-classic .pdv-pedido-titulo {
+    font-size: 17px;
+  }
+
+  .caixa-pdv-classic .pdv-pedido-header small {
+    font-size: 11px;
+  }
+
+  .caixa-pdv-classic .btn-novo-pedido {
+    min-height: 38px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  /* Busca */
+  .caixa-pdv-classic .pdv-campo-grande label {
+    font-size: 10px;
+    margin-bottom: 3px;
+  }
+
+  .caixa-pdv-classic .pdv-busca {
+    height: 44px;
+    font-size: 16px;
+    padding: 8px 14px;
+  }
+
+  /* Lista */
+  .caixa-pdv-classic .pdv-itens-header {
+    min-height: 31px;
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+
+  .caixa-pdv-classic .pdv-lista-pedido-vazio {
+    min-height: 105px;
+  }
+
+  .caixa-pdv-classic .pdv-lista-pedido-vazio strong {
+    font-size: 15px;
+  }
+
+  .caixa-pdv-classic .pdv-lista-pedido-vazio span {
+    font-size: 12px;
+  }
+
+  /* Pagamento */
+  .caixa-pdv-classic .pdv-pagamento-row {
+    margin-top: 7px;
+    gap: 9px;
+  }
+
+  .caixa-pdv-classic .campo-grupo {
+    gap: 3px;
+  }
+
+  .caixa-pdv-classic .campo-grupo label {
+    font-size: 10px;
+  }
+
+  .caixa-pdv-classic .campo-grupo select,
+  .caixa-pdv-classic .campo-grupo input {
+    height: 38px;
+    font-size: 14px;
+  }
+
+  /* Resumo */
+  .caixa-pdv-classic .pdv-resumo-card {
+    padding: 11px 13px;
+  }
+
+  .caixa-pdv-classic .pdv-resumo-titulo {
+    padding-bottom: 7px;
+    font-size: 13px;
+  }
+
+  .caixa-pdv-classic .pdv-resumo-linha {
+    padding: 5px 0;
+    font-size: 13px;
+  }
+
+  .caixa-pdv-classic .pdv-total-liquido {
+    margin-top: 4px;
+    padding: 9px 12px;
+  }
+
+  .caixa-pdv-classic .pdv-total-valor {
+    font-size: 26px;
+  }
+
+  .caixa-pdv-classic .pdv-pago-troco {
+    margin-top: 6px;
+  }
+
+  .caixa-pdv-classic .pdv-pago-troco > div {
+    padding: 7px 9px;
+  }
+
+  .caixa-pdv-classic .pdv-pago-troco div div {
+    font-size: 14px;
+  }
+
+  /* Botões */
+  .caixa-pdv-classic .pdv-acoes-classic {
+    gap: 6px;
+  }
+
+  .caixa-pdv-classic .pdv-acoes-classic button {
+    min-height: 40px;
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .caixa-pdv-classic .btn-finalizar-grande {
+    min-height: 45px;
+    font-size: 14px !important;
+  }
+
+  /* ==========================================================
+     ATALHOS — TODO O PAINEL VISÍVEL
+     ========================================================== */
+
+  .caixa-pdv-classic .pdv-atalhos {
+    padding: 8px 10px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos strong {
+    margin-bottom: 5px;
+    font-size: 10px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-lista {
+    column-gap: 7px;
+    row-gap: 4px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos .atalho {
+    min-height: 31px;
+    gap: 5px;
+    font-size: 10px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos kbd {
+    min-width: 31px;
+    padding: 3px 5px;
+    font-size: 9px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos .atalho small {
+    font-size: 9px;
+  }
+}
+
+/* ============================================================
+   ATALHOS — FAIXA INFERIOR DO CAIXA
+   Aproveita o espaço horizontal disponível.
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-atalhos-inferior {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.caixa-pdv-classic .pdv-atalhos-inferior strong {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.caixa-pdv-classic .pdv-atalhos-inferior .pdv-atalhos-lista {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
+}
+
+.caixa-pdv-classic .pdv-atalhos-inferior .atalho {
+  min-height: 38px;
+  justify-content: center;
+  gap: 7px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.caixa-pdv-classic .pdv-atalhos-inferior kbd {
+  min-width: 38px;
+  padding: 5px 7px;
+  font-size: 10px;
+  text-align: center;
+}
+
+.caixa-pdv-classic .pdv-atalhos-inferior .atalho small {
+  font-size: 9px;
+}
+
+/* Não deixar as regras antigas do painel lateral interferirem */
+.caixa-pdv-classic .pdv-main-right > .pdv-atalhos {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .caixa-pdv-classic .pdv-atalhos-inferior {
+    gap: 12px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-inferior .pdv-atalhos-lista {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-height: 850px) and (min-width: 901px) {
+  .caixa-pdv-classic .pdv-atalhos-inferior {
+    margin-top: 8px;
+    padding: 8px 12px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-inferior .atalho {
+    min-height: 34px;
+    font-size: 11px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-inferior kbd {
+    min-width: 34px;
+    padding: 4px 6px;
+  }
+}
+
+/* ============================================================
+   AJUSTE FINAL — RESUMO OCUPA O ESPAÇO VERTICAL DISPONÍVEL
+   Os atalhos ficam na faixa inferior.
+   ============================================================ */
+
+.caixa-pdv-classic .pdv-main-right {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.caixa-pdv-classic .pdv-main-right .pdv-resumo-card {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.caixa-pdv-classic .pdv-main-right .pdv-acoes-classic {
+  flex: 0 0 auto;
+}
+
+/* Mantém os atalhos somente na faixa inferior */
+.caixa-pdv-classic .pdv-main-right > .pdv-atalhos {
+  display: none;
+}
+
+/* Faixa inferior dos atalhos */
+.caixa-pdv-classic .pdv-atalhos-inferior {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.caixa-pdv-classic .pdv-atalhos-inferior > strong {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.caixa-pdv-classic .pdv-atalhos-inferior .pdv-atalhos-lista {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
+}
+
+.caixa-pdv-classic .pdv-atalhos-inferior .atalho {
+  min-height: 38px;
+  justify-content: center;
+  gap: 7px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.caixa-pdv-classic .pdv-atalhos-inferior kbd {
+  min-width: 38px;
+  padding: 5px 7px;
+  font-size: 10px;
+  text-align: center;
+}
+
+@media (max-width: 1100px) and (min-width: 901px) {
+  .caixa-pdv-classic .pdv-atalhos-inferior {
+    gap: 10px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-inferior .pdv-atalhos-lista {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-height: 850px) and (min-width: 901px) {
+  .caixa-pdv-classic .pdv-main-right {
+    gap: 8px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-inferior {
+    margin-top: 8px;
+    padding: 8px 12px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-inferior .atalho {
+    min-height: 34px;
+    font-size: 11px;
+  }
+
+  .caixa-pdv-classic .pdv-atalhos-inferior kbd {
+    min-width: 34px;
+    padding: 4px 6px;
+  }
+}
+
