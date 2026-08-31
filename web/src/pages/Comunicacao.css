@@ -79,7 +79,7 @@
   border-radius: 7px;
   padding: 0 9px;
   background: var(--accent);
-  color: #fff;
+  color: var(--surface);
   cursor: pointer;
   font-weight: 600;
 }
@@ -131,7 +131,7 @@
   justify-content: center;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
+  color: var(--surface);
   font-size: 11px;
 }
 
@@ -249,7 +249,7 @@
   border: 0;
   border-radius: 8px;
   background: var(--accent);
-  color: #fff;
+  color: var(--surface);
   cursor: pointer;
   font-weight: 600;
 }

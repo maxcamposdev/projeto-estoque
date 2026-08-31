@@ -1,4 +1,4 @@
-// controllers/salesController.js — Caixa + Vendas (sem transações para maior compatibilidade)
+// controllers/salesController.js — Caixa + Vendas (com transação real)
 const db = require('../config/db');
 
 // ============================================================
@@ -7,9 +7,22 @@ const db = require('../config/db');
 
 async function abrirCaixa(req, res, next) {
   try {
-    const { opening_amount = 0, notes = '' } = req.body;
-    const userId = req.user.id;
-    const unitId = req.user.unit_id || 1;
+    const { opening_amount = 0, notes = '', operator_id } = req.body;
+    let userId = req.user.id;
+    let unitId = req.user.unit_id || 1;
+
+    // Só gerente/admin podem abrir o caixa em nome de outro operador
+    if (operator_id && Number(operator_id) !== req.user.id) {
+      if (!['gerente', 'admin'].includes(req.user.role)) {
+        return res.status(403).json({ success: false, message: 'Você não tem permissão para abrir o caixa em nome de outro operador.' });
+      }
+      const { rows: op } = await db.query('SELECT id, unit_id FROM users WHERE id = $1', [operator_id]);
+      if (op.length === 0) {
+        return res.status(404).json({ success: false, message: 'Operador não encontrado.' });
+      }
+      userId = op[0].id;
+      unitId = op[0].unit_id || unitId;
+    }
 
     const { rows: existing } = await db.query(
       `SELECT id FROM cash_registers WHERE operator_id = $1 AND status = 'OPEN'`,
@@ -42,11 +55,13 @@ async function fecharCaixa(req, res, next) {
     if (cr[0].status === 'CLOSED') return res.status(409).json({ success: false, message: 'Caixa já está fechado.' });
 
     const { rows: sumRows } = await db.query(
-      `SELECT 
+      `SELECT
         COALESCE(SUM(CASE WHEN payment_method = 'CASH' THEN total ELSE 0 END), 0) as total_dinheiro,
+        COALESCE(SUM(CASE WHEN payment_method = 'CARD' THEN total ELSE 0 END), 0) as total_cartao,
+        COALESCE(SUM(CASE WHEN payment_method = 'PIX' THEN total ELSE 0 END), 0) as total_pix,
         COALESCE(SUM(total), 0) as total_vendas,
         COUNT(*) as qtd_vendas
-       FROM sales 
+       FROM sales
        WHERE cash_register_id = $1 AND status = 'COMPLETED'`,
       [id]
     );
@@ -54,7 +69,7 @@ async function fecharCaixa(req, res, next) {
     const expected = Number(cr[0].opening_amount) + Number(sumRows[0].total_dinheiro);
 
     const { rows } = await db.query(
-      `UPDATE cash_registers SET 
+      `UPDATE cash_registers SET
         status = 'CLOSED', closed_at = NOW(), closing_amount = $1, expected_amount = $2,
         notes = COALESCE(notes, '') || $3
        WHERE id = $4 RETURNING *`,
@@ -66,6 +81,11 @@ async function fecharCaixa(req, res, next) {
       resumo: {
         totalVendas: Number(sumRows[0].total_vendas),
         qtdVendas: Number(sumRows[0].qtd_vendas),
+        porFormaPagamento: {
+          dinheiro: Number(sumRows[0].total_dinheiro),
+          cartao: Number(sumRows[0].total_cartao),
+          pix: Number(sumRows[0].total_pix),
+        },
         esperado: expected,
         diferenca: Number(closing_amount) - expected,
       },
@@ -96,58 +116,68 @@ async function meuCaixaAtual(req, res, next) {
 }
 
 // ============================================================
-// VENDAS — versão simplificada SEM transações
+// VENDAS — agora com transação real
 // ============================================================
 
 async function criarVenda(req, res, next) {
+  const { items, customer_name = '', customer_cpf = '', discount = 0, payment_method = 'CASH', amount_paid, seller_id } = req.body;
+  const userId = req.user.id;
+  const unitId = req.user.unit_id || 1;
+
+  if (!items || !Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ success: false, message: 'A venda precisa ter pelo menos 1 item.' });
+  }
+
+  const client = await db.connect();
   try {
-    const { items, customer_name = '', discount = 0, payment_method = 'CASH', amount_paid } = req.body;
-    const userId = req.user.id;
-    const unitId = req.user.unit_id || 1;
+    await client.query('BEGIN');
 
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ success: false, message: 'A venda precisa ter pelo menos 1 item.' });
-    }
-
-    // 1. Pega o caixa aberto
-    const { rows: cr } = await db.query(
+    const { rows: cr } = await client.query(
       `SELECT id FROM cash_registers WHERE operator_id = $1 AND status = 'OPEN' LIMIT 1`,
       [userId]
     );
     if (cr.length === 0) {
-      return res.status(400).json({ success: false, message: 'Você precisa abrir o caixa antes de registrar vendas.' });
+      throw { status: 400, message: 'Você precisa abrir o caixa antes de registrar vendas.' };
     }
     const cashRegisterId = cr[0].id;
 
-    // 2. Calcula subtotal (já validando estoque)
+    if (!seller_id) {
+      throw { status: 400, message: 'Selecione o vendedor antes de registrar a venda.' };
+    }
+
+    const { rows: seller } = await client.query(
+      `SELECT id FROM users
+       WHERE id = $1
+         AND role = 'operador'
+         AND unit_id = $2`,
+      [seller_id, unitId]
+    );
+
+    if (seller.length === 0) {
+      throw { status: 400, message: 'Vendedor inválido ou pertencente a outra unidade.' };
+    }
+
     let subtotal = 0;
     const itemsProcessados = [];
 
     for (const item of items) {
-      const { rows: prod } = await db.query(
-        `SELECT id, name, price, quantity FROM products WHERE id = $1`,
+      const { rows: prod } = await client.query(
+        `SELECT id, name, price, quantity FROM products WHERE id = $1 FOR UPDATE`,
         [item.product_id]
       );
-      if (prod.length === 0) {
-        return res.status(404).json({ success: false, message: `Produto #${item.product_id} não encontrado.` });
-      }
+      if (prod.length === 0) throw { status: 404, message: `Produto #${item.product_id} não encontrado.` };
       const p = prod[0];
       const qty = Number(item.quantity);
-      if (qty <= 0) {
-        return res.status(400).json({ success: false, message: 'Quantidade inválida.' });
-      }
+      if (qty <= 0) throw { status: 400, message: 'Quantidade inválida.' };
       if (Number(p.quantity) < qty) {
-        return res.status(400).json({ success: false, message: `Estoque insuficiente para "${p.name}" (disponível: ${p.quantity}).` });
+        throw { status: 400, message: `Estoque insuficiente para "${p.name}" (disponível: ${p.quantity}).` };
       }
 
       const itemSubtotal = Number(p.price) * qty;
       subtotal += itemSubtotal;
       itemsProcessados.push({
-        product_id: p.id,
-        product_name: p.name,
-        quantity: qty,
-        unit_price: Number(p.price),
-        subtotal: itemSubtotal,
+        product_id: p.id, product_name: p.name, quantity: qty,
+        unit_price: Number(p.price), subtotal: itemSubtotal,
       });
     }
 
@@ -158,39 +188,38 @@ async function criarVenda(req, res, next) {
       changeAmount = Math.max(0, paid - total);
     }
 
-    // 3. Insere a venda
-    const { rows: sale } = await db.query(
-      `INSERT INTO sales (cash_register_id, operator_id, unit_id, customer_name, subtotal, discount, total, payment_method, amount_paid, change_amount)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
-      [cashRegisterId, userId, unitId, customer_name, subtotal, discount, total, payment_method, amount_paid || total, changeAmount]
+    const { rows: sale } = await client.query(
+      `INSERT INTO sales (cash_register_id, operator_id, seller_id, unit_id, customer_name, customer_cpf, subtotal, discount, total, payment_method, amount_paid, change_amount)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
+      [cashRegisterId, userId, seller_id, unitId, customer_name, customer_cpf, subtotal, discount, total, payment_method, amount_paid || total, changeAmount]
     );
 
-    // 4. Insere os itens, baixa estoque e registra movimentação
     for (const item of itemsProcessados) {
-      await db.query(
+      await client.query(
         `INSERT INTO sale_items (sale_id, product_id, product_name, quantity, unit_price, subtotal)
          VALUES ($1, $2, $3, $4, $5, $6)`,
         [sale[0].id, item.product_id, item.product_name, item.quantity, item.unit_price, item.subtotal]
       );
-      await db.query(
+      await client.query(
         `UPDATE products SET quantity = quantity - $1, updated_at = NOW() WHERE id = $2`,
         [item.quantity, item.product_id]
       );
-      await db.query(
+      await client.query(
         `INSERT INTO stock_movements (product_id, type, quantity, note, user_id)
          VALUES ($1, 'OUT', $2, $3, $4)`,
         [item.product_id, item.quantity, `Venda #${sale[0].id}`, userId]
       );
     }
 
-    res.status(201).json({
-      success: true,
-      message: 'Venda registrada com sucesso!',
-      sale: { ...sale[0], items: itemsProcessados },
-    });
+    await client.query('COMMIT');
+    res.status(201).json({ success: true, message: 'Venda registrada com sucesso!', sale: { ...sale[0], items: itemsProcessados } });
   } catch (e) {
+    await client.query('ROLLBACK');
     console.error('Erro criarVenda:', e);
-    res.status(500).json({ success: false, message: 'Erro ao registrar venda: ' + e.message });
+    const status = e.status || 500;
+    res.status(status).json({ success: false, message: e.message ? 'Erro ao registrar venda: ' + e.message : 'Erro ao registrar venda.' });
+  } finally {
+    client.release();
   }
 }
 
@@ -247,7 +276,7 @@ async function cancelarVenda(req, res, next) {
 async function relatorioPorOperador(req, res, next) {
   try {
     const { rows } = await db.query(`
-      SELECT 
+      SELECT
         u.id as operador_id, u.name as operador_nome, u.unit_id, un.name as unidade_nome,
         COUNT(s.id) as total_vendas,
         COALESCE(SUM(s.total), 0) as faturamento,
@@ -270,14 +299,14 @@ async function relatorioPorOperador(req, res, next) {
 async function resumoVendasHoje(req, res, next) {
   try {
     const { rows } = await db.query(`
-      SELECT 
+      SELECT
         COUNT(*) as total_vendas,
         COALESCE(SUM(total), 0) as faturamento,
         COALESCE(AVG(total), 0) as ticket_medio,
         COALESCE(SUM(CASE WHEN payment_method = 'CASH' THEN total ELSE 0 END), 0) as total_dinheiro,
         COALESCE(SUM(CASE WHEN payment_method = 'CARD' THEN total ELSE 0 END), 0) as total_cartao,
         COALESCE(SUM(CASE WHEN payment_method = 'PIX' THEN total ELSE 0 END), 0) as total_pix
-      FROM sales 
+      FROM sales
       WHERE status = 'COMPLETED' AND created_at >= CURRENT_DATE
     `);
     res.json({ success: true, resumo: rows[0] });

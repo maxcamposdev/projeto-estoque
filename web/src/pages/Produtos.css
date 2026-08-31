@@ -274,7 +274,7 @@
   object-fit: cover;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--surface);
 }
 .btn-remover-img {
   padding: 0.4rem 0.8rem;
@@ -289,7 +289,7 @@
 }
 .btn-remover-img:hover {
   background: var(--danger);
-  color: #fff;
+  color: var(--surface);
 }
 .img-erro {
   margin-top: 0.5rem;
@@ -308,7 +308,7 @@
   object-fit: cover;
   border-radius: 6px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--surface);
   display: block;
 }
 .thumb-vazio {
@@ -322,4 +322,31 @@
   border-radius: 6px;
   color: var(--text-muted);
   font-size: 0.8rem;
+}
+
+/* ============================================================
+   BOTÃO "NOVO PRODUTO" — classe própria (sem herdar .btn-primary do Login)
+   ============================================================ */
+
+.btn-novo-produto {
+  width: auto;
+  height: 44px;
+  padding: 0 20px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: linear-gradient(135deg, #147f9c, #356fc1);
+  color: #fff;
+
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.btn-novo-produto:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 9px 20px rgba(45, 111, 168, 0.28);
 }

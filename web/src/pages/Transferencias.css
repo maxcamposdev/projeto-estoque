@@ -266,7 +266,7 @@
 }
 
 .transfer-status-shipped {
-  color: #1d4ed8;
+  color: var(--accent-hover);
   background: #dbeafe;
 }
 
@@ -281,7 +281,7 @@
 }
 
 .transfer-status-rejected {
-  color: #991b1b;
+  color: var(--danger);
   background: #fee2e2;
 }
 
@@ -303,8 +303,8 @@
 
 .btn-approve:hover,
 .btn-receive:hover {
-  border-color: var(--success, #22c55e);
-  color: var(--success, #22c55e);
+  border-color: var(--success, var(--success));
+  color: var(--success, var(--success));
 }
 
 .btn-reject:hover {
@@ -330,8 +330,8 @@
 }
 
 .transfer-success {
-  color: var(--success, #22c55e);
-  border: 1px solid var(--success, #22c55e);
+  color: var(--success, var(--success));
+  border: 1px solid var(--success, var(--success));
   background: var(--bg-input);
 }
 

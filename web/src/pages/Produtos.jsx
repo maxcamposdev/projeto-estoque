@@ -209,7 +209,7 @@ export default function Produtos() {
     <div className="produtos">
       <div className="produtos-header">
         <h1>Produtos</h1>
-        <button className="btn-primary" onClick={handleNew}>＋ Novo Produto</button>
+        <button className="btn-novo-produto" onClick={handleNew}>＋ Novo Produto</button>
       </div>
 
       {message && <p className="msg-success">{message}</p>}

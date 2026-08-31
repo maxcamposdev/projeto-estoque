@@ -4,7 +4,7 @@
   min-height: 60vh; gap: 12px;
 }
 .spinner {
-  width: 36px; height: 36px; border: 4px solid #e2e2e2; border-top-color: #2563eb;
+  width: 36px; height: 36px; border: 4px solid #e2e2e2; border-top-color: var(--accent);
   border-radius: 50%; animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -23,20 +23,20 @@
 .abrir-caixa-actions { display: flex; gap: 10px; justify-content: center; }
 
 .btn-primary {
-  background: #2563eb; color: #fff; border: none; padding: 12px 24px; border-radius: 6px;
+  background: var(--accent); color: #fff; border: none; padding: 12px 24px; border-radius: 6px;
   font-weight: 600; cursor: pointer; font-size: 15px;
 }
 .btn-cancel {
   background: #e2e2e2; color: #333; border: none; padding: 12px 24px; border-radius: 6px;
   font-weight: 600; cursor: pointer; font-size: 15px;
 }
-.btn-link { background: none; border: none; color: #2563eb; margin-top: 16px; cursor: pointer; text-decoration: underline; }
+.btn-link { background: none; border: none; color: var(--accent); margin-top: 16px; cursor: pointer; text-decoration: underline; }
 
 .caixa-success, .caixa-error {
   padding: 12px 20px; border-radius: 6px; margin-bottom: 12px; font-weight: 600;
 }
 .caixa-success { background: #dcfce7; color: #166534; }
-.caixa-error { background: #fee2e2; color: #991b1b; }
+.caixa-error { background: #fee2e2; color: var(--danger); }
 
 .modal-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center;
@@ -146,7 +146,7 @@
 .pdv-info-campo input:focus,
 .pdv-info-campo select:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: var(--accent);
 }
 
 .pdv-main-grid {
@@ -193,7 +193,7 @@
 
 .btn-novo-pedido {
   border: none;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   padding: 10px 16px;
   border-radius: 6px;
@@ -203,7 +203,7 @@
 }
 
 .btn-novo-pedido:hover {
-  background: #1d4ed8;
+  background: var(--accent-hover);
 }
 
 .pdv-bipagem-box {
@@ -240,7 +240,7 @@
 
 .pdv-busca:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
 }
 
@@ -293,7 +293,7 @@
 }
 
 .pdv-item-preco {
-  color: #2563eb;
+  color: var(--accent);
   font-weight: 700;
 }
 
@@ -397,7 +397,7 @@
 .pdv-item-row-remover {
   background: none;
   border: none;
-  color: #dc2626;
+  color: var(--danger);
   font-weight: 700;
   cursor: pointer;
 }
@@ -567,7 +567,7 @@
 }
 
 .btn-destaque {
-  background: #16a34a;
+  background: var(--success);
   color: #fff;
   padding: 11px;
 }
@@ -583,7 +583,7 @@
 
 .btn-fechar-caixa {
   background: #fee2e2;
-  color: #b91c1c;
+  color: var(--danger);
   padding: 11px;
 }
 
@@ -702,8 +702,8 @@
 
 .caixa-pdv-classic {
   --pdv-primary: #1e3a8a;
-  --pdv-primary-hover: #1d4ed8;
-  --pdv-success: #16a34a;
+  --pdv-primary-hover: var(--accent-hover);
+  --pdv-success: var(--success);
   --pdv-success-light: #dcfce7;
   --pdv-bg: #f1f5f9;
   --pdv-card: #ffffff;
@@ -1504,7 +1504,7 @@
 
   min-height: 58px;
 
-  background: #16a34a;
+  background: var(--success);
   color: #ffffff;
   border-color: #15803d;
 
@@ -1540,7 +1540,7 @@
 
 .caixa-pdv-classic .pdv-acoes-classic .btn-fechar-caixa {
   background: #fee2e2;
-  color: #b91c1c;
+  color: var(--danger);
   border-color: #fecaca;
 }
 
@@ -2748,5 +2748,576 @@ body.dark .caixa-pdv-classic .btn-secundario,
     min-width: 34px;
     padding: 4px 6px;
   }
+}
+
+
+/* ============================================================
+   DARK MODE — CONTRASTE DO PDV / CAIXA
+   ============================================================ */
+
+[data-theme="dark"] .pdv-infobar {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .pdv-info-campo input,
+[data-theme="dark"] .pdv-info-campo select,
+[data-theme="dark"] .pdv-busca input,
+[data-theme="dark"] .pdv-pagamento-row input,
+[data-theme="dark"] .pdv-pagamento-row select {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .pdv-info-campo input::placeholder,
+[data-theme="dark"] .pdv-busca input::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .pdv-pedido-titulo,
+[data-theme="dark"] .pdv-resumo-titulo,
+[data-theme="dark"] .pdv-resumo-linha strong,
+[data-theme="dark"] .btn-secundario {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .pdv-pedido-header small,
+[data-theme="dark"] .pdv-itens-header,
+[data-theme="dark"] .pdv-lista-pedido-vazio strong,
+[data-theme="dark"] .pdv-atalhos .atalho small {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .pdv-pedido,
+[data-theme="dark"] .pdv-item-atual,
+[data-theme="dark"] .pdv-itens-lista,
+[data-theme="dark"] .pdv-resumo-card {
+  background: var(--bg-card);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .pdv-itens-header {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .pdv-item-row {
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .pdv-item-atual {
+  background: var(--bg-input);
+}
+
+[data-theme="dark"] .pdv-lista-pedido-vazio {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .pdv-resumo-card {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .pdv-resumo-titulo {
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .pdv-pago-troco > div {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .btn-secundario {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .operador-fixo {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+/* Elementos clássicos do PDV */
+[data-theme="dark"] .caixa-pdv-classic .pdv-resumo-card {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .caixa-pdv-classic .pdv-pago-troco > div {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .caixa-pdv-classic .pdv-acoes-classic .btn-secundario {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+
+/* ============================================================
+   CORREÇÃO FINAL — CAIXA / PDV + TEMA ESCURO
+   ============================================================ */
+
+/* O PDV acompanha o tema global */
+.caixa-pdv-classic {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Cards, painéis e áreas principais */
+[data-theme="dark"] .caixa-pdv-classic,
+[data-theme="dark"] .caixa-pdv-classic .caixa-card,
+[data-theme="dark"] .caixa-pdv-classic .pdv-card,
+[data-theme="dark"] .caixa-pdv-classic .card,
+[data-theme="dark"] .caixa-pdv-classic .caixa-container,
+[data-theme="dark"] .caixa-pdv-classic .pdv-container {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Textos */
+[data-theme="dark"] .caixa-pdv-classic h1,
+[data-theme="dark"] .caixa-pdv-classic h2,
+[data-theme="dark"] .caixa-pdv-classic h3,
+[data-theme="dark"] .caixa-pdv-classic h4,
+[data-theme="dark"] .caixa-pdv-classic h5,
+[data-theme="dark"] .caixa-pdv-classic h6,
+[data-theme="dark"] .caixa-pdv-classic p,
+[data-theme="dark"] .caixa-pdv-classic span,
+[data-theme="dark"] .caixa-pdv-classic label,
+[data-theme="dark"] .caixa-pdv-classic strong,
+[data-theme="dark"] .caixa-pdv-classic div {
+  border-color: var(--border-color);
+}
+
+/* Inputs */
+[data-theme="dark"] .caixa-pdv-classic input,
+[data-theme="dark"] .caixa-pdv-classic select,
+[data-theme="dark"] .caixa-pdv-classic textarea {
+  background: var(--bg-input) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--input-border) !important;
+}
+
+[data-theme="dark"] .caixa-pdv-classic input::placeholder,
+[data-theme="dark"] .caixa-pdv-classic textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* Áreas claras que estavam fixadas em branco */
+[data-theme="dark"] .caixa-pdv-classic [style*="background: #fff"],
+[data-theme="dark"] .caixa-pdv-classic [style*="background:#fff"],
+[data-theme="dark"] .caixa-pdv-classic [style*="background: #ffffff"],
+[data-theme="dark"] .caixa-pdv-classic [style*="background:#ffffff"] {
+  background: var(--bg-card) !important;
+}
+
+/* Tabelas */
+[data-theme="dark"] .caixa-pdv-classic table,
+[data-theme="dark"] .caixa-pdv-classic thead,
+[data-theme="dark"] .caixa-pdv-classic tbody,
+[data-theme="dark"] .caixa-pdv-classic tr,
+[data-theme="dark"] .caixa-pdv-classic td,
+[data-theme="dark"] .caixa-pdv-classic th {
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .caixa-pdv-classic th {
+  background: var(--bg-secondary) !important;
+}
+
+[data-theme="dark"] .caixa-pdv-classic td {
+  background: var(--bg-card) !important;
+}
+
+/* Links */
+[data-theme="dark"] .caixa-pdv-classic a {
+  color: var(--accent-hover) !important;
+}
+
+/* Modal / caixa fechado */
+[data-theme="dark"] .caixa-pdv-classic .caixa-fechado,
+[data-theme="dark"] .caixa-pdv-classic .caixa-fechado-card,
+[data-theme="dark"] .caixa-pdv-classic .empty-state {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Corrige textos que estavam #1e293b */
+[data-theme="dark"] .caixa-pdv-classic [style*="#1e293b"],
+[data-theme="dark"] .caixa-pdv-classic [style*="#0f172a"] {
+  color: var(--text-primary) !important;
+}
+
+/* Separadores */
+[data-theme="dark"] .caixa-pdv-classic hr {
+  border-color: var(--border-soft) !important;
+}
+
+/* Sombras mais adequadas no escuro */
+[data-theme="dark"] .caixa-pdv-classic .card,
+[data-theme="dark"] .caixa-pdv-classic .caixa-card,
+[data-theme="dark"] .caixa-pdv-classic .pdv-card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28) !important;
+}
+
+/* ============================================================
+   BOTÕES
+   ============================================================ */
+
+[data-theme="dark"] .caixa-pdv-classic button {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .caixa-pdv-classic .btn-secondary,
+[data-theme="dark"] .caixa-pdv-classic .btn-outline {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .caixa-pdv-classic .btn-secondary:hover,
+[data-theme="dark"] .caixa-pdv-classic .btn-outline:hover {
+  background: var(--bg-input) !important;
+}
+
+/* ============================================================
+   VARIÁVEIS DO PDV
+   ============================================================ */
+
+[data-theme="dark"] .caixa-pdv-classic {
+  --pdv-primary: var(--accent);
+  --pdv-primary-hover: var(--accent-hover);
+  --pdv-success: var(--success);
+  --pdv-success-light: var(--success-bg);
+  --pdv-bg: var(--bg-secondary);
+  --pdv-card: var(--bg-card);
+  --pdv-border: var(--border-color);
+  --pdv-border-soft: var(--border-soft);
+  --pdv-text: var(--text-primary);
+  --pdv-text-secondary: var(--text-secondary);
+  --pdv-text-muted: var(--text-muted);
+  --pdv-dark: var(--bg-primary);
+}
+
+/* ============================================================
+   CAIXA FECHADO — VISUAL FINAL
+   ============================================================ */
+
+[data-theme="dark"] .caixa-pdv-classic .caixa-fechado-container,
+[data-theme="dark"] .caixa-pdv-classic .caixa-locked,
+[data-theme="dark"] .caixa-pdv-classic .locked-card {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .caixa-pdv-classic .caixa-fechado-container h1,
+[data-theme="dark"] .caixa-pdv-classic .caixa-fechado-container h2,
+[data-theme="dark"] .caixa-pdv-classic .caixa-fechado-container h3,
+[data-theme="dark"] .caixa-pdv-classic .caixa-locked h1,
+[data-theme="dark"] .caixa-pdv-classic .caixa-locked h2,
+[data-theme="dark"] .caixa-pdv-classic .locked-card h1 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .caixa-pdv-classic .caixa-fechado-container p,
+[data-theme="dark"] .caixa-pdv-classic .caixa-locked p,
+[data-theme="dark"] .caixa-pdv-classic .locked-card p {
+  color: var(--text-secondary) !important;
+}
+
+
+/* ============================================================
+   CORREÇÃO FINAL - TELA CAIXA FECHADO / TEMAS
+   ============================================================ */
+
+.caixa-fechado {
+  width: 100%;
+  min-height: calc(100vh - 155px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.caixa-fechado-card {
+  width: min(460px, 100%);
+  box-sizing: border-box;
+  padding: 34px 32px;
+  border-radius: 14px;
+
+  background: var(--bg-card);
+  color: var(--text-primary);
+
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.18);
+
+  text-align: center;
+}
+
+.caixa-fechado-card h2,
+.caixa-fechado-card h3,
+.caixa-fechado-card strong {
+  color: var(--text-primary);
+}
+
+.caixa-fechado-card p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.caixa-demo-aviso {
+  margin: 20px 0;
+  padding: 14px 16px;
+  border-radius: 10px;
+
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+
+  border: 1px solid var(--border-soft);
+  line-height: 1.5;
+}
+
+.caixa-demo-aviso strong {
+  color: var(--text-primary);
+}
+
+.caixa-fechado-card .btn-abrir-caixa,
+.caixa-fechado-card button {
+  color: #ffffff;
+}
+
+.caixa-fechado-card a {
+  color: var(--accent);
+}
+
+.caixa-fechado-card a:hover {
+  color: var(--accent-hover);
+}
+
+/* Tema claro */
+[data-theme="light"] .caixa-fechado-card {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: #e2e8f0;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.10);
+}
+
+[data-theme="light"] .caixa-fechado-card h2,
+[data-theme="light"] .caixa-fechado-card h3,
+[data-theme="light"] .caixa-fechado-card strong {
+  color: #0f172a;
+}
+
+[data-theme="light"] .caixa-fechado-card p {
+  color: #475569;
+}
+
+[data-theme="light"] .caixa-demo-aviso {
+  background: #f8fafc;
+  color: #475569;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .caixa-demo-aviso strong {
+  color: #0f172a;
+}
+
+/* Tema escuro */
+[data-theme="dark"] .caixa-fechado-card {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .caixa-fechado-card h2,
+[data-theme="dark"] .caixa-fechado-card h3,
+[data-theme="dark"] .caixa-fechado-card strong {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .caixa-fechado-card p {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .caixa-demo-aviso {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border-soft);
+}
+
+[data-theme="dark"] .caixa-demo-aviso strong {
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   AJUSTE DO BOTÃO DE ABRIR
+   ============================================================ */
+
+.caixa-fechado-card .btn-abrir-caixa {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 18px;
+
+  background: var(--accent);
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.caixa-fechado-card .btn-abrir-caixa:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* Se o botão usa outra classe, aplica também ao botão principal */
+.caixa-fechado-card button:first-of-type {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .caixa-fechado {
+    min-height: calc(100vh - 130px);
+    padding: 25px 15px;
+  }
+
+  .caixa-fechado-card {
+    padding: 26px 20px;
+  }
+}
+
+
+/* Link "Ver últimas vendas" no tema claro */
+[data-theme="light"] .caixa-fechado-card a {
+  color: #334155;
+  font-weight: 600;
+}
+
+[data-theme="light"] .caixa-fechado-card a:hover {
+  color: #0f172a;
+}
+
+
+/* ============================================================
+   FORÇA COR DO LINK "VER ÚLTIMAS VENDAS"
+   ============================================================ */
+
+.caixa-fechado-card a[href*="vendas"],
+.caixa-fechado-card a[href*="venda"],
+.caixa-fechado-card .ultimas-vendas,
+.caixa-fechado-card a {
+  color: #334155 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.caixa-fechado-card a[href*="vendas"]:hover,
+.caixa-fechado-card a[href*="venda"]:hover,
+.caixa-fechado-card .ultimas-vendas:hover,
+.caixa-fechado-card a:hover {
+  color: #0f172a !important;
+  opacity: 1 !important;
+}
+
+/* Tema claro — garante texto escuro */
+[data-theme="light"] .caixa-fechado-card a,
+[data-theme="light"] .caixa-fechado-card a *,
+[data-theme="light"] .caixa-fechado-card a[href*="vendas"],
+[data-theme="light"] .caixa-fechado-card a[href*="venda"] {
+  color: #334155 !important;
+  opacity: 1 !important;
+}
+
+/* Tema escuro */
+[data-theme="dark"] .caixa-fechado-card a,
+[data-theme="dark"] .caixa-fechado-card a *,
+[data-theme="dark"] .caixa-fechado-card a[href*="vendas"],
+[data-theme="dark"] .caixa-fechado-card a[href*="venda"] {
+  color: var(--accent) !important;
+  opacity: 1 !important;
+}
+
+
+/* ============================================================
+   BOTÃO "VER ÚLTIMAS VENDAS"
+   ============================================================ */
+
+.caixa-fechado-card button.btn-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-height: 40px !important;
+
+  margin-top: 18px !important;
+  padding: 8px 14px !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+
+  color: #334155 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+
+  cursor: pointer !important;
+}
+
+.caixa-fechado-card button.btn-link:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .caixa-fechado-card button.btn-link {
+  color: #334155 !important;
+  background: transparent !important;
+  opacity: 1 !important;
+}
+
+[data-theme="light"] .caixa-fechado-card button.btn-link:hover {
+  color: #0f172a !important;
+  background: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .caixa-fechado-card button.btn-link {
+  color: #cbd5e1 !important;
+  background: transparent !important;
+  opacity: 1 !important;
+}
+
+[data-theme="dark"] .caixa-fechado-card button.btn-link:hover {
+  color: #f8fafc !important;
+  background: #1e293b !important;
 }
 

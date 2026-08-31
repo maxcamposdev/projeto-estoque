@@ -673,20 +673,21 @@ export default function PedidosCompra() {
 
       <div className="pedidos-header">
         <div>
-          <h1>Pedidos de Compra</h1>
+          <div className="pedidos-titulo-linha">
+            <h1>Pedidos de Compra</h1>
+            <button
+              className="btn-novo-pedido"
+              onClick={novoPedido}
+            >
+              <span>＋</span>
+              Novo pedido
+            </button>
+          </div>
           <p>
             Gerencie solicitações de reposição e acompanhe o recebimento
             dos produtos.
           </p>
         </div>
-
-        <button
-          className="btn-novo-pedido"
-          onClick={novoPedido}
-        >
-          <span>＋</span>
-          Novo pedido
-        </button>
       </div>
 
       {erro && (

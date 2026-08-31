@@ -101,4 +101,23 @@ async function login(req, res, next) {
   }
 }
 
-module.exports = { register, login };
+
+// Lista usuários (só gerente/admin) — usado pra escolher operador na abertura do caixa
+async function listarUsuarios(req, res, next) {
+  try {
+    if (!['gerente', 'admin'].includes(req.user.role)) {
+      return res.status(403).json({ success: false, message: 'Sem permissão para listar usuários.' });
+    }
+    const { rows } = await db.query(
+      `SELECT id, name, email, role, unit_id
+       FROM users
+       WHERE email = 'teste@teste.com'
+       ORDER BY name`
+    );
+    res.json({ success: true, users: rows });
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { register, login, listarUsuarios };

@@ -280,49 +280,104 @@ export default function Login() {
         </div>
 
       </section>
+{/* =====================================================
+          COMUNICAÇÃO COMERCIAL — LATERAIS
+          ===================================================== */}
 
-      {/* REDES SOCIAIS */}
-      <div className="social-buttons">
+      <aside className="login-marketing login-marketing-left">
 
-        {/* WHATSAPP */}
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="social-button whatsapp-button"
-          aria-label="Falar pelo WhatsApp"
-          title="Falar pelo WhatsApp"
-        >
-          <svg
-            className="social-svg whatsapp-svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            aria-hidden="true"
+        <div className="marketing-line">
+          <span></span>
+        </div>
+
+        <div className="marketing-kicker">
+          CONTROLE SEM COMPLICAÇÃO
+        </div>
+
+        <div className="marketing-title">
+          ESTOQUE
+          <br />
+          <span>CAIXA</span>
+          <br />
+          VENDAS
+        </div>
+
+        <p className="marketing-description">
+          Tudo o que o seu negócio precisa
+          para trabalhar com mais controle.
+        </p>
+        
+        <div className="marketing-socials">
+
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="marketing-social marketing-social-whatsapp"
+            aria-label="Falar pelo WhatsApp"
+            title="Falar pelo WhatsApp"
           >
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.075c.149.198 2.095 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982 1-3.648-.235-.374a9.86 9.86 0 1 1 8.372 4.632m8.596-18.631A12.012 12.012 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.95 11.95 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.295-8.747"/>
-          </svg>
-        </a>
+            <span className="marketing-social-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.198-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.075c.149.198 2.095 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982 1-3.648-.235-.374a9.86 9.86 0 1 1 8.372 4.632m8.596-18.631A12.012 12.012 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142.588 5.945L.057 24l6.304-1.654a11.95 11.95 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.295-8.747"/>
+              </svg>
+            </span>
 
-        {/* INSTAGRAM */}
-        <a
-          href={instagramUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="social-button instagram-button"
-          aria-label="Acessar Instagram"
-          title="Acessar Instagram"
-        >
-          <svg
-            className="social-svg instagram-svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            aria-hidden="true"
+            <span className="marketing-social-copy">
+              <small>FALE COMIGO</small>
+              <strong>WhatsApp</strong>
+            </span>
+
+            <span className="marketing-social-arrow">↗</span>
+          </a>
+
+          <a
+            href={instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="marketing-social marketing-social-instagram"
+            aria-label="Conhecer trabalhos no Instagram"
+            title="Conhecer trabalhos no Instagram"
           >
-            <path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6"/>
-          </svg>
-        </a>
+            <span className="marketing-social-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6"/>
+              </svg>
+            </span>
 
-      </div>
+            <span className="marketing-social-copy">
+              <small>CONHEÇA MEU TRABALHO</small>
+              <strong>Instagram</strong>
+            </span>
+
+            <span className="marketing-social-arrow">↗</span>
+          </a>
+
+        </div>
+
+      </aside>
+
+
+      <aside className="login-marketing login-marketing-right">
+
+        <div className="marketing-number">
+          01 <span>→</span>
+        </div>
+
+        <div className="marketing-question">
+          Seu negócio
+          <br />
+          <strong>pode ser mais organizado.</strong>
+        </div>
+
+        <p className="marketing-description">
+          Conheça o sistema e descubra
+          uma forma mais simples de
+          controlar sua operação.
+        </p>
+
+      </aside>
+
 
     </main>
   );

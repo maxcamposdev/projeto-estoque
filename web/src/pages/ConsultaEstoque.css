@@ -52,7 +52,7 @@
   border: 0;
   border-radius: 8px;
   background: var(--accent);
-  color: #fff;
+  color: var(--surface);
   cursor: pointer;
   font-weight: 600;
 }
@@ -126,7 +126,7 @@
 
 .consulta-solicitar:hover {
   background: var(--accent);
-  color: #fff;
+  color: var(--surface);
 }
 
 .consulta-solicitar:disabled {

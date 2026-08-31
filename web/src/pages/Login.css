@@ -114,7 +114,7 @@
 
   background: rgba(255, 255, 255, 0.14);
 
-  color: #ffffff;
+  color: var(--surface);
 
   backdrop-filter: blur(12px);
 
@@ -209,7 +209,7 @@
     #4566d1
   );
 
-  color: #ffffff;
+  color: var(--surface);
 
   font-size: 12px;
   font-weight: 800;
@@ -443,7 +443,7 @@
 }
 
 .form-group input:focus {
-  background: #ffffff;
+  background: var(--surface);
 
   border-color: #3983aa;
 
@@ -546,7 +546,7 @@
     #356fc1
   );
 
-  color: #ffffff;
+  color: var(--surface);
 
   font-family: inherit;
 
@@ -773,7 +773,7 @@
 
   background: rgba(255, 255, 255, 0.14);
 
-  color: #ffffff;
+  color: var(--surface);
 
   backdrop-filter: blur(12px);
 
@@ -904,7 +904,7 @@
 
   border-color: rgba(255, 255, 255, 0.08);
 
-  color: #ffffff;
+  color: var(--surface);
 
   box-shadow:
     0 30px 70px rgba(0, 0, 0, 0.42);
@@ -1206,7 +1206,7 @@
 .whatsapp-button {
   background: #25d366 !important;
   border: none !important;
-  color: #fff !important;
+  color: var(--surface) !important;
   box-shadow: 0 4px 12px rgba(37, 211, 102, .20);
 }
 
@@ -1220,7 +1220,7 @@
       #515bd4 100%
     ) !important;
   border: none !important;
-  color: #fff !important;
+  color: var(--surface) !important;
   box-shadow: 0 4px 12px rgba(221, 42, 123, .20);
 }
 
@@ -1231,7 +1231,7 @@
 
 .whatsapp-svg,
 .instagram-svg {
-  color: #fff !important;
+  color: var(--surface) !important;
   fill: none;
 }
 
@@ -1293,7 +1293,7 @@
   border: none !important;
   border-radius: 50% !important;
 
-  color: #ffffff !important;
+  color: var(--surface) !important;
 
   text-decoration: none !important;
 
@@ -1312,7 +1312,7 @@
 .social-buttons .whatsapp-button {
   background: #25D366 !important;
 
-  color: #ffffff !important;
+  color: var(--surface) !important;
 
   box-shadow:
     0 5px 14px rgba(37, 211, 102, .28) !important;
@@ -1332,7 +1332,7 @@
       #515BD4 100%
     ) !important;
 
-  color: #ffffff !important;
+  color: var(--surface) !important;
 
   box-shadow:
     0 5px 14px rgba(129, 52, 175, .25) !important;
@@ -1351,7 +1351,7 @@
 
   display: block !important;
 
-  color: #ffffff !important;
+  color: var(--surface) !important;
 
   fill: currentColor !important;
 
@@ -1380,7 +1380,7 @@
    ============================================================ */
 
 [data-theme="dark"] .social-buttons .social-button {
-  color: #ffffff !important;
+  color: var(--surface) !important;
 }
 
 /* ============================================================
@@ -1447,4 +1447,2061 @@
   .social-buttons {
     bottom: 4px !important;
   }
+}
+
+/* ============================================================
+   CTA COMERCIAL — LATERAIS DA TELA DE LOGIN
+   ============================================================ */
+
+.login-cta {
+  position: fixed;
+  top: 50%;
+  z-index: 50;
+
+  width: 250px;
+  padding: 20px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(15, 23, 42, 0.10);
+
+  box-shadow:
+    0 14px 40px rgba(15, 23, 42, 0.10);
+
+  backdrop-filter: blur(14px);
+
+  transform: translateY(-50%);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.login-cta:hover {
+  transform: translateY(calc(-50% - 4px));
+
+  box-shadow:
+    0 18px 45px rgba(15, 23, 42, 0.15);
+}
+
+.login-cta-whatsapp {
+  left: 28px;
+}
+
+.login-cta-instagram {
+  right: 28px;
+}
+
+.login-cta-icon {
+  width: 38px;
+  height: 38px;
+
+  min-width: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  color: #fff;
+}
+
+.login-cta-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.login-cta-whatsapp .login-cta-icon {
+  background: #25D366;
+}
+
+.login-cta-instagram .login-cta-icon {
+  background: linear-gradient(
+    135deg,
+    #F58529 0%,
+    #DD2A7B 45%,
+    #8134AF 75%,
+    #515BD4 100%
+  );
+}
+
+.login-cta-content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-cta-content strong {
+  color: #0f172a;
+
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.login-cta-content span {
+  color: #475569;
+
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.login-cta-content a {
+  margin-top: 3px;
+
+  color: #1d4ed8;
+
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 800;
+
+  text-decoration: none;
+}
+
+.login-cta-whatsapp .login-cta-content a {
+  color: #15803d;
+}
+
+.login-cta-content a:hover {
+  text-decoration: underline;
+}
+
+/* DARK MODE */
+
+[data-theme="dark"] .login-cta {
+  background: rgba(17, 24, 39, 0.94);
+  border-color: rgba(255, 255, 255, 0.10);
+
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="dark"] .login-cta-content strong {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .login-cta-content span {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .login-cta-content a {
+  color: #93c5fd;
+}
+
+[data-theme="dark"] .login-cta-whatsapp .login-cta-content a {
+  color: #86efac;
+}
+
+/* TELAS MENORES */
+
+@media (max-width: 1100px) {
+  .login-cta {
+    width: 220px;
+    padding: 16px;
+  }
+
+  .login-cta-whatsapp {
+    left: 14px;
+  }
+
+  .login-cta-instagram {
+    right: 14px;
+  }
+}
+
+@media (max-width: 900px) {
+  .login-cta {
+    display: none;
+  }
+}
+
+
+
+/* ============================================================
+   COMUNICAÇÃO COMERCIAL — LOGIN
+   Visual editorial / minimalista
+   ============================================================ */
+
+.login-marketing {
+  position: fixed;
+  top: 50%;
+
+  z-index: 5;
+
+  width: 285px;
+
+  pointer-events: none;
+
+  color: #ffffff;
+
+  transform: translateY(-50%);
+}
+
+/* ============================================================
+   LADO ESQUERDO
+   ============================================================ */
+
+.login-marketing-left {
+  left: calc(50% - 450px);
+
+  animation: marketingLeftIn 1s ease both;
+}
+
+.marketing-line {
+  width: 42px;
+  height: 1px;
+
+  margin-bottom: 22px;
+
+  background: rgba(255, 255, 255, .65);
+
+  position: relative;
+  overflow: hidden;
+}
+
+.marketing-line span {
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 100%;
+  height: 100%;
+
+  background: #ffffff;
+
+  animation: marketingLineMove 3.5s ease-in-out infinite;
+}
+
+.marketing-kicker {
+  margin-bottom: 14px;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: .18em;
+
+  opacity: .62;
+}
+
+.marketing-title {
+  font-size: 42px;
+  line-height: .91;
+
+  font-weight: 900;
+
+  letter-spacing: -.045em;
+}
+
+.marketing-title span {
+  opacity: .42;
+}
+
+.marketing-description {
+  max-width: 280px;
+
+  margin: 22px 0 0;
+
+  font-size: 14px;
+  line-height: 1.55;
+
+  color: rgba(255, 255, 255, .68);
+}
+
+/* ============================================================
+   LADO DIREITO
+   ============================================================ */
+
+.login-marketing-right {
+  right: calc(50% - 560px);
+
+  animation: marketingRightIn 1s ease .15s both;
+}
+
+.marketing-number {
+  margin-bottom: 26px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: .14em;
+
+  color: rgba(255, 255, 255, .52);
+}
+
+.marketing-number span {
+  margin-left: 8px;
+
+  font-size: 15px;
+
+  color: rgba(255, 255, 255, .9);
+}
+
+.marketing-question {
+  font-size: 43px;
+  line-height: 1.04;
+
+  font-weight: 300;
+
+  letter-spacing: -.035em;
+}
+
+.marketing-question strong {
+  font-weight: 800;
+}
+
+.login-marketing-right .marketing-description {
+  max-width: 300px;
+  margin-top: 20px;
+}
+
+.marketing-whatsapp {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  width: fit-content;
+
+  margin-top: 23px;
+
+  padding-bottom: 6px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, .45);
+
+  color: #ffffff !important;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  text-decoration: none !important;
+
+  pointer-events: auto;
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease;
+}
+
+.marketing-whatsapp:hover {
+  opacity: .75;
+
+  transform: translateX(4px);
+}
+
+.marketing-whatsapp-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #25d366;
+
+  box-shadow:
+    0 0 0 4px rgba(37, 211, 102, .12);
+
+  animation: marketingPulse 2s infinite;
+}
+
+.marketing-arrow {
+  margin-left: 2px;
+
+  font-size: 14px;
+}
+
+.marketing-instagram {
+  display: block;
+
+  margin-top: 12px;
+
+  color: rgba(255, 255, 255, .48) !important;
+
+  font-size: 10px;
+
+  text-decoration: none !important;
+
+  pointer-events: auto;
+
+  transition: color .2s ease;
+}
+
+.marketing-instagram:hover {
+  color: #ffffff !important;
+}
+
+/* ============================================================
+   ANIMAÇÕES
+   ============================================================ */
+
+@keyframes marketingLeftIn {
+
+  from {
+    opacity: 0;
+    transform: translate(-20px, -50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+
+}
+
+@keyframes marketingRightIn {
+
+  from {
+    opacity: 0;
+    transform: translate(20px, -50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+
+}
+
+@keyframes marketingLineMove {
+
+  0% {
+    left: -100%;
+  }
+
+  45% {
+    left: 100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+
+}
+
+@keyframes marketingPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px rgba(37, 211, 102, .10);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 7px rgba(37, 211, 102, 0);
+  }
+
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 1100px) {
+
+  .login-marketing {
+    width: 220px;
+  }
+
+  .marketing-title {
+    font-size: 28px;
+  }
+
+  .marketing-question {
+    font-size: 22px;
+  }
+
+  .login-marketing-left {
+    left: 25px;
+  }
+
+  .login-marketing-right {
+    right: 25px;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .login-marketing {
+    display: none;
+  }
+
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+
+[data-theme="dark"] .marketing-description {
+  color: rgba(255, 255, 255, .62);
+}
+
+
+
+/* ============================================================
+   LOGIN — CTA LATERAIS / CAPTAÇÃO
+   Versão final
+   ============================================================ */
+
+/* Esconde completamente os antigos botões redondos
+   que ficavam abaixo do card. */
+.login-container > .social-buttons {
+  display: none !important;
+}
+
+
+/* ------------------------------------------------------------
+   CONTAINER DOS CTAs
+   ------------------------------------------------------------ */
+
+.login-side-cta {
+  position: fixed;
+
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 245px;
+
+  z-index: 50;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  pointer-events: auto;
+
+  opacity: 0;
+
+  animation: loginSideCtaIn .8s cubic-bezier(.22, .61, .36, 1) forwards;
+}
+
+.login-side-cta-left {
+  left: 48px;
+}
+
+.login-side-cta-right {
+  right: 48px;
+
+  animation-delay: .14s;
+}
+
+
+/* ------------------------------------------------------------
+   LINHA DECORATIVA
+   ------------------------------------------------------------ */
+
+.side-cta-line {
+  width: 32px;
+  height: 1px;
+
+  margin-bottom: 9px;
+
+  background: rgba(255, 255, 255, .65);
+
+  transition:
+    width .3s ease,
+    opacity .3s ease;
+}
+
+.login-side-cta-right {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.login-side-cta-right .side-cta-line {
+  align-self: flex-end;
+}
+
+
+/* ------------------------------------------------------------
+   PEQUENO TÍTULO
+   ------------------------------------------------------------ */
+
+.side-cta-kicker {
+  font-size: 9px;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  color: rgba(255, 255, 255, .62);
+
+  text-transform: uppercase;
+}
+
+
+/* ------------------------------------------------------------
+   TÍTULO PRINCIPAL
+   ------------------------------------------------------------ */
+
+.side-cta-title {
+  display: block;
+
+  margin-top: 1px;
+
+  font-size: 21px;
+  line-height: 1.12;
+
+  font-weight: 700;
+
+  letter-spacing: -.45px;
+
+  color: #fff;
+
+  text-shadow:
+    0 3px 18px rgba(0, 0, 0, .10);
+}
+
+
+/* ------------------------------------------------------------
+   TEXTO
+   ------------------------------------------------------------ */
+
+.side-cta-text {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 14px;
+  line-height: 1.55;
+
+  font-weight: 400;
+
+  color: rgba(255, 255, 255, .70);
+}
+
+
+/* ------------------------------------------------------------
+   LINK / CTA
+   ------------------------------------------------------------ */
+
+.side-cta-link {
+  display: inline-flex;
+  align-items: center;
+
+  width: fit-content;
+
+  gap: 7px;
+
+  margin-top: 9px;
+
+  padding: 0 0 6px;
+
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .40);
+
+  background: transparent;
+
+  color: #fff;
+
+  font-size: 11px;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    gap .25s ease,
+    border-color .25s ease,
+    opacity .25s ease,
+    transform .25s ease;
+}
+
+.side-cta-link:hover {
+  gap: 11px;
+
+  border-bottom-color: rgba(255, 255, 255, .95);
+
+  opacity: 1;
+
+  transform: translateX(2px);
+}
+
+.login-side-cta-right .side-cta-link:hover {
+  transform: translateX(-2px);
+}
+
+
+/* ------------------------------------------------------------
+   ÍCONES
+   ------------------------------------------------------------ */
+
+.side-cta-icon {
+  width: 20px;
+  height: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.side-cta-icon svg {
+  width: 18px;
+  height: 18px;
+
+  display: block;
+}
+
+
+/* WhatsApp */
+
+.side-cta-whatsapp {
+  color: #25D366;
+
+  filter:
+    drop-shadow(0 0 7px rgba(37, 211, 102, .30));
+
+  animation:
+    loginWhatsappPulse 3s ease-in-out infinite;
+}
+
+
+/* Instagram */
+
+.side-cta-instagram {
+  color: rgba(255, 255, 255, .92);
+}
+
+
+/* Seta */
+
+.side-cta-arrow {
+  font-size: 15px;
+  line-height: 1;
+
+  font-weight: 400;
+
+  transition: transform .25s ease;
+}
+
+.side-cta-link:hover .side-cta-arrow {
+  transform: translateX(2px);
+}
+
+
+/* ------------------------------------------------------------
+   HOVER DO BLOCO
+   ------------------------------------------------------------ */
+
+.login-side-cta:hover .side-cta-line {
+  width: 58px;
+  opacity: 1;
+}
+
+.login-side-cta:hover .side-cta-title {
+  text-shadow:
+    0 5px 25px rgba(0, 0, 0, .20);
+}
+
+
+/* ------------------------------------------------------------
+   ANIMAÇÕES
+   ------------------------------------------------------------ */
+
+@keyframes loginSideCtaIn {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-50% + 18px));
+  }
+
+  to {
+    opacity: .96;
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes loginWhatsappPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+
+/* ------------------------------------------------------------
+   TELAS MENORES
+   ------------------------------------------------------------ */
+
+@media (max-width: 1150px) {
+
+  .login-side-cta {
+    width: 205px;
+  }
+
+  .login-side-cta-left {
+    left: 22px;
+  }
+
+  .login-side-cta-right {
+    right: 22px;
+  }
+
+  .side-cta-title {
+    font-size: 18px;
+  }
+
+  .side-cta-text {
+    font-size: 11px;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   TABLET / CELULAR
+   ------------------------------------------------------------ */
+
+@media (max-width: 850px) {
+
+  .login-side-cta {
+    display: none !important;
+  }
+
+  .login-container > .social-buttons {
+    display: none !important;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   ACESSIBILIDADE — REDUZIR MOVIMENTO
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .login-side-cta {
+    animation: none;
+    opacity: .96;
+    transform: translateY(-50%);
+  }
+
+  .side-cta-whatsapp {
+    animation: none;
+  }
+
+  .side-cta-link {
+    transition: none;
+  }
+}
+
+
+/* ============================================================
+   NOVO LAYOUT DE CAPTAÇÃO — LOGIN
+   Os antigos CTAs/redes sociais ficam ocultos para evitar
+   qualquer sobreposição com o novo design.
+   ============================================================ */
+
+.social-buttons,
+.login-side-cta {
+  display: none !important;
+}
+
+/* ------------------------------------------------------------
+   PAINÉIS LATERAIS
+   ------------------------------------------------------------ */
+
+.login-contact-panel,
+.login-service-panel {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  width: 290px;
+
+  pointer-events: none;
+}
+
+.login-contact-panel {
+  left: clamp(28px, 5vw, 90px);
+  text-align: left;
+}
+
+.login-service-panel {
+  right: clamp(28px, 5vw, 90px);
+  text-align: left;
+}
+
+/* ------------------------------------------------------------
+   CONTATO
+   ------------------------------------------------------------ */
+
+.login-panel-index,
+.login-service-index {
+  display: block;
+
+  margin-bottom: 24px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+
+  color: rgba(255,255,255,.58);
+}
+
+.login-panel-kicker,
+.login-service-kicker {
+  display: block;
+
+  margin-bottom: 12px;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .22em;
+
+  color: rgba(255,255,255,.58);
+}
+
+.login-contact-panel h2,
+.login-service-panel h2 {
+  margin: 0;
+
+  font-size: clamp(24px, 2vw, 31px);
+  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -.035em;
+
+  color: rgba(255,255,255,.88);
+}
+
+.login-contact-panel h2 strong,
+.login-service-panel h2 strong {
+  font-weight: 800;
+  color: #fff;
+}
+
+.login-contact-panel > p {
+  max-width: 275px;
+
+  margin: 18px 0 24px;
+
+  font-size: 13px;
+  line-height: 1.65;
+
+  color: rgba(255,255,255,.63);
+}
+
+/* ------------------------------------------------------------
+   LINKS DE CONTATO
+   ------------------------------------------------------------ */
+
+.login-contact-links {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  width: 100%;
+
+  pointer-events: auto;
+}
+
+.login-contact-link {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 38px 1fr 20px;
+  align-items: center;
+
+  width: 100%;
+
+  padding: 11px 0;
+
+  color: rgba(255,255,255,.92);
+  text-decoration: none;
+
+  border-bottom: 1px solid rgba(255,255,255,.18);
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    color .25s ease;
+}
+
+.login-contact-link:hover {
+  transform: translateX(7px);
+  border-color: rgba(255,255,255,.58);
+  color: #fff;
+}
+
+.login-contact-icon {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+}
+
+.login-contact-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.login-contact-link small {
+  display: block;
+
+  margin-bottom: 2px;
+
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .16em;
+
+  opacity: .58;
+}
+
+.login-contact-link span:not(.login-contact-icon) {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.login-contact-link b {
+  font-size: 16px;
+  font-weight: 400;
+
+  opacity: .65;
+}
+
+.login-contact-whatsapp .login-contact-icon {
+  color: #25D366;
+}
+
+.login-contact-instagram .login-contact-icon {
+  color: #ff7bbd;
+}
+
+/* ------------------------------------------------------------
+   SERVIÇOS
+   ------------------------------------------------------------ */
+
+.login-service-intro {
+  max-width: 285px;
+
+  margin: 18px 0 25px;
+
+  font-size: 13px;
+  line-height: 1.65;
+
+  color: rgba(255,255,255,.61);
+}
+
+.login-service-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 17px;
+}
+
+.login-service-item {
+  display: grid;
+  grid-template-columns: 29px 1fr;
+
+  gap: 10px;
+
+  padding-bottom: 14px;
+
+  border-bottom: 1px solid rgba(255,255,255,.13);
+}
+
+.login-service-item > span {
+  padding-top: 2px;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .08em;
+
+  color: rgba(255,255,255,.42);
+}
+
+.login-service-item strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  color: rgba(255,255,255,.92);
+}
+
+.login-service-item p {
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 1.45;
+
+  color: rgba(255,255,255,.55);
+}
+
+.login-service-bottom {
+  display: block;
+
+  margin-top: 23px;
+
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .18em;
+
+  color: rgba(255,255,255,.38);
+}
+
+/* ------------------------------------------------------------
+   ANIMAÇÃO DISCRETA
+   ------------------------------------------------------------ */
+
+.login-contact-panel {
+  animation: loginSideLeft .8s ease both;
+}
+
+.login-service-panel {
+  animation: loginSideRight 1s ease both;
+}
+
+@keyframes loginSideLeft {
+  from {
+    opacity: 0;
+    transform: translate(-16px, -50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
+@keyframes loginSideRight {
+  from {
+    opacity: 0;
+    transform: translate(16px, -50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
+/* ------------------------------------------------------------
+   TELAS MENORES
+   ------------------------------------------------------------ */
+
+@media (max-width: 1180px) {
+  .login-contact-panel,
+  .login-service-panel {
+    width: 230px;
+  }
+
+  .login-contact-panel {
+    left: 22px;
+  }
+
+  .login-service-panel {
+    right: 22px;
+  }
+
+  .login-contact-panel h2,
+  .login-service-panel h2 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 900px) {
+  .login-contact-panel,
+  .login-service-panel {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   NOVA APRESENTAÇÃO DO LOGIN
+   Camada final — substitui visualmente CTAs anteriores
+   ============================================================ */
+
+.login-side-cta,
+.social-buttons {
+  display: none !important;
+}
+
+.login-presentation {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+
+  pointer-events: none;
+}
+
+.login-presentation-side {
+  position: absolute;
+  top: 50%;
+
+  width: min(310px, 22vw);
+
+  transform: translateY(-50%);
+
+  pointer-events: auto;
+
+  color: rgba(255,255,255,.92);
+
+  animation: presentationFade .8s ease both;
+}
+
+.login-presentation-contact {
+  left: 5.5%;
+}
+
+.login-presentation-features {
+  right: 5.5%;
+  animation-delay: .12s;
+}
+
+.presentation-eyebrow {
+  display: block;
+
+  margin-bottom: 17px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+
+  color: rgba(255,255,255,.58);
+}
+
+.login-presentation-side h2 {
+  margin: 0;
+
+  max-width: 330px;
+
+  font-size: clamp(24px, 2.1vw, 34px);
+  line-height: 1.04;
+  font-weight: 300;
+  letter-spacing: -.035em;
+}
+
+.login-presentation-side h2 strong {
+  display: block;
+
+  font-weight: 700;
+
+  color: #fff;
+}
+
+.login-presentation-side > p {
+  max-width: 300px;
+
+  margin: 17px 0 25px;
+
+  font-size: 13px;
+  line-height: 1.65;
+
+  color: rgba(255,255,255,.62);
+}
+
+/* ============================================================
+   LINKS DE CONTATO
+   ============================================================ */
+
+.presentation-links {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 300px;
+
+  gap: 2px;
+}
+
+.presentation-link {
+  display: grid;
+  grid-template-columns: 34px 1fr 18px;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 12px 0;
+
+  border-top: 1px solid rgba(255,255,255,.16);
+
+  color: #fff;
+
+  text-decoration: none;
+
+  transition:
+    padding-left .22s ease,
+    border-color .22s ease,
+    opacity .22s ease;
+}
+
+.presentation-link:last-child {
+  border-bottom: 1px solid rgba(255,255,255,.16);
+}
+
+.presentation-link:hover {
+  padding-left: 7px;
+  border-color: rgba(255,255,255,.42);
+}
+
+.presentation-icon {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+}
+
+.presentation-icon svg {
+  width: 17px;
+  height: 17px;
+
+  fill: currentColor;
+}
+
+.presentation-whatsapp .presentation-icon {
+  color: #25D366;
+}
+
+.presentation-instagram .presentation-icon {
+  color: #ff5c9a;
+}
+
+.presentation-link small {
+  display: block;
+
+  margin-bottom: 2px;
+
+  font-size: 9px;
+  line-height: 1.2;
+  letter-spacing: .04em;
+
+  color: rgba(255,255,255,.48);
+}
+
+.presentation-link strong {
+  display: block;
+
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.presentation-link b {
+  font-size: 15px;
+  font-weight: 400;
+
+  color: rgba(255,255,255,.5);
+
+  transition: transform .22s ease;
+}
+
+.presentation-link:hover b {
+  transform: translate(3px,-3px);
+}
+
+/* ============================================================
+   LISTA DE RECURSOS
+   ============================================================ */
+
+.feature-list {
+  width: 100%;
+  max-width: 330px;
+
+  margin-top: 24px;
+}
+
+.feature-item {
+  display: grid;
+  grid-template-columns: 31px 1fr;
+
+  gap: 12px;
+
+  padding: 13px 0;
+
+  border-top: 1px solid rgba(255,255,255,.14);
+}
+
+.feature-item:last-child {
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+
+.feature-item > span {
+  padding-top: 2px;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .12em;
+
+  color: rgba(255,255,255,.38);
+}
+
+.feature-item strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  color: rgba(255,255,255,.94);
+}
+
+.feature-item p {
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 1.5;
+
+  color: rgba(255,255,255,.53);
+}
+
+/* ============================================================
+   ANIMAÇÃO
+   ============================================================ */
+
+@keyframes presentationFade {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-50% + 12px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+/* ============================================================
+   TELAS MENORES
+   ============================================================ */
+
+@media (max-width: 1050px) {
+
+  .login-presentation-side {
+    width: 250px;
+  }
+
+  .login-presentation-contact {
+    left: 3%;
+  }
+
+  .login-presentation-features {
+    right: 3%;
+  }
+
+}
+
+@media (max-width: 850px) {
+
+  .login-presentation {
+    position: static;
+
+    display: none;
+  }
+
+}
+
+/* ============================================================
+   GARANTIA: NÃO MOSTRAR OS ÍCONES ANTIGOS
+   ============================================================ */
+
+main.login-container > .social-buttons {
+  display: none !important;
+}
+
+
+
+/* ============================================================
+   LIMPEZA FINAL — CONTATOS REMOVIDOS DO LOGIN
+   ============================================================ */
+
+.social-buttons {
+  display: none !important;
+}
+
+.marketing-whatsapp,
+.marketing-instagram {
+  display: none !important;
+}
+
+/* ============================================================
+   PROPAGANDA LATERAL — ESCALA / PRESENÇA
+   ============================================================ */
+
+.login-marketing {
+  width: min(360px, 25vw) !important;
+}
+
+.login-marketing-left {
+  left: 14vw !important;
+}
+
+.login-marketing-right {
+  right: 14vw !important;
+}
+
+/* ------------------------------------------------------------
+   ESQUERDA — TEXTO MAIS FORTE
+   ------------------------------------------------------------ */
+
+.login-marketing-left .marketing-line {
+  width: 58px;
+  margin-bottom: 25px;
+}
+
+.login-marketing-left .marketing-kicker {
+  margin-bottom: 15px;
+
+  font-size: 11px;
+  letter-spacing: .22em;
+
+  color: rgba(255,255,255,.68);
+}
+
+.login-marketing-left .marketing-title {
+  font-size: clamp(42px, 4vw, 64px);
+  line-height: .86;
+
+  letter-spacing: -.055em;
+}
+
+.login-marketing-left .marketing-description {
+  max-width: 330px;
+
+  margin-top: 25px;
+
+  font-size: 14px;
+  line-height: 1.65;
+
+  color: rgba(255,255,255,.72);
+}
+
+/* ------------------------------------------------------------
+   DIREITA — APRESENTAÇÃO DO SERVIÇO
+   ------------------------------------------------------------ */
+
+.login-marketing-right .marketing-number {
+  margin-bottom: 28px;
+
+  font-size: 11px;
+  letter-spacing: .18em;
+}
+
+.login-marketing-right .marketing-question {
+  max-width: 370px;
+
+  font-size: clamp(34px, 3.1vw, 48px);
+  line-height: .98;
+
+  letter-spacing: -.05em;
+}
+
+.login-marketing-right .marketing-description {
+  max-width: 350px;
+
+  margin-top: 23px;
+
+  font-size: 14px;
+  line-height: 1.65;
+
+  color: rgba(255,255,255,.7);
+}
+
+/* ============================================================
+   CONTATOS — WHATSAPP / INSTAGRAM
+   ============================================================ */
+
+.marketing-socials {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 330px;
+
+  margin-top: 30px;
+
+  border-top: 1px solid rgba(255,255,255,.18);
+}
+
+.marketing-social {
+  display: grid;
+  grid-template-columns: 46px 1fr 22px;
+  align-items: center;
+
+  min-height: 62px;
+
+  gap: 12px;
+
+  border-bottom: 1px solid rgba(255,255,255,.18);
+
+  color: #fff !important;
+  text-decoration: none !important;
+
+  transition:
+    padding-left .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.marketing-social:hover {
+  padding-left: 10px;
+
+  border-color: rgba(255,255,255,.42);
+
+  background: rgba(255,255,255,.035);
+}
+
+.marketing-social-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.1);
+
+  transition:
+    transform .25s ease,
+    background .25s ease;
+}
+
+.marketing-social:hover .marketing-social-icon {
+  transform: scale(1.08);
+}
+
+.marketing-social-icon svg {
+  width: 20px;
+  height: 20px;
+
+  fill: currentColor;
+}
+
+.marketing-social-whatsapp .marketing-social-icon {
+  color: #25d366;
+}
+
+.marketing-social-instagram .marketing-social-icon {
+  color: #ff5c9a;
+}
+
+.marketing-social-copy small {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: .15em;
+
+  color: rgba(255,255,255,.45);
+}
+
+.marketing-social-copy strong {
+  display: block;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color: rgba(255,255,255,.95);
+}
+
+.marketing-social-arrow {
+  font-size: 17px;
+  font-weight: 300;
+
+  color: rgba(255,255,255,.48);
+
+  transition: transform .25s ease;
+}
+
+.marketing-social:hover .marketing-social-arrow {
+  transform: translate(4px,-3px);
+
+  color: #fff;
+}
+
+/* ============================================================
+   REMOVER DEFINITIVAMENTE OS ELEMENTOS ANTIGOS
+   ============================================================ */
+
+.social-buttons,
+.marketing-whatsapp,
+.marketing-instagram {
+  display: none !important;
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 1150px) {
+
+  .login-marketing {
+    width: 270px !important;
+  }
+
+  .login-marketing-left {
+    left: 3vw !important;
+  }
+
+  .login-marketing-right {
+    right: 3vw !important;
+  }
+
+  .login-marketing-left .marketing-title {
+    font-size: 42px;
+  }
+
+  .login-marketing-right .marketing-question {
+    font-size: 32px;
+  }
+
+}
+
+@media (max-width: 850px) {
+
+  .login-marketing {
+    display: none !important;
+  }
+
+}
+
+
+/* ============================================================
+   AJUSTE FINAL — PROPAGANDA MAIS PRESENTE
+   ============================================================ */
+
+.login-marketing-left {
+  left: 14vw;
+}
+
+.login-marketing-right {
+  right: 14vw;
+}
+
+.marketing-title {
+  font-size: clamp(40px, 3vw, 46px);
+}
+
+.login-marketing-left .marketing-description {
+  max-width: 310px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.marketing-question {
+  font-size: clamp(32px, 2.5vw, 38px);
+}
+
+.login-marketing-right .marketing-description {
+  max-width: 330px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   ÍCONES — LINKS REAIS PARA CONTATO
+   ============================================================ */
+
+.marketing-socials {
+  max-width: 310px;
+  margin-top: 24px;
+}
+
+.marketing-social {
+  cursor: pointer;
+}
+
+.marketing-social-icon {
+  cursor: pointer;
+}
+
+.marketing-social-copy small {
+  font-size: 10px;
+  letter-spacing: .15em;
+}
+
+.marketing-social-copy strong {
+  font-size: 14px;
+}
+
+.marketing-social-arrow {
+  font-size: 17px;
+}
+
+/* Aproxima ainda mais visualmente os dois blocos do login. */
+@media (min-width: 1200px) {
+  .login-marketing-left {
+    left: 14vw;
+  }
+
+  .login-marketing-right {
+    right: 14vw;
+  }
+}
+
+/* ============================================================
+   AJUSTE 2 — FONTES MAIORES + ANIMAÇÃO MINIMALISTA
+   ============================================================ */
+
+.login-marketing-left .marketing-kicker {
+  font-size: 13px !important;
+  letter-spacing: .2em !important;
+}
+
+.login-marketing-left .marketing-description {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+.login-marketing-right .marketing-description {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+.marketing-social-copy small {
+  font-size: 11px !important;
+  letter-spacing: .16em !important;
+}
+
+.marketing-social-copy strong {
+  font-size: 17px !important;
+}
+
+/* esconde o "01" enquanto ajustamos o JSX */
+.login-marketing-right .marketing-number {
+  display: none !important;
+}
+
+/* animação de entrada, minimalista: fade + leve subida, em cascata */
+@keyframes marketingFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-marketing-left .marketing-kicker,
+.login-marketing-left .marketing-title,
+.login-marketing-left .marketing-description,
+.login-marketing-left .marketing-line,
+.login-marketing-right .marketing-question,
+.login-marketing-right .marketing-description,
+.marketing-social {
+  opacity: 0;
+  animation: marketingFadeUp .7s ease forwards;
+}
+
+.login-marketing-left .marketing-line   { animation-delay: .05s; }
+.login-marketing-left .marketing-kicker { animation-delay: .1s; }
+.login-marketing-left .marketing-title  { animation-delay: .18s; }
+.login-marketing-left .marketing-description { animation-delay: .3s; }
+
+.login-marketing-right .marketing-question    { animation-delay: .12s; }
+.login-marketing-right .marketing-description { animation-delay: .26s; }
+
+.marketing-social:nth-of-type(1) { animation-delay: .4s; }
+.marketing-social:nth-of-type(2) { animation-delay: .48s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .login-marketing-left .marketing-kicker,
+  .login-marketing-left .marketing-title,
+  .login-marketing-left .marketing-description,
+  .login-marketing-left .marketing-line,
+  .login-marketing-right .marketing-question,
+  .login-marketing-right .marketing-description,
+  .marketing-social {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   AJUSTE 3 — EFEITO NEON NO HOVER (textos + contatos)
+   ============================================================ */
+
+.login-marketing-left .marketing-title,
+.login-marketing-right .marketing-question,
+.login-marketing-left .marketing-kicker,
+.login-marketing-right .marketing-number {
+  transition: text-shadow .35s ease, color .35s ease;
+}
+
+.login-marketing-left .marketing-title:hover,
+.login-marketing-right .marketing-question:hover {
+  color: #fff;
+  text-shadow:
+    0 0 6px rgba(255,255,255,.55),
+    0 0 18px rgba(255,255,255,.35),
+    0 0 34px rgba(120,170,255,.35);
+}
+
+.login-marketing-left .marketing-kicker:hover,
+.login-marketing-right .marketing-number:hover {
+  color: #fff;
+  text-shadow:
+    0 0 5px rgba(255,255,255,.6),
+    0 0 14px rgba(120,170,255,.4);
+}
+
+/* neon nos cards de contato (whatsapp/instagram) */
+.marketing-social-copy strong {
+  transition: text-shadow .35s ease, color .35s ease;
+}
+
+.marketing-social-whatsapp:hover .marketing-social-copy strong {
+  color: #fff;
+  text-shadow:
+    0 0 6px rgba(37,211,102,.85),
+    0 0 18px rgba(37,211,102,.55),
+    0 0 32px rgba(37,211,102,.35);
+}
+
+.marketing-social-instagram:hover .marketing-social-copy strong {
+  color: #fff;
+  text-shadow:
+    0 0 6px rgba(255,92,154,.85),
+    0 0 18px rgba(255,92,154,.55),
+    0 0 32px rgba(255,92,154,.35);
+}
+
+.marketing-social-whatsapp:hover .marketing-social-icon {
+  box-shadow: 0 0 16px rgba(37,211,102,.6);
+}
+
+.marketing-social-instagram:hover .marketing-social-icon {
+  box-shadow: 0 0 16px rgba(255,92,154,.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-marketing-left .marketing-title,
+  .login-marketing-right .marketing-question,
+  .login-marketing-left .marketing-kicker,
+  .login-marketing-right .marketing-number,
+  .marketing-social-copy strong {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   FIX — LINKS DE CONTATO NÃO CLICÁVEIS
+   (pointer-events:none em .login-marketing bloqueava os links reais)
+   ============================================================ */
+
+.login-marketing .marketing-social {
+  pointer-events: auto !important;
+}
+
+/* ============================================================
+   AJUSTE 4 — NEON TAMBÉM NAS DESCRIÇÕES (ESQUERDA E DIREITA)
+   ============================================================ */
+
+.login-marketing-left .marketing-description,
+.login-marketing-right .marketing-description {
+  transition: text-shadow .35s ease, color .35s ease;
+}
+
+.login-marketing-left .marketing-description:hover,
+.login-marketing-right .marketing-description:hover {
+  color: #fff;
+  text-shadow:
+    0 0 5px rgba(255,255,255,.5),
+    0 0 14px rgba(255,255,255,.3),
+    0 0 26px rgba(120,170,255,.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-marketing-left .marketing-description,
+  .login-marketing-right .marketing-description {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   AJUSTE 5 — NEON COMPLETO (linha, labels pequenos, seta)
+   ============================================================ */
+
+.login-marketing-left .marketing-line span {
+  transition: box-shadow .35s ease, background .35s ease;
+}
+
+.login-marketing-left:hover .marketing-line span {
+  background: #fff;
+  box-shadow:
+    0 0 6px rgba(255,255,255,.6),
+    0 0 16px rgba(120,170,255,.4);
+}
+
+.marketing-social-copy small {
+  transition: text-shadow .35s ease, color .35s ease;
+}
+
+.marketing-social-whatsapp:hover .marketing-social-copy small {
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 0 8px rgba(37,211,102,.6);
+}
+
+.marketing-social-instagram:hover .marketing-social-copy small {
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 0 8px rgba(255,92,154,.6);
+}
+
+.marketing-social-arrow {
+  transition: text-shadow .35s ease, color .35s ease, transform .25s ease;
+}
+
+.marketing-social-whatsapp:hover .marketing-social-arrow {
+  text-shadow: 0 0 8px rgba(37,211,102,.7);
+}
+
+.marketing-social-instagram:hover .marketing-social-arrow {
+  text-shadow: 0 0 8px rgba(255,92,154,.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-marketing-left .marketing-line span,
+  .marketing-social-copy small,
+  .marketing-social-arrow {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   FIX — HOVER NÃO DISPARAVA (pointer-events:none no container pai)
+   ============================================================ */
+
+.login-marketing-left .marketing-kicker,
+.login-marketing-left .marketing-title,
+.login-marketing-left .marketing-description,
+.login-marketing-left .marketing-line,
+.login-marketing-right .marketing-number,
+.login-marketing-right .marketing-question,
+.login-marketing-right .marketing-description {
+  pointer-events: auto !important;
 }

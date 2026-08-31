@@ -1,61 +1,12 @@
-/* components/CaixaFlutuante.css — Botão "Caixa" / "Sistema" (posição dinâmica) */
-
-.caixa-btn {
-  position: fixed;
-  z-index: 900;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.85rem;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: #ffffff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  white-space: nowrap;
-}
-
-.caixa-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5);
-}
-
-.caixa-btn.caixa-btn-aberto {
-  background: linear-gradient(135deg, #10b981, #059669);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
-}
-.caixa-btn.caixa-btn-aberto:hover {
-  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5);
-}
-
-.caixa-btn.caixa-btn-fechado {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
-}
-.caixa-btn.caixa-btn-fechado:hover {
-  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.5);
-}
-
-.caixa-btn.caixa-btn-sistema {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
-}
-.caixa-btn.caixa-btn-sistema:hover {
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
-}
-
-.caixa-btn-icon { font-size: 1rem; line-height: 1; }
-.caixa-btn-text { font-weight: 600; }
-
-@media (max-width: 768px) {
-  .caixa-btn { padding: 0.35rem 0.7rem; font-size: 0.75rem; }
-}
-@media (max-width: 480px) {
-  .caixa-btn { padding: 0.35rem 0.6rem; }
-  .caixa-btn-text { display: none; }
-}
+.caixa-btn { position:fixed; z-index:900; display:inline-flex; align-items:center; justify-content:center; gap:0.4rem; padding:0.4rem 0.85rem; border:1px solid transparent; border-radius:8px; background:linear-gradient(135deg,#10b981,#059669); color:var(--surface); font-size:0.85rem; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(16,185,129,0.35); transition:transform 0.15s ease,box-shadow 0.15s ease; white-space:nowrap; }
+.caixa-btn:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(16,185,129,0.5); }
+.caixa-btn.caixa-btn-aberto { background:linear-gradient(135deg,#10b981,#059669); box-shadow:0 4px 12px rgba(16,185,129,0.35); }
+.caixa-btn.caixa-btn-aberto:hover { box-shadow:0 6px 16px rgba(16,185,129,0.5); }
+.caixa-btn.caixa-btn-fechado { background:linear-gradient(135deg,#ef4444,var(--danger)); box-shadow:0 4px 12px rgba(239,68,68,0.35); }
+.caixa-btn.caixa-btn-fechado:hover { box-shadow:0 6px 16px rgba(239,68,68,0.5); }
+.caixa-btn.caixa-btn-sistema { background:linear-gradient(135deg,#3b82f6,var(--accent)); box-shadow:0 4px 12px rgba(59,130,246,0.35); }
+.caixa-btn.caixa-btn-sistema:hover { box-shadow:0 6px 16px rgba(59,130,246,0.5); }
+.caixa-btn-icon { font-size:1rem; line-height:1; }
+.caixa-btn-text { font-weight:600; }
+@media (max-width:768px) { .caixa-btn { padding:0.35rem 0.7rem; font-size:0.75rem; } }
+@media (max-width:480px) { .caixa-btn { padding:0.35rem 0.6rem; } .caixa-btn-text { display:none; } }

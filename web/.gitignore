@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Backups locais (não versionar)
+*.backup-*
+*.backup2
+*.save
+.css-backup-*/

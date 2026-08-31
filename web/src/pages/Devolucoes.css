@@ -169,7 +169,7 @@
 
 .dev-btn-primary {
   background: var(--accent);
-  color: #fff;
+  color: var(--surface);
   border-color: var(--accent);
 }
 
@@ -191,8 +191,8 @@
 }
 
 .dev-success {
-  border: 1px solid var(--success, #22c55e);
-  color: var(--success, #22c55e);
+  border: 1px solid var(--success, var(--success));
+  color: var(--success, var(--success));
 }
 
 .dev-table-wrapper {
@@ -231,22 +231,22 @@
 
 .dev-status-pending {
   background: rgba(234, 179, 8, .15);
-  color: #ca8a04;
+  color: var(--warning);
 }
 
 .dev-status-sent {
   background: rgba(59, 130, 246, .15);
-  color: #2563eb;
+  color: var(--accent);
 }
 
 .dev-status-received {
   background: rgba(34, 197, 94, .15);
-  color: #16a34a;
+  color: var(--success);
 }
 
 .dev-status-cancelled {
   background: rgba(239, 68, 68, .15);
-  color: #dc2626;
+  color: var(--danger);
 }
 
 .dev-row-actions {

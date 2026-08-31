@@ -176,9 +176,9 @@
 }
 
 .eb-success {
-  color: var(--success, #22c55e);
+  color: var(--success, var(--success));
   background: var(--bg-input);
-  border: 1px solid var(--success, #22c55e);
+  border: 1px solid var(--success, var(--success));
 }
 
 .estoque-baixo-loading {
@@ -394,7 +394,7 @@
   padding: 0.18rem 0.45rem;
   border-radius: 5px;
   background: #facc15;
-  color: #991b1b;
+  color: var(--danger);
   font-size: 0.72rem;
   font-weight: 700;
   line-height: 1.2;
@@ -403,7 +403,7 @@
 
 /* Texto do alerta em vermelho */
 .badge-baixo {
-  color: #dc2626;
+  color: var(--danger);
 }
 
 
@@ -562,7 +562,7 @@
 }
 
 .produto-ja-selecionado .resultado-add {
-  color: var(--success, #22c55e);
+  color: var(--success, var(--success));
 }
 
 .busca-vazia {

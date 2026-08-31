@@ -1,182 +1,344 @@
-/* styles/theme.css — Design System do Portfólio (tema escuro + claro) */
+/* ============================================================
+   THEME GLOBAL
+   ============================================================ */
 
-/* ===== TEMA PADRÃO: ESCURO ===== */
 :root {
-  /* Cores base */
   --bg-primary: #0a0e17;
   --bg-secondary: #111827;
   --bg-card: #1a1f2e;
   --bg-input: #1e2433;
 
-  /* Cor de destaque do Projeto 04 — Estoque (azul ciano) */
-  --accent: #06b6d4; /* Azul ciano */
-  --accent-hover: #22d3ee; /* Mais claro para hover */
-  --accent-dim: rgba(6, 182, 212, 0.15); /* Sutil para fundos */
-  --accent-text: #000000; /* Texto escuro sobre fundo accent claro */
+  --surface: #ffffff;
+  --surface-hover: #f8fafc;
 
-  /* Texto */
-  --text-primary: #f1f5f9; /* Branco quase puro */
-  --text-secondary: #94a3b8; /* Cinza claro */
-  --text-muted: #64748b; /* Cinza mais escuro */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
 
-  /* Bordas */
-  --border: #1e293b; /* Cinza escuro */
-  --border-focus: var(--accent); /* Destaca o foco */
+  --border-color: #334155;
+  --border-soft: #1e293b;
 
-  /* Estados e Alertas */
-  --danger: #ef4444; /* Vermelho */
+  --accent: #06b6d4;
+  --accent-hover: #22d3ee;
+  --accent-dim: rgba(6, 182, 212, 0.15);
+  --accent-text: #000000;
+
+  --danger: #ef4444;
   --danger-bg: rgba(239, 68, 68, 0.1);
-  --warning: #f59e0b; /* Amarelo/Laranja */
+
+  --warning: #f59e0b;
   --warning-bg: rgba(245, 158, 11, 0.12);
-  --warning-text: #000000; /* Texto escuro sobre fundo amarelo */
-  --success: #22c55e; /* Verde */
+  --warning-text: #000000;
+
+  --success: #22c55e;
   --success-bg: rgba(34, 197, 94, 0.1);
 
-  /* Fontes */
-  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --input-border: #334155;
+  --input-focus: var(--accent);
 
-  /* Tamanhos e Espaçamentos */
-  --radius: 8px; /* Raio padrão para cantos */
-  --radius-lg: 12px; /* Raio maior para cards */
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.3); /* Sombra padrão */
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
 }
 
-/* ===== TEMA CLARO ===== */
+/* ============================================================
+   TEMA CLARO
+   ============================================================ */
+
 [data-theme="light"] {
-  --bg-primary: #f1f5f9; /* Fundo claro principal */
-  --bg-secondary: #e2e8f0; /* Fundo secundário claro */
-  --bg-card: #ffffff; /* Fundo do card branco */
-  --bg-input: #f8fafc; /* Fundo dos inputs claro */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-input: #f8fafc;
 
-  --accent: #0891b2; /* Azul mais escuro/corporativo para tema claro */
-  --accent-hover: #06b6d4; /* Azul mais claro para hover */
-  --accent-dim: rgba(8, 145, 178, 0.1); /* Sutil para fundos claros */
-  --accent-text: #ffffff; /* Texto branco sobre fundo accent claro */
+  --surface: #ffffff;
+  --surface-hover: #f1f5f9;
 
-  --text-primary: #0f172a; /* Texto escuro principal */
-  --text-secondary: #334155; /* Texto secundário escuro */
-  --text-muted: #64748b; /* Texto atenuado escuro */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
 
-  --border: #cbd5e1; /* Borda clara */
-  --border-focus: var(--accent); /* Destaca o foco */
+  --border-color: #d1d5db;
+  --border-soft: #e5e7eb;
 
-  --danger: #b91c1c; /* Vermelho escuro */
+  --accent: #0891b2;
+  --accent-hover: #06b6d4;
+  --accent-dim: rgba(8, 145, 178, 0.1);
+  --accent-text: #ffffff;
+
+  --danger: #b91c1c;
   --danger-bg: rgba(185, 28, 28, 0.1);
-  --warning: #b45309; /* Amarelo/Laranja escuro */
+
+  --warning: #b45309;
   --warning-bg: rgba(180, 83, 9, 0.12);
-  --warning-text: #ffffff; /* Texto branco sobre fundo amarelo */
-  --success: #15803d; /* Verde escuro */
+  --warning-text: #ffffff;
+
+  --success: #15803d;
   --success-bg: rgba(21, 128, 61, 0.1);
 
-  --shadow: 0 4px 24px rgba(15, 23, 42, 0.08); /* Sombra mais suave em fundo claro */
+  --input-border: #cbd5e1;
+  --input-focus: var(--accent);
+
+  --shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
 }
 
-/* ===== Reset e Base ===== */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* ============================================================
+   TEMA ESCURO
+   ============================================================ */
+
+[data-theme="dark"] {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-card: #1a1f2e;
+  --bg-input: #1e2433;
+
+  --surface: #ffffff;
+  --surface-hover: #263142;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+
+  --border-color: #334155;
+  --border-soft: #1e293b;
+
+  --accent: #06b6d4;
+  --accent-hover: #22d3ee;
+  --accent-dim: rgba(6, 182, 212, 0.15);
+  --accent-text: #000000;
+
+  --danger: #ef4444;
+  --danger-bg: rgba(239, 68, 68, 0.1);
+
+  --warning: #f59e0b;
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  --warning-text: #000000;
+
+  --success: #22c55e;
+  --success-bg: rgba(34, 197, 94, 0.1);
+
+  --input-border: #334155;
+  --input-focus: var(--accent);
+
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+html,
+body {
+  min-height: 100%;
 }
 
 html {
-  font-size: 16px;
-  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 body {
-  font-family: var(--font-body);
-  background-color: var(--bg-primary);
+  margin: 0;
+  background: var(--bg-primary);
   color: var(--text-primary);
-  line-height: 1.6;
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
-/* Aplica as variáveis do tema ao body também */
-[data-theme="light"] body {
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+input,
+select,
+textarea {
+  color: var(--text-primary);
+  background: var(--bg-input);
+  border-color: var(--input-border);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+/* ============================================================
+   PDV / CAIXA
+   ============================================================ */
+
+.caixa-pdv-classic {
+  --pdv-primary: var(--accent);
+  --pdv-primary-hover: var(--accent-hover);
+
+  --pdv-success: var(--success);
+  --pdv-success-light: var(--success-bg);
+
+  --pdv-bg: var(--bg-secondary);
+  --pdv-card: var(--bg-card);
+
+  --pdv-border: var(--border-color);
+  --pdv-border-soft: var(--border-soft);
+
+  --pdv-text: var(--text-primary);
+  --pdv-text-secondary: var(--text-secondary);
+  --pdv-text-muted: var(--text-muted);
+
+  --pdv-dark: var(--bg-primary);
+
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   UTILITÁRIOS
+   ============================================================ */
+
+.theme-bg-primary {
   background-color: var(--bg-primary);
+}
+
+.theme-bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.theme-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+}
+
+.theme-text-primary {
   color: var(--text-primary);
 }
 
-a {
-  color: var(--accent);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-a:hover {
-  color: var(--accent-hover);
+.theme-text-secondary {
+  color: var(--text-secondary);
 }
 
-/* Scrollbar customizada (Webkit) */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-/* Componentes compartilhados */
-.spinner {
-  width: 36px; height: 36px;
-  border: 3px solid var(--border);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto 1rem;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.dashboard-loading, .mov-loading, .produtos-loading {
-  display: flex; flex-direction: column;
-  justify-content: center; align-items: center;
-  min-height: 300px; color: var(--text-secondary);
+.theme-text-muted {
+  color: var(--text-muted);
 }
 
-.empty-state {
-  text-align: center; padding: 3rem 1rem;
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-}
-.empty-state h3 { margin-bottom: 0.5rem; color: var(--text-primary); }
-.empty-state p { margin-bottom: 1.5rem; color: var(--text-secondary); }
+/* ============================================================
+   GARANTIA DAS VARIÁVEIS DO TEMA
+   ============================================================ */
 
-.paginacao {
-  margin-top: 1rem; display: flex;
-  align-items: center; justify-content: center;
-  gap: 1rem;
-}
-.btn-page {
-  background: var(--bg-card); border: 1px solid var(--border);
-  color: var(--text-primary); padding: 0.5rem 1rem;
-  border-radius: var(--radius); cursor: pointer;
-}
-.btn-page:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-page:hover:not(:disabled) { border-color: var(--accent); }
-.page-info { color: var(--text-secondary); font-size: 0.9rem; }
+:root {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-card: #1a1f2e;
+  --bg-input: #1e2433;
 
-.mov-filters {
-  display: flex; align-items: center; justify-content: space-between;
-  margin: 1.5rem 0 1rem; flex-wrap: wrap; gap: 1rem;
-}
-.filters-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.input-select {
-  background: var(--bg-input); border: 1px solid var(--border);
-  color: var(--text-primary); padding: 0.5rem 0.75rem;
-  border-radius: var(--radius); font-size: 0.85rem;
+  --surface: #ffffff;
+  --surface-hover: #f8fafc;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+
+  --border-color: #334155;
+  --border-soft: #1e293b;
+
+  --accent: #06b6d4;
+  --accent-hover: #22d3ee;
+  --accent-dim: rgba(6, 182, 212, 0.15);
+  --accent-text: #000000;
+
+  --danger: #ef4444;
+  --danger-bg: rgba(239, 68, 68, 0.1);
+
+  --warning: #f59e0b;
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  --warning-text: #000000;
+
+  --success: #22c55e;
+  --success-bg: rgba(34, 197, 94, 0.1);
+
+  --input-border: #475569;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
 }
 
-/* Fix: .btn-primary só é definido em Login.css e vaza pras outras páginas
-   (largura 100%) porque o CSS não é isolado por rota. Estas regras com
-   maior especificidade forçam largura automática fora do login. */
-.produtos-header .btn-primary,
-.empty-state .btn-primary,
-.mov-form .btn-primary,
-.produto-form .btn-primary {
-  width: auto;
-  height: auto;
-  min-height: 44px;
-  padding: 0.75rem 2rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  gap: 0.4rem;
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-input: #f8fafc;
+
+  --surface: #ffffff;
+  --surface-hover: #f8fafc;
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  --border-color: #dbe3ee;
+  --border-soft: #e2e8f0;
+
+  --accent: #0891b2;
+  --accent-hover: #06b6d4;
+  --accent-dim: rgba(8, 145, 178, 0.1);
+  --accent-text: #ffffff;
+
+  --danger: #b91c1c;
+  --danger-bg: rgba(185, 28, 28, 0.1);
+
+  --warning: #b45309;
+  --warning-bg: rgba(180, 83, 9, 0.12);
+  --warning-text: #ffffff;
+
+  --success: #15803d;
+  --success-bg: rgba(21, 128, 61, 0.1);
+
+  --input-border: #cbd5e1;
+}
+
+/* ============================================================
+   FIX — GARANTIA DE APLICAÇÃO DO TEMA NO APP INTEIRO
+   ============================================================ */
+
+#root,
+.app,
+.pedidos-compra-page,
+main {
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }

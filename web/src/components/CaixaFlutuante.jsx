@@ -57,7 +57,7 @@ export default function CaixaFlutuante() {
 
   const handleClick = () => {
     if (isCaixa) {
-      navigate('/home');
+      navigate('/dashboard');
     } else {
       navigate('/caixa');
     }

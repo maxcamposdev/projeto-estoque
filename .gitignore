@@ -43,3 +43,8 @@ backend.backup-*/
 
 # Build do frontend
 web/dist/
+
+# Backups adicionais (extensões sem hífen)
+*.backup2
+*.save
+.css-backup-*/

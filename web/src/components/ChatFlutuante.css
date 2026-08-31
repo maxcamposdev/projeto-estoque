@@ -17,7 +17,7 @@
 
   background: var(--accent);
 
-  color: #fff;
+  color: var(--surface);
 
   display: flex;
   align-items: center;
@@ -69,8 +69,8 @@
   align-items: center;
   justify-content: center;
 
-  background: #dc2626;
-  color: #fff;
+  background: var(--danger);
+  color: var(--surface);
 
   font-size: 10px;
   font-weight: 800;
@@ -274,11 +274,11 @@
 
   border-radius: 50%;
 
-  background: #16a34a;
+  background: var(--success);
 }
 
 .chat-online-status.offline i {
-  background: #f59e0b;
+  background: var(--warning);
 }
 
 .chat-fechar {
@@ -397,9 +397,9 @@
 
   border-radius: 999px;
 
-  background: #dc2626;
+  background: var(--danger);
 
-  color: #fff;
+  color: var(--surface);
 
   font-size: 9px;
 }
@@ -584,7 +584,7 @@
   border-radius: 8px;
 
   background: var(--accent);
-  color: #fff;
+  color: var(--surface);
 
   cursor: pointer;
 
