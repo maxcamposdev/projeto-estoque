@@ -127,3 +127,58 @@
     padding: 0.4rem 1rem 0.6rem;
   }
 }
+
+
+/* ==== MOBILE RESPONSIVO ==== */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.6rem 0.8rem;
+    gap: 0.5rem;
+  }
+  .header-left {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .header-logo {
+    font-size: 1rem;
+  }
+  .header-right {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.4rem;
+  }
+  .nav-menu a {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.85rem;
+  }
+  .btn-logout, .btn-lang {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.85rem;
+  }
+  .header-caixa-row {
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0.5rem;
+  }
+  .nav-menu a {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.78rem;
+  }
+  .btn-logout, .btn-lang {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.78rem;
+  }
+}

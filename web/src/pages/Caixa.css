@@ -3321,3 +3321,65 @@ body.dark .caixa-pdv-classic .btn-secundario,
   background: #1e293b !important;
 }
 
+
+
+/* ==== MOBILE RESPONSIVO ==== */
+@media (max-width: 1024px) {
+  .caixa-pdv-classic {
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem !important;
+    padding: 0.8rem !important;
+  }
+  .pdv-busca, .pdv-lista, .pdv-carrinho {
+    width: 100% !important;
+  }
+  .pdv-carrinho-footer {
+    position: relative !important;
+    bottom: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .caixa, .caixa-fechado {
+    padding: 0.8rem !important;
+  }
+  .caixa-fechado-card {
+    padding: 1.2rem !important;
+  }
+  .abrir-caixa-form input {
+    font-size: 1rem !important;
+    padding: 0.8rem !important;
+  }
+  .pdv-pagamento-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .pdv-pagamento-row select,
+  .pdv-pagamento-row input {
+    width: 100% !important;
+  }
+  .btn-finalizar, .btn-destaque {
+    padding: 0.8rem 1rem !important;
+    font-size: 1rem !important;
+  }
+  .modal-overlay .modal-card,
+  .modal-overlay > div {
+    width: 95% !important;
+    max-width: none !important;
+    margin: 1rem auto !important;
+    padding: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .caixa-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .caixa-header h1 {
+    font-size: 1.3rem !important;
+  }
+  .pdv-atalhos {
+    display: none !important;
+  }
+}

@@ -216,3 +216,30 @@
     display: none;
   }
 }
+
+
+/* ==== MOBILE RESPONSIVO ==== */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 0.8rem !important;
+  }
+  .dashboard-cards {
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem !important;
+  }
+  .dashboard-card {
+    padding: 1rem !important;
+  }
+  .dashboard-card h2 {
+    font-size: 1.1rem !important;
+  }
+  .dashboard-card .numero {
+    font-size: 2rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-card .numero {
+    font-size: 1.6rem !important;
+  }
+}
