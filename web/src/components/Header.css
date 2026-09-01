@@ -169,3 +169,5 @@
 @media (max-width: 900px) {
   .btn-lang, .btn-logout { display: none !important; }
 }
+.mobile-drawer-btn.sistema { border-color: #3b82f6; color: #3b82f6; }
+.mobile-drawer-btn.sistema:hover { background: #3b82f6; color: #fff; }
