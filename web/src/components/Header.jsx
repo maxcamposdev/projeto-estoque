@@ -1,59 +1,85 @@
-// components/Header.jsx — Cabeçalho com logo, menu e botão de tema
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Logo from './Logo';
 import './Header.css';
 
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    try { return localStorage.getItem('theme') || 'dark'; } catch { return 'dark'; }
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => setTheme((p) => (p === 'dark' ? 'light' : 'dark'));
-  const isActive = (path) => (location.pathname === path ? 'active' : '');
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  };
+
+  const isActive = (path) => location.pathname === path ? 'active' : '';
+  const showNav = !!localStorage.getItem('token');
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     navigate('/');
+    setMenuOpen(false);
   };
 
-  const token = localStorage.getItem('token');
-  const isLoginPage = location.pathname === '/';
-  const showNav = token && !isLoginPage;
+  const handleNav = (path) => {
+    navigate(path);
+    setMenuOpen(false);
+  };
+
+  const navItems = [
+    { path: '/dashboard', label: 'Dashboard' },
+    { path: '/produtos', label: 'Produtos' },
+    { path: '/movimentacoes', label: 'Movimentacoes' },
+    { path: '/pedidos-compra', label: 'Pedidos de Compra' },
+    { path: '/fornecedores', label: 'Fornecedores' },
+    { path: '/transferencias', label: 'Transferencias' },
+    { path: '/devolucoes', label: 'Devolucoes' },
+  ];
 
   return (
     <header className="header">
       <div className="header-content">
-        <span className="header-logo" onClick={() => navigate(showNav ? '/dashboard' : '/')}>
-          <Logo size={36} /> Sistema de Gestão de Estoque
+        <span className="header-logo" onClick={() => handleNav(showNav ? '/dashboard' : '/')}>
+          <span className="logo-badge">SUALOGO</span>
+          <span className="logo-text">Sistema de Gestao</span>
         </span>
-
-        {showNav && (
-          <nav className="header-nav">
-            <button className={`nav-btn ${isActive('/dashboard')}`} onClick={() => navigate('/dashboard')}>Dashboard</button>
-            <button className={`nav-btn ${isActive('/produtos')}`} onClick={() => navigate('/produtos')}>Produtos</button>
-            <button className={`nav-btn ${isActive('/movimentacoes')}`} onClick={() => navigate('/movimentacoes')}>Movimentações</button>
-            <button className={`nav-btn ${isActive('/pedidos-compra')}`} onClick={() => navigate('/pedidos-compra')}>Pedidos de Compra</button>
-            <button className={`nav-btn ${isActive('/fornecedores')}`} onClick={() => navigate('/fornecedores')}>Fornecedores</button>
-            <button className={`nav-btn ${isActive('/transferencias')}`} onClick={() => navigate('/transferencias')}>Transferências</button>
-            <button className={`nav-btn ${isActive('/devolucoes')}`} onClick={() => navigate('/devolucoes')}>Devoluções</button>
-          </nav>
-        )}
-
+        <nav className="header-nav">
+          {navItems.map(item => (
+            <button key={item.path} className={'nav-btn ' + isActive(item.path)} onClick={() => handleNav(item.path)}>{item.label}</button>
+          ))}
+        </nav>
         <div className="header-right">
-          <button className="btn-lang" onClick={toggleTheme} title={theme === 'dark' ? 'Tema claro' : 'Tema escuro'}>
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
-          {showNav && (
-            <button className="btn-logout" onClick={handleLogout}>Sair</button>
-          )}
+          <button className="btn-lang" onClick={toggleTheme} title={theme === 'dark' ? 'Tema claro' : 'Tema escuro'}>{theme === 'dark' ? '\u2600' : '\u263e'}</button>
+          <button className="btn-logout" onClick={handleLogout}>Sair</button>
+          <button className="hamburger-btn" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">{menuOpen ? '\u2715' : '\u2630'}</button>
         </div>
       </div>
+      {menuOpen && (
+        <>
+          <div className="mobile-drawer-overlay" onClick={() => setMenuOpen(false)} />
+          <div className="mobile-drawer">
+            <nav className="mobile-drawer-nav">
+              {navItems.map(item => (
+                <button key={item.path} className={'mobile-drawer-link ' + isActive(item.path)} onClick={() => handleNav(item.path)}>{item.label}</button>
+              ))}
+            </nav>
+            <div className="mobile-drawer-actions">
+              <button className="mobile-drawer-btn theme" onClick={toggleTheme}>{theme === 'dark' ? '\u2600 Tema Claro' : '\u263e Tema Escuro'}</button>
+              <button className="mobile-drawer-btn caixa" onClick={() => handleNav('/caixa')} disabled={!showNav}>Caixa</button>
+              <button className="mobile-drawer-btn sair" onClick={handleLogout} disabled={!showNav}>Sair</button>
+            </div>
+          </div>
+        </>
+      )}
     </header>
   );
 }
