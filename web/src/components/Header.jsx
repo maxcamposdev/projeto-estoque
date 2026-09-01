@@ -22,6 +22,7 @@ export default function Header() {
 
   const isActive = (path) => location.pathname === path ? 'active' : '';
   const showNav = !!localStorage.getItem('token');
+  const isCaixa = location.pathname === '/caixa';
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -81,7 +82,7 @@ export default function Header() {
             </nav>
             <div className="mobile-drawer-actions">
               <button className="mobile-drawer-btn theme" onClick={toggleTheme}>{theme === 'dark' ? '\u2600 Tema Claro' : '\u263e Tema Escuro'}</button>
-              <button className="mobile-drawer-btn caixa" onClick={() => handleNav('/caixa')} disabled={!showNav}>Caixa</button>
+              {isCaixa ? <button className="mobile-drawer-btn sistema" onClick={() => handleNav('/dashboard')}>Sistema</button> : <button className="mobile-drawer-btn caixa" onClick={() => handleNav('/caixa')} disabled={!showNav}>Caixa</button>}
               <button className="mobile-drawer-btn sair" onClick={handleLogout} disabled={!showNav}>Sair</button>
             </div>
           </div>
