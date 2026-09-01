@@ -182,3 +182,17 @@
     font-size: 0.78rem;
   }
 }
+
+/* ==== MOBILE RESPONSIVO ==== */
+@media (max-width: 900px) {
+  .header { padding: 0.6rem 0.8rem !important; }
+  .header-content { flex-direction: column !important; align-items: stretch !important; gap: 0.6rem !important; }
+  .header-logo { text-align: center !important; font-size: 1.1rem !important; }
+  .header-nav { flex-wrap: wrap !important; justify-content: center !important; gap: 0.3rem !important; width: 100% !important; }
+  .nav-btn { padding: 0.5rem 0.7rem !important; font-size: 0.85rem !important; }
+  .header-right { width: 100% !important; justify-content: center !important; gap: 0.4rem !important; }
+  .btn-lang, .btn-logout { padding: 0.5rem 0.7rem !important; font-size: 0.85rem !important; }
+}
+@media (max-width: 480px) {
+  .nav-btn { padding: 0.4rem 0.5rem !important; font-size: 0.75rem !important; }
+}

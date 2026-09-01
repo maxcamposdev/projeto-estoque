@@ -3383,3 +3383,31 @@ body.dark .caixa-pdv-classic .btn-secundario,
     display: none !important;
   }
 }
+
+/* ==== MOBILE RESPONSIVO ==== */
+@media (max-width: 1024px) {
+  .caixa-pdv-classic { grid-template-columns: 1fr !important; gap: 0.8rem !important; padding: 0.6rem !important; }
+  .pdv-main-grid { grid-template-columns: 1fr !important; gap: 0.6rem !important; }
+  .pdv-main-left, .pdv-main-right { width: 100% !important; min-width: 0 !important; }
+  .pdv-carrinho-footer { position: relative !important; bottom: auto !important; width: 100% !important; }
+}
+@media (max-width: 768px) {
+  .caixa, .caixa-fechado { padding: 0.6rem !important; }
+  .caixa-fechado-card { padding: 1rem !important; width: 95% !important; }
+  .pdv-topbar { flex-wrap: wrap !important; padding: 0.6rem !important; gap: 0.4rem !important; }
+  .pdv-infobar { flex-wrap: wrap !important; padding: 0.5rem !important; gap: 0.4rem !important; }
+  .pdv-info-campo { min-width: 0 !important; flex: 1 1 45% !important; }
+  .pdv-info-campo.pdv-info-cliente { flex: 1 1 100% !important; }
+  .pdv-pagamento-row { flex-direction: column !important; align-items: stretch !important; gap: 0.5rem !important; }
+  .pdv-pagamento-row select, .pdv-pagamento-row input { width: 100% !important; font-size: 1rem !important; padding: 0.7rem !important; }
+  .btn-finalizar, .btn-destaque { padding: 0.9rem 1rem !important; font-size: 1rem !important; width: 100% !important; }
+  .modal-overlay > div, .modal-overlay .modal-content { width: 95% !important; max-width: none !important; margin: 0.5rem auto !important; padding: 1rem !important; }
+  .pdv-atalhos { display: none !important; }
+  .pdv-carrinho-acoes { flex-wrap: wrap !important; gap: 0.4rem !important; }
+  .pdv-carrinho-acoes button { flex: 1 1 30% !important; min-width: 90px !important; }
+}
+@media (max-width: 480px) {
+  .pdv-topbar h1, .pdv-topbar-status { font-size: 0.9rem !important; }
+  .pdv-info-campo label { font-size: 0.7rem !important; }
+  .pdv-info-campo input, .pdv-info-campo span { font-size: 0.9rem !important; }
+}

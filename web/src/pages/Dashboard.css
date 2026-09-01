@@ -243,3 +243,16 @@
     font-size: 1.6rem !important;
   }
 }
+
+/* ==== MOBILE RESPONSIVO ==== */
+@media (max-width: 900px) {
+  .dashboard { padding: 0.8rem !important; }
+  .dashboard-header { text-align: center !important; }
+  .dashboard-cards { grid-template-columns: 1fr !important; gap: 0.8rem !important; }
+  .card { padding: 1rem !important; }
+  .card .card-value { font-size: 1.6rem !important; }
+  .card-info h2, .card-info .card-label { font-size: 0.85rem !important; }
+}
+@media (max-width: 480px) {
+  .card .card-value { font-size: 1.3rem !important; }
+}
