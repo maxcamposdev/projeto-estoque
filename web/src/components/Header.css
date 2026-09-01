@@ -164,3 +164,8 @@
   .mobile-drawer-btn.caixa { border-color: var(--accent); }
   .mobile-drawer-btn.sair { border-color: var(--danger); color: var(--danger); }
 }
+
+/* ==== MOBILE: tema/sair so dentro do drawer ==== */
+@media (max-width: 900px) {
+  .btn-lang, .btn-logout { display: none !important; }
+}
