@@ -111,7 +111,6 @@ async function listarUsuarios(req, res, next) {
     const { rows } = await db.query(
       `SELECT id, name, email, role, unit_id
        FROM users
-       WHERE email = 'teste@teste.com'
        ORDER BY name`
     );
     res.json({ success: true, users: rows });
