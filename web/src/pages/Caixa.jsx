@@ -324,7 +324,7 @@ export default function Caixa() {
               <label>Operador do caixa:</label>
               {meuUsuario && ['gerente', 'admin'].includes(meuUsuario.role) ? (
                 <select value={operatorId || ''} onChange={(e) => setOperatorId(Number(e.target.value))}>
-                  {listaOperadores.filter(u => [2, 14].includes(Number(u.id))).map(u => (
+                  {listaOperadores.filter(u => u.role === 'operador').map(u => (
                     <option key={u.id} value={u.id}>{u.name}{u.id === meuUsuario.id ? ' (você)' : ''}</option>
                   ))}
                 </select>
