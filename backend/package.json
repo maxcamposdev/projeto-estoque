@@ -8,7 +8,13 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js"
   },
-  "keywords": ["estoque", "api", "rest", "portfolio", "maxcamposdev"],
+  "keywords": [
+    "estoque",
+    "api",
+    "rest",
+    "portfolio",
+    "maxcamposdev"
+  ],
   "author": "Max Campos <maxcamposdev@gmail.com> (https://github.com/maxcamposdev)",
   "license": "MIT",
   "dependencies": {
@@ -25,6 +31,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.10",
     "nodemon": "^3.1.4"
   }
 }

@@ -1,0 +1,22 @@
+# fly.toml app configuration file generated for estoque-maxcampos on 2026-09-01T19:28:44-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'estoque-maxcampos'
+primary_region = 'gru'
+
+[build]
+[env]
+  NODE_ENV = 'production'
+  PORT = '3000'
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  min_machines_running = 1
+
+[[vm]]
+  memory = '256mb'
+  cpus = 1
+  memory_mb = 256
