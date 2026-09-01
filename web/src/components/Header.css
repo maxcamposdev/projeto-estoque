@@ -196,3 +196,9 @@
 @media (max-width: 480px) {
   .nav-btn { padding: 0.4rem 0.5rem !important; font-size: 0.75rem !important; }
 }
+
+/* ==== z-index do header acima do overlay ==== */
+.header {
+  position: relative;
+  z-index: 1000;
+}

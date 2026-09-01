@@ -10,3 +10,10 @@
 .caixa-btn-text { font-weight:600; }
 @media (max-width:768px) { .caixa-btn { padding:0.35rem 0.7rem; font-size:0.75rem; } }
 @media (max-width:480px) { .caixa-btn { padding:0.35rem 0.6rem; } .caixa-btn-text { display:none; } }
+
+/* ==== MOBILE: esconder botão flutuante ==== */
+@media (max-width: 768px) {
+  .caixa-btn {
+    display: none !important;
+  }
+}
