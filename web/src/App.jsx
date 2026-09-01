@@ -1,5 +1,5 @@
 // App.jsx — Rotas da aplicação (apenas português)
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -38,7 +38,7 @@ function AuthenticatedLayout({ children }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Layout><Login /></Layout>} />
         <Route path="/dashboard" element={<PrivateRoute><AuthenticatedLayout><Dashboard /></AuthenticatedLayout></PrivateRoute>} />
@@ -55,6 +55,6 @@ export default function App() {
           <Route path="/comunicacao" element={<PrivateRoute><AuthenticatedLayout><Comunicacao /></AuthenticatedLayout></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
