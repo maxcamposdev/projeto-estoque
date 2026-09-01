@@ -119,4 +119,26 @@ async function listarUsuarios(req, res, next) {
   }
 }
 
-module.exports = { register, login, listarUsuarios };
+// Login de demonstração — acesso aberto, sem senha
+async function demoLogin(req, res, next) {
+  try {
+    const { rows } = await db.query(
+      `SELECT id, name, email, role, unit_id FROM users WHERE email = $1 LIMIT 1`,
+      ['admin@estoque.test']
+    );
+    if (rows.length === 0) {
+      return res.status(500).json({ success: false, message: 'Usuário de demonstração não encontrado.' });
+    }
+    const user = rows[0];
+    const token = jwt.sign(
+      { id: user.id, name: user.name, email: user.email, role: user.role, unit_id: user.unit_id },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+    );
+    res.json({ success: true, message: 'Acesso de demonstração!', token, user });
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { register, login, listarUsuarios, demoLogin };

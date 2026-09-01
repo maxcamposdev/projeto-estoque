@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <p className="footer-text">
-          &copy; {new Date().getFullYear()} Max Campos — Todos os direitos reservados.
+          &copy; {new Date().getFullYear()} [Sua Empresa] — Todos os direitos reservados.
         </p>
         <div className="footer-links">
           {/* WhatsApp real — Regra 6: link com ?text= de origem */}
@@ -24,7 +24,7 @@ export default function Footer() {
 
           {/* Instagram real — Regra 6 */}
           <a
-            href="https://instagram.com/maxcamposdev"
+            href="https://www.instagram.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-icon"

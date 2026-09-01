@@ -75,10 +75,7 @@ export default function Login() {
     setError('');
 
     try {
-      const { data } = await api.post('/auth/login', {
-        email: 'maxcamposdev@gmail.com',
-        password: '123456',
-      });
+      const { data } = await api.post('/auth/demo');
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
@@ -97,7 +94,7 @@ export default function Login() {
     'https://wa.me/5541995712235?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20sistema.';
 
   const instagramUrl =
-    'https://www.instagram.com/maxcamposdev/';
+    'https://www.instagram.com/';
 
   return (
     <main className="login-container">

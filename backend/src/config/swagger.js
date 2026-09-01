@@ -7,11 +7,11 @@ const options = {
     info: {
       title: 'API Gestão de estoque para sua empresa',
       version: '1.0.0',
-      description: 'API REST do Sistema de Controle de Estoque — Projeto 04 do Portfólio Max Campos',
+      description: 'API REST do Sistema de Controle de Estoque — Versão de demonstração',
       contact: {
-        name: 'Max Campos',
-        email: 'maxcamposdev@gmail.com',
-        url: 'https://github.com/maxcamposdev',
+        name: '[Sua Empresa]',
+        email: 'contato@suaempresa.test',
+        url: 'https://suaempresa.com',
       },
     },
     servers: [

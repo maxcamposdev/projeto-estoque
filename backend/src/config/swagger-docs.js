@@ -25,7 +25,7 @@
  *           schema:
  *             type: object
  *             properties:
- *               name: { type: string, example: "Max Campos" }
+ *               name: { type: string, example: "Administrador" }
  *               email: { type: string, example: "max@email.com" }
  *               password: { type: string, example: "123456" }
  *     responses:

@@ -62,7 +62,7 @@ export default function Dashboard() {
   }, []);
 
   const isDemo =
-    user?.email === 'maxcamposdev@gmail.com';
+    user?.email === 'admin@estoque.test';
 
   const displayName =
     isDemo
