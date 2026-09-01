@@ -68,9 +68,16 @@ export default function Header() {
           <div className="mobile-drawer-overlay" onClick={() => setMenuOpen(false)} />
           <div className="mobile-drawer">
             <nav className="mobile-drawer-nav">
-              {navItems.map(item => (
-                <button key={item.path} className={'mobile-drawer-link ' + isActive(item.path)} onClick={() => handleNav(item.path)}>{item.label}</button>
-              ))}
+              {isCaixa ? (
+                <>
+                  <button className="mobile-drawer-link" onClick={() => handleNav('/produtos')}>Produtos</button>
+                  <button className="mobile-drawer-link" onClick={() => handleNav('/consulta-estoque')}>Consulta Estoque</button>
+                </>
+              ) : (
+                navItems.map(item => (
+                  <button key={item.path} className={'mobile-drawer-link ' + isActive(item.path)} onClick={() => handleNav(item.path)}>{item.label}</button>
+                ))
+              )}
             </nav>
             <div className="mobile-drawer-actions">
               <button className="mobile-drawer-btn theme" onClick={toggleTheme}>{theme === 'dark' ? '\u2600 Tema Claro' : '\u263e Tema Escuro'}</button>
