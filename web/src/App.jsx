@@ -54,8 +54,6 @@ export default function App() {
         <Route path="/devolucoes" element={<PrivateRoute><AuthenticatedLayout><Devolucoes /></AuthenticatedLayout></PrivateRoute>} />
         <Route path="/consulta-estoque" element={<PrivateRoute><AuthenticatedLayout><ConsultaEstoque /></AuthenticatedLayout></PrivateRoute>} />
         <Route path="/caixa" element={<PrivateRoute><AuthenticatedLayout><Caixa /></AuthenticatedLayout></PrivateRoute>} />
-          <Route path="/rotinas" element={<PrivateRoute><AuthenticatedLayout><Rotinas /></AuthenticatedLayout></PrivateRoute>} />
-        <Route path="/rotinas/:id" element={<PrivateRoute><AuthenticatedLayout><RotinaDetalhes /></AuthenticatedLayout></PrivateRoute>} />
         <Route path="/comunicacao" element={<PrivateRoute><AuthenticatedLayout><Comunicacao /></AuthenticatedLayout></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
