@@ -249,3 +249,14 @@
     width:calc(100vw - 20px)!important
   }
 }
+
+/* fix: X de fechar da notificacao agora e um <button> real, sem herdar estilo nativo */
+.chat-notificacao-fechar{
+  margin-left:auto!important;
+  background:transparent!important;
+  border:0!important;
+  padding:0 4px!important;
+  cursor:pointer!important;
+  color:var(--text-secondary)!important;font-size:18px!important;line-height:1!important
+}
+.chat-notificacao-fechar:hover{color:var(--text-primary)!important}

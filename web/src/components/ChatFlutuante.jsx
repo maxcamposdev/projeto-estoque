@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import api from '../services/api';
 import './ChatFlutuante.css';
 
 function obterUsuario() {
@@ -11,115 +12,512 @@ function obterUsuario() {
   }
 }
 
-const LOJAS = [
-  {
-    id: 1,
-    nome: 'Loja Centro',
-    codigo: 'CENTRO',
-    online: true
-  },
-  {
-    id: 2,
-    nome: 'Loja Norte',
-    codigo: 'NORTE',
-    online: true
-  },
-  {
-    id: 3,
-    nome: 'Loja Sul',
-    codigo: 'SUL',
-    online: false
-  },
-  {
-    id: 4,
-    nome: 'Loja Shopping',
-    codigo: 'SHOPPING',
-    online: true
+function nomeConversa(conversa) {
+  if (!conversa) {
+    return 'Comunicação';
   }
-];
+
+  return (
+    `${conversa.unit_a_name || 'Unidade'} ↔ ` +
+    `${conversa.unit_b_name || 'Unidade'}`
+  );
+}
 
 export default function ChatFlutuante() {
   const usuario = obterUsuario();
 
   const [aberto, setAberto] = useState(false);
-  const [lojaSelecionada, setLojaSelecionada] = useState(null);
 
-  const minhaLoja =
-    usuario?.unit_name ||
-    usuario?.unitName ||
-    'Minha unidade';
+  const [conversas, setConversas] = useState([]);
+  const [unidades, setUnidades] = useState([]);
 
-  function selecionarLoja(loja) {
-    setLojaSelecionada(loja);
+  const [conversaAtual, setConversaAtual] =
+    useState(null);
+
+  const [mensagens, setMensagens] =
+    useState([]);
+
+  const [texto, setTexto] = useState('');
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [erro, setErro] =
+    useState('');
+
+  const [notificacao, setNotificacao] =
+    useState(null);
+
+  const [online, setOnline] =
+    useState(false);
+
+  const inicializado =
+    useRef(false);
+
+  const totalNaoLidasAnterior =
+    useRef(0);
+
+  const timeoutNotificacao =
+    useRef(null);
+
+
+  // ==========================================================
+  // CARREGAR LOJAS
+  // ==========================================================
+
+  const carregarUnidades = useCallback(
+    async () => {
+      try {
+        const response = await api.get(
+          '/comunicacao/unidades'
+        );
+
+        setUnidades(
+          response.data?.unidades || []
+        );
+
+      } catch (error) {
+        console.error(
+          'Erro ao carregar unidades:',
+          error
+        );
+      }
+    },
+    []
+  );
+
+
+  // ==========================================================
+  // CARREGAR CONVERSAS
+  // ==========================================================
+
+  const carregarConversas = useCallback(
+    async () => {
+      try {
+        const response = await api.get(
+          '/comunicacao/conversas'
+        );
+
+        const lista =
+          response.data?.conversas || [];
+
+        const totalNaoLidas =
+          lista.reduce(
+            (total, conversa) =>
+              total +
+              Number(
+                conversa.unread_count || 0
+              ),
+            0
+          );
+
+        // Nova mensagem
+        if (
+          inicializado.current &&
+          totalNaoLidas >
+            totalNaoLidasAnterior.current
+        ) {
+          const novaConversa =
+            lista.find(
+              (conversa) =>
+                Number(
+                  conversa.unread_count || 0
+                ) > 0
+            );
+
+          if (novaConversa) {
+
+            setNotificacao({
+              conversa: novaConversa,
+              texto:
+                novaConversa.last_message ||
+                'Você recebeu uma nova mensagem.'
+            });
+
+            clearTimeout(
+              timeoutNotificacao.current
+            );
+
+            timeoutNotificacao.current =
+              setTimeout(() => {
+                setNotificacao(null);
+              }, 8000);
+          }
+        }
+
+        totalNaoLidasAnterior.current =
+          totalNaoLidas;
+
+        inicializado.current = true;
+
+        setConversas(lista);
+
+        setOnline(true);
+
+      } catch (error) {
+        console.error(
+          'Erro ao carregar comunicação:',
+          error
+        );
+
+        setOnline(false);
+      }
+    },
+    []
+  );
+
+
+  // ==========================================================
+  // INICIALIZAÇÃO
+  // ==========================================================
+
+  useEffect(() => {
+
+    carregarUnidades();
+    carregarConversas();
+
+    const intervalo =
+      setInterval(() => {
+        carregarUnidades();
+        carregarConversas();
+      }, 4000);
+
+    return () => {
+      clearInterval(intervalo);
+
+      clearTimeout(
+        timeoutNotificacao.current
+      );
+    };
+
+  }, [
+    carregarUnidades,
+    carregarConversas
+  ]);
+
+
+  // ==========================================================
+  // ABRIR CONVERSA EXISTENTE
+  // ==========================================================
+
+  async function abrirConversa(conversa) {
+
+    try {
+
+      setErro('');
+
+      setConversaAtual(conversa);
+
+      const response =
+        await api.get(
+          `/comunicacao/conversas/${conversa.id}/mensagens`
+        );
+
+      setMensagens(
+        response.data?.mensagens || []
+      );
+
+      await carregarConversas();
+
+    } catch (error) {
+
+      setErro(
+        error.response?.data?.message ||
+        'Não foi possível carregar as mensagens.'
+      );
+    }
   }
 
-  function voltarParaLojas() {
-    setLojaSelecionada(null);
+
+  // ==========================================================
+  // ABRIR OU CRIAR CONVERSA COM UMA LOJA
+  // ==========================================================
+
+  async function abrirOuCriarConversa(unidade) {
+
+    try {
+
+      setErro('');
+
+      const minhaUnidade =
+        Number(usuario?.unit_id);
+
+      const conversaExistente =
+        conversas.find(
+          (conversa) => {
+
+            const a =
+              Number(
+                conversa.unit_a_id
+              );
+
+            const b =
+              Number(
+                conversa.unit_b_id
+              );
+
+            return (
+              a === Number(unidade.id) &&
+              b === minhaUnidade
+            ) ||
+            (
+              b === Number(unidade.id) &&
+              a === minhaUnidade
+            );
+          }
+        );
+
+      if (conversaExistente) {
+
+        await abrirConversa(
+          conversaExistente
+        );
+
+        return;
+      }
+
+      const response =
+        await api.post(
+          '/comunicacao/conversas',
+          {
+            unit_id:
+              Number(unidade.id)
+          }
+        );
+
+      const novaConversa =
+        response.data?.data;
+
+      await carregarConversas();
+
+      if (novaConversa) {
+
+        await abrirConversa(
+          novaConversa
+        );
+      }
+
+    } catch (error) {
+
+      setErro(
+        error.response?.data?.message ||
+        'Não foi possível iniciar a conversa.'
+      );
+    }
   }
+
+
+  // ==========================================================
+  // ENVIAR MENSAGEM
+  // ==========================================================
+
+  async function enviarMensagem() {
+
+    const mensagem =
+      texto.trim();
+
+    if (
+      !mensagem ||
+      !conversaAtual
+    ) {
+      return;
+    }
+
+    try {
+
+      setLoading(true);
+      setErro('');
+
+      const response =
+        await api.post(
+          `/comunicacao/conversas/${conversaAtual.id}/mensagens`,
+          {
+            message: mensagem
+          }
+        );
+
+      setMensagens(
+        (atual) => [
+          ...atual,
+          response.data.data
+        ]
+      );
+
+      setTexto('');
+
+      await carregarConversas();
+
+    } catch (error) {
+
+      setErro(
+        error.response?.data?.message ||
+        'Não foi possível enviar a mensagem.'
+      );
+
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
+  // ==========================================================
+  // CONTADORES
+  // ==========================================================
+
+  const totalNaoLidas =
+    conversas.reduce(
+      (total, conversa) =>
+        total +
+        Number(
+          conversa.unread_count || 0
+        ),
+      0
+    );
+
+
+  // ==========================================================
+  // MAPA DE CONVERSAS POR UNIDADE
+  // ==========================================================
+
+  const conversasPorUnidade =
+    new Map();
+
+  conversas.forEach(
+    (conversa) => {
+
+      const a =
+        Number(
+          conversa.unit_a_id
+        );
+
+      const b =
+        Number(
+          conversa.unit_b_id
+        );
+
+      const minhaUnidade =
+        Number(
+          usuario?.unit_id
+        );
+
+      const outraUnidade =
+        a === minhaUnidade
+          ? b
+          : a;
+
+      conversasPorUnidade.set(
+        outraUnidade,
+        conversa
+      );
+    }
+  );
+
 
   return (
     <>
-      {/* =====================================================
-          BOTÃO FLUTUANTE
-      ====================================================== */}
+      {/* ======================================================
+          NOTIFICAÇÃO
+      ======================================================= */}
 
-      {!aberto && (
-        <button
-          type="button"
-          className="chat-flutuante-botao"
-          onClick={() => setAberto(true)}
-          aria-label="Abrir comunicação entre unidades"
+      {notificacao && (
+        <div
+          className="chat-notificacao"
+          role="button"
+          tabIndex={0}
+          onClick={() => {
+
+            setAberto(true);
+
+            abrirConversa(
+              notificacao.conversa
+            );
+
+            setNotificacao(null);
+          }}
         >
-          <span className="chat-flutuante-botao-icone">
-            💬
+
+          <span className="chat-notificacao-icone">
+            🔔
           </span>
 
-          <span className="chat-flutuante-botao-badge">
-            Comunicação
+          <span className="chat-notificacao-conteudo">
+
+            <strong>
+              Nova mensagem
+            </strong>
+
+            <small>
+              {nomeConversa(
+                notificacao.conversa
+              )}
+            </small>
+
+            <span>
+              {notificacao.texto}
+            </span>
+
           </span>
-        </button>
+
+          <button
+            type="button"
+            className="chat-notificacao-fechar"
+            aria-label="Fechar notificação"
+            onClick={(e) => {
+              e.stopPropagation();
+              setNotificacao(null);
+            }}
+          >
+            ×
+          </button>
+
+        </div>
       )}
 
-      {/* =====================================================
-          PAINEL
-      ====================================================== */}
+
+      {/* ======================================================
+          JANELA DO CHAT
+      ======================================================= */}
 
       {aberto && (
-        <section className="chat-flutuante-painel">
 
-          {/* =================================================
-              CABEÇALHO
-          ================================================== */}
+        <section
+          className="chat-flutuante-painel"
+        >
 
-          <header className="chat-flutuante-header">
+          <header
+            className="chat-flutuante-header"
+          >
 
-            <div className="chat-flutuante-header-info">
+            <div>
 
-              <div className="chat-flutuante-header-icone">
-                💬
-              </div>
+              <strong>
+                Comunicação
+              </strong>
 
-              <div>
-                <strong>
-                  Comunicação
-                </strong>
+              <span
+                className={
+                  `chat-online-status ${
+                    online
+                      ? 'online'
+                      : 'offline'
+                  }`
+                }
+              >
+                <i />
 
-                <span className="chat-online-status online">
-                  <i />
-                  Comunicação entre unidades
-                </span>
-              </div>
+                {online
+                  ? 'Online'
+                  : 'Reconectando...'}
+              </span>
 
             </div>
 
             <button
               type="button"
               className="chat-fechar"
-              onClick={() => {
-                setAberto(false);
-                setLojaSelecionada(null);
-              }}
-              aria-label="Fechar comunicação"
+              onClick={() =>
+                setAberto(false)
+              }
             >
               ×
             </button>
@@ -127,255 +525,305 @@ export default function ChatFlutuante() {
           </header>
 
 
-          {/* =================================================
-              CONTEÚDO
-          ================================================== */}
-
           <div className="chat-flutuante-corpo">
 
-            {!lojaSelecionada ? (
+            {!conversaAtual ? (
 
               <div className="chat-conversas">
 
-                {/* =============================================
-                    INTRODUÇÃO
-                ============================================== */}
-
-                <div className="chat-comunicacao-intro">
-
-                  <div className="chat-comunicacao-intro-icone">
-                    💬
-                  </div>
-
-                  <div>
-                    <strong>
-                      Comunicação interna
-                    </strong>
-
-                    <p>
-                      Converse com outras lojas
-                      e unidades da empresa.
-                    </p>
-                  </div>
-
-                </div>
-
-
-                {/* =============================================
-                    MINHA UNIDADE
-                ============================================== */}
+                {/* ==================================================
+                    TODAS AS LOJAS
+                =================================================== */}
 
                 <div className="chat-secao-titulo">
-                  Minha unidade
+                  Lojas
                 </div>
 
-                <div className="chat-minha-unidade">
+                {unidades.length === 0 ? (
 
-                  <div className="chat-loja-avatar">
-                    🏪
-                  </div>
-
-                  <div className="chat-loja-info">
-
-                    <strong>
-                      {minhaLoja}
-                    </strong>
+                  <div className="chat-sem-conversas">
 
                     <span>
-                      Unidade atual
+                      💬
                     </span>
+
+                    <strong>
+                      Nenhuma loja disponível
+                    </strong>
+
+                    <small>
+                      Não existem outras unidades ativas.
+                    </small>
 
                   </div>
 
-                  <span className="chat-loja-status">
-                    Você
-                  </span>
+                ) : (
 
-                </div>
+                  unidades.map(
+                    (unidade) => {
+
+                      const conversa =
+                        conversasPorUnidade.get(
+                          Number(
+                            unidade.id
+                          )
+                        );
+
+                      const naoLidas =
+                        Number(
+                          conversa?.unread_count || 0
+                        );
+
+                      return (
+
+                        <button
+                          type="button"
+                          key={
+                            `unidade-${unidade.id}`
+                          }
+                          className="chat-conversa"
+                          onClick={() =>
+                            abrirOuCriarConversa(
+                              unidade
+                            )
+                          }
+                        >
+
+                          <div
+                            className="chat-conversa-topo"
+                          >
+
+                            <strong>
+                              {unidade.name}
+                            </strong>
+
+                            {naoLidas > 0 && (
+
+                              <b>
+                                {naoLidas}
+                              </b>
+
+                            )}
+
+                          </div>
+
+                          <span>
+
+                            {conversa?.last_message ||
+                              'Nova conversa'}
+
+                          </span>
+
+                        </button>
+                      );
+                    }
+                  )
+
+                )}
 
 
-                {/* =============================================
-                    OUTRAS LOJAS
-                ============================================== */}
+                {/* ==================================================
+                    CONVERSAS EXISTENTES
+                =================================================== */}
 
-                <div className="chat-secao-titulo">
-                  Lojas e unidades
-                </div>
+                {conversas.length > 0 && (
 
-                <div className="chat-lista-lojas">
+                  <div
+                    className={
+                      `chat-secao-titulo ` +
+                      `chat-secao-recentes`
+                    }
+                  >
+                    Conversas recentes
+                  </div>
 
-                  {LOJAS
-                    .filter(
-                      (loja) =>
-                        loja.nome !== minhaLoja
-                    )
-                    .map((loja) => (
+                )}
+
+                {conversas
+                  .slice(0, 5)
+                  .map(
+                    (conversa) => (
 
                       <button
                         type="button"
-                        key={loja.id}
-                        className="chat-loja"
+                        key={
+                          `conversa-${conversa.id}`
+                        }
+                        className="chat-conversa"
                         onClick={() =>
-                          selecionarLoja(loja)
+                          abrirConversa(
+                            conversa
+                          )
                         }
                       >
 
-                        <div className="chat-loja-avatar">
-                          🏪
-                        </div>
-
-                        <div className="chat-loja-info">
+                        <div
+                          className="chat-conversa-topo"
+                        >
 
                           <strong>
-                            {loja.nome}
+                            {nomeConversa(
+                              conversa
+                            )}
                           </strong>
 
-                          <span>
-                            Unidade {loja.codigo}
-                          </span>
+                          {Number(
+                            conversa.unread_count || 0
+                          ) > 0 && (
+
+                            <b>
+                              {
+                                conversa.unread_count
+                              }
+                            </b>
+
+                          )}
 
                         </div>
 
-                        <div className="chat-loja-direita">
-
-                          <span
-                            className={
-                              `chat-loja-online ${
-                                loja.online
-                                  ? 'online'
-                                  : 'offline'
-                              }`
-                            }
-                          >
-                            <i />
-
-                            {loja.online
-                              ? 'Online'
-                              : 'Offline'}
-                          </span>
-
-                          <span className="chat-loja-seta">
-                            ›
-                          </span>
-
-                        </div>
+                        <span>
+                          {conversa.last_message ||
+                            'Nenhuma mensagem ainda'}
+                        </span>
 
                       </button>
 
-                    ))}
-
-                </div>
-
-
-                {/* =============================================
-                    AVISO
-                ============================================== */}
-
-                <div className="chat-comunicacao-info">
-
-                  <span>
-                    ℹ️
-                  </span>
-
-                  <p>
-                    Use a comunicação interna para
-                    trocar informações com outras
-                    unidades de forma rápida e organizada.
-                  </p>
-
-                </div>
+                    )
+                  )}
 
               </div>
 
             ) : (
 
-              /* =================================================
-                 TELA DA LOJA SELECIONADA
-              ================================================== */
+              <div
+                className="chat-flutuante-conversa"
+              >
 
-              <div className="chat-flutuante-conversa">
-
-                <div className="chat-conversa-barra">
+                <div
+                  className="chat-conversa-barra"
+                >
 
                   <button
                     type="button"
-                    onClick={voltarParaLojas}
-                    aria-label="Voltar para lojas"
+                    onClick={() =>
+                      setConversaAtual(null)
+                    }
                   >
                     ←
                   </button>
 
-                  <div className="chat-conversa-barra-loja">
-
-                    <div className="chat-loja-avatar pequeno">
-                      🏪
-                    </div>
-
-                    <div>
-                      <strong>
-                        {lojaSelecionada.nome}
-                      </strong>
-
-                      <span>
-                        Unidade {lojaSelecionada.codigo}
-                      </span>
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-                {/* =============================================
-                    ESTADO DEMONSTRATIVO
-                ============================================== */}
-
-                <div className="chat-demonstracao">
-
-                  <div className="chat-demonstracao-icone">
-                    💬
-                  </div>
-
                   <strong>
-                    Comunicação disponível
+                    {nomeConversa(
+                      conversaAtual
+                    )}
                   </strong>
 
-                  <p>
-                    Aqui você poderá conversar
-                    diretamente com a equipe da{' '}
-                    <b>
-                      {lojaSelecionada.nome}
-                    </b>.
-                  </p>
+                </div>
 
-                  <div className="chat-demonstracao-status">
 
-                    <span>
-                      <i />
-                      {lojaSelecionada.online
-                        ? 'Unidade online'
-                        : 'Unidade offline'}
-                    </span>
+                {erro && (
 
+                  <div className="chat-erro">
+                    ⚠️ {erro}
                   </div>
+
+                )}
+
+
+                <div className="chat-mensagens">
+
+                  {mensagens.map(
+                    (mensagem) => {
+
+                      const propria =
+                        Number(
+                          usuario?.id
+                        ) ===
+                        Number(
+                          mensagem.user_id
+                        );
+
+                      return (
+
+                        <div
+                          key={
+                            mensagem.id
+                          }
+                          className={
+                            `chat-mensagem ${
+                              propria
+                                ? 'propria'
+                                : 'outra'
+                            }`
+                          }
+                        >
+
+                          <small>
+                            {mensagem.user_name ||
+                              'Usuário'}
+                          </small>
+
+                          <div>
+                            {mensagem.message}
+                          </div>
+
+                          <time>
+                            {new Date(
+                              mensagem.created_at
+                            ).toLocaleTimeString(
+                              'pt-BR',
+                              {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              }
+                            )}
+                          </time>
+
+                        </div>
+
+                      );
+                    }
+                  )}
 
                 </div>
 
 
-                {/* =============================================
-                    CAMPO VISUAL
-                ============================================== */}
+                <div
+                  className="chat-flutuante-composer"
+                >
 
-                <div className="chat-composicao-demo">
+                  <textarea
+                    value={texto}
+                    onChange={(e) =>
+                      setTexto(
+                        e.target.value
+                      )
+                    }
+                    onKeyDown={(e) => {
 
-                  <div className="chat-input-demo">
-                    Digite uma mensagem...
-                  </div>
+                      if (
+                        e.key === 'Enter' &&
+                        !e.shiftKey
+                      ) {
+                        e.preventDefault();
+
+                        enviarMensagem();
+                      }
+
+                    }}
+                    placeholder="Digite uma mensagem..."
+                    rows="1"
+                  />
 
                   <button
                     type="button"
-                    className="chat-enviar-demo"
-                    title="Comunicação"
+                    onClick={
+                      enviarMensagem
+                    }
+                    disabled={
+                      loading ||
+                      !texto.trim()
+                    }
                   >
                     ➤
                   </button>
@@ -390,6 +838,54 @@ export default function ChatFlutuante() {
 
         </section>
       )}
+
+
+      {/* ======================================================
+          BOTÃO FLUTUANTE
+      ======================================================= */}
+
+      <button
+        type="button"
+        className={
+          `chat-flutuante-botao ${
+            aberto
+              ? 'chat-botao-aberto'
+              : ''
+          } ${
+            totalNaoLidas > 0
+              ? 'chat-tem-novas'
+              : ''
+          }`
+        }
+        onClick={() => {
+
+          setNotificacao(null);
+
+          setAberto(
+            (atual) => !atual
+          );
+        }}
+        aria-label={aberto ? 'Fechar comunicação' : 'Abrir comunicação'}
+      >
+
+        <span className="chat-botao-icone">
+          💬
+        </span>
+
+        {totalNaoLidas > 0 && (
+
+          <span className="chat-badge">
+
+            {totalNaoLidas > 99
+              ? '99+'
+              : totalNaoLidas}
+
+          </span>
+
+        )}
+
+      </button>
+
     </>
   );
 }
