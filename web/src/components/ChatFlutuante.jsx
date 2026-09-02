@@ -27,6 +27,10 @@ export default function ChatFlutuante() {
   const usuario = obterUsuario();
 
   const [aberto, setAberto] = useState(false);
+  const [lojaDemoSelecionada, setLojaDemoSelecionada] = useState(null);
+  const [mensagemDemo, setMensagemDemo] = useState('');
+  const [mensagensDemo, setMensagensDemo] = useState({});
+
 
   const [conversas, setConversas] = useState([]);
   const [unidades, setUnidades] = useState([]);
@@ -474,6 +478,144 @@ export default function ChatFlutuante() {
       )}
 
 
+
+      {lojaDemoSelecionada && (
+        <section className="chat-demo-janela">
+
+          <header className="chat-demo-header">
+
+            <button
+              type="button"
+              className="chat-demo-voltar"
+              onClick={() => setLojaDemoSelecionada(null)}
+            >
+              ←
+            </button>
+
+            <div className="chat-demo-header-info">
+
+              <span className="chat-demo-avatar">
+                🏪
+              </span>
+
+              <div>
+                <strong>
+                  {lojaDemoSelecionada.nome}
+                </strong>
+
+                <small>
+                  <i />
+                  {lojaDemoSelecionada.status}
+                </small>
+              </div>
+
+            </div>
+
+            <button
+              type="button"
+              className="chat-demo-fechar"
+              onClick={() => setLojaDemoSelecionada(null)}
+            >
+              ×
+            </button>
+
+          </header>
+
+          <div className="chat-demo-mensagens">
+
+            <div className="chat-demo-aviso">
+              <span>🏪</span>
+              <strong>
+                Comunicação entre lojas
+              </strong>
+              <small>
+                Esta é uma demonstração da conversa.
+              </small>
+            </div>
+
+            <div className="chat-demo-mensagem outra">
+              <small>
+                {lojaDemoSelecionada.nome}
+              </small>
+              <div>
+                Olá! Como podemos ajudar?
+              </div>
+              <time>
+                agora
+              </time>
+            </div>
+
+            {(mensagensDemo[lojaDemoSelecionada.id] || []).map(
+              (msg, index) => (
+                <div
+                  key={index}
+                  className="chat-demo-mensagem propria"
+                >
+                  <div>{msg}</div>
+                  <time>agora</time>
+                </div>
+              )
+            )}
+
+          </div>
+
+          <div className="chat-demo-composer">
+
+            <input
+              value={mensagemDemo}
+              onChange={(e) => setMensagemDemo(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && mensagemDemo.trim()) {
+
+                  e.preventDefault();
+
+                  const id = lojaDemoSelecionada.id;
+                  const texto = mensagemDemo.trim();
+
+                  setMensagensDemo((atual) => ({
+                    ...atual,
+                    [id]: [
+                      ...(atual[id] || []),
+                      texto
+                    ]
+                  }));
+
+                  setMensagemDemo('');
+                }
+              }}
+              placeholder="Digite uma mensagem..."
+            />
+
+            <button
+              type="button"
+              disabled={!mensagemDemo.trim()}
+              onClick={() => {
+
+                const id = lojaDemoSelecionada.id;
+                const texto = mensagemDemo.trim();
+
+                if (!texto) return;
+
+                setMensagensDemo((atual) => ({
+                  ...atual,
+                  [id]: [
+                    ...(atual[id] || []),
+                    texto
+                  ]
+                }));
+
+                setMensagemDemo('');
+              }}
+            >
+              ➤
+            </button>
+
+          </div>
+
+        </section>
+      )}
+
+
       {/* ======================================================
           JANELA DO CHAT
       ======================================================= */}
@@ -552,7 +694,7 @@ export default function ChatFlutuante() {
                       type="button"
                       key={loja.id}
                       className="chat-loja-demo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => setLojaDemoSelecionada(loja)}
                     >
 
                       <span className="chat-loja-demo-icone">
