@@ -597,54 +597,31 @@
 }
 
 /* ============================================================
+   POSIÇÃO DO CHAT
+   ============================================================ */
+
+.chat-flutuante-botao {
+  right: 18px;
+  bottom: 10px;
+}
+
+.chat-flutuante-painel {
+  right: 18px;
+  bottom: 78px;
+}
+
+.chat-notificacao {
+  right: 18px;
+  bottom: 78px;
+}
+
+/* ============================================================
    MOBILE
    ============================================================ */
 
 @media (max-width: 600px) {
 
   .chat-flutuante-botao {
-    right: 16px;
-    bottom: 16px;
-  }
-
-  .chat-flutuante-painel {
-    right: 16px;
-    bottom: 82px;
-
-    width: calc(100vw - 32px);
-    height: min(540px, calc(100vh - 105px));
-  }
-
-  .chat-notificacao {
-    right: 16px;
-    bottom: 82px;
-
-    width: calc(100vw - 32px);
-  }
-}
-
-/* ============================================================
-   POSIÇÃO — CANTO INFERIOR
-   ============================================================ */
-
-.chat-flutuante-botao {
-  right: 18px !important;
-  bottom: 10px !important;
-}
-
-.chat-flutuante-painel {
-  right: 18px !important;
-  bottom: 78px !important;
-}
-
-.chat-notificacao {
-  right: 18px !important;
-  bottom: 78px !important;
-}
-
-@media (max-width: 600px) {
-
-  .chat-flutuante-botao {
     right: 12px !important;
     bottom: 8px !important;
   }
@@ -652,48 +629,14 @@
   .chat-flutuante-painel {
     right: 12px !important;
     bottom: 70px !important;
+    width: calc(100vw - 24px);
+    height: min(540px, calc(100vh - 90px));
   }
 
   .chat-notificacao {
     right: 12px !important;
     bottom: 70px !important;
-  }
-}
-
-/* ============================================================
-   POSIÇÃO — CANTO INFERIOR
-   ============================================================ */
-
-.chat-flutuante-botao {
-  right: 18px !important;
-  bottom: 10px !important;
-}
-
-.chat-flutuante-painel {
-  right: 18px !important;
-  bottom: 78px !important;
-}
-
-.chat-notificacao {
-  right: 18px !important;
-  bottom: 78px !important;
-}
-
-@media (max-width: 600px) {
-
-  .chat-flutuante-botao {
-    right: 12px !important;
-    bottom: 8px !important;
-  }
-
-  .chat-flutuante-painel {
-    right: 12px !important;
-    bottom: 70px !important;
-  }
-
-  .chat-notificacao {
-    right: 12px !important;
-    bottom: 70px !important;
+    width: calc(100vw - 24px);
   }
 }
 
@@ -703,25 +646,20 @@
 
 .chat-secao-titulo {
   padding: 10px 14px 6px;
-
   color: var(--text-secondary);
-
   font-size: 10px;
   font-weight: 800;
-
   text-transform: uppercase;
   letter-spacing: .04em;
 }
 
 .chat-secao-recentes {
   margin-top: 4px;
-
   border-top: 1px solid var(--border);
 }
 
 .chat-conversa {
-  transition:
-    background .15s ease;
+  transition: background .15s ease;
 }
 
 .chat-conversa:hover {
