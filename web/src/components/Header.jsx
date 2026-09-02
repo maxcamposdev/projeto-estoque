@@ -44,6 +44,7 @@ export default function Header() {
     { path: '/fornecedores', label: 'Fornecedores' },
     { path: '/transferencias', label: 'Transferencias' },
     { path: '/devolucoes', label: 'Devolucoes' },
+    { path: '/rotinas', label: 'Rotinas' },
   ];
 
   return (
