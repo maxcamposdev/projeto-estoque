@@ -1,4 +1,3 @@
-# scripts/migrate-sales-v2.js -- Adiciona colunas que faltam nas tabelas de vendas
 require('dotenv').config();
 const db = require('../src/config/db');
 
