@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import './Rotinas.css';
 
 export default function Rotinas() {
+  const navigate = useNavigate();
   const [rotinas, setRotinas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [nome, setNome] = useState('');
@@ -49,7 +51,7 @@ export default function Rotinas() {
   }
 
   function abrirRotina(id) {
-    window.location.hash = `/rotinas/${id}`;
+    navigate(`/rotinas/${id}`);
   }
 
   return (

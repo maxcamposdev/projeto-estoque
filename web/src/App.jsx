@@ -14,6 +14,7 @@ import Devolucoes from './pages/Devolucoes';
 import ConsultaEstoque from './pages/ConsultaEstoque';
 import Comunicacao from './pages/Comunicacao';
 import Rotinas from './pages/Rotinas';
+import RotinaDetalhes from './pages/RotinaDetalhes';
 import Caixa from './pages/Caixa';
 import ChatFlutuante from './components/ChatFlutuante';
 import CaixaFlutuante from './components/CaixaFlutuante';
@@ -54,6 +55,7 @@ export default function App() {
         <Route path="/consulta-estoque" element={<PrivateRoute><AuthenticatedLayout><ConsultaEstoque /></AuthenticatedLayout></PrivateRoute>} />
         <Route path="/caixa" element={<PrivateRoute><AuthenticatedLayout><Caixa /></AuthenticatedLayout></PrivateRoute>} />
           <Route path="/rotinas" element={<PrivateRoute><AuthenticatedLayout><Rotinas /></AuthenticatedLayout></PrivateRoute>} />
+        <Route path="/rotinas/:id" element={<PrivateRoute><AuthenticatedLayout><RotinaDetalhes /></AuthenticatedLayout></PrivateRoute>} />
         <Route path="/comunicacao" element={<PrivateRoute><AuthenticatedLayout><Comunicacao /></AuthenticatedLayout></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
