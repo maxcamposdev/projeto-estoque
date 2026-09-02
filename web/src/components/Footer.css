@@ -35,3 +35,7 @@
 .footer-icon:hover {
   color: var(--accent);
 }
+
+@media (max-width: 600px) {
+  .footer { padding-bottom: 5rem !important; }
+}

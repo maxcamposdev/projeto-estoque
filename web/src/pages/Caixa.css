@@ -3411,3 +3411,21 @@ body.dark .caixa-pdv-classic .btn-secundario,
   .pdv-info-campo label { font-size: 0.7rem !important; }
   .pdv-info-campo input, .pdv-info-campo span { font-size: 0.9rem !important; }
 }
+
+/* ==== Recibo e modais — adapta ao tema ==== */
+:root[data-theme='dark'] .modal-content,
+:root[data-theme='dark'] .recibo {
+  background: #1f2937 !important;
+  color: #f3f4f6 !important;
+}
+:root[data-theme='dark'] .modal-content input,
+:root[data-theme='dark'] .modal-content p,
+:root[data-theme='dark'] .modal-content li,
+:root[data-theme='dark'] .recibo h2,
+:root[data-theme='dark'] .recibo p,
+:root[data-theme='dark'] .recibo li {
+  color: #f3f4f6 !important;
+}
+:root[data-theme='dark'] .modal-content hr { border-color: #4b5563 !important; }
+:root[data-theme='dark'] .venda-item { background: #374151 !important; color: #f3f4f6 !important; }
+:root[data-theme='dark'] .modal-content input { background: #374151 !important; border-color: #4b5563 !important; }
