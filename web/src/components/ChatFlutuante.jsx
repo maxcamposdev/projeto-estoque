@@ -532,94 +532,55 @@ export default function ChatFlutuante() {
               <div className="chat-conversas">
 
                 {/* ==================================================
-                    TODAS AS LOJAS
+                    TODAS AS LOJAS — DEMONSTRAÇÃO
                 =================================================== */}
 
                 <div className="chat-secao-titulo">
                   Lojas
                 </div>
 
-                {unidades.length === 0 ? (
+                <div className="chat-lojas-demo">
 
-                  <div className="chat-sem-conversas">
+                  {[
+                    { id: 1, nome: 'Loja Centro', status: 'Online' },
+                    { id: 2, nome: 'Loja Norte', status: 'Online' },
+                    { id: 3, nome: 'Loja Sul', status: 'Online' },
+                    { id: 4, nome: 'Loja Shopping', status: 'Online' }
+                  ].map((loja) => (
 
-                    <span>
-                      💬
-                    </span>
+                    <button
+                      type="button"
+                      key={loja.id}
+                      className="chat-loja-demo"
+                      onClick={(e) => e.preventDefault()}
+                    >
 
-                    <strong>
-                      Nenhuma loja disponível
-                    </strong>
+                      <span className="chat-loja-demo-icone">
+                        🏪
+                      </span>
 
-                    <small>
-                      Não existem outras unidades ativas.
-                    </small>
+                      <span className="chat-loja-demo-info">
 
-                  </div>
+                        <strong>
+                          {loja.nome}
+                        </strong>
 
-                ) : (
+                        <small>
+                          <i />
+                          {loja.status}
+                        </small>
 
-                  unidades.map(
-                    (unidade) => {
+                      </span>
 
-                      const conversa =
-                        conversasPorUnidade.get(
-                          Number(
-                            unidade.id
-                          )
-                        );
+                      <span className="chat-loja-demo-seta">
+                        ›
+                      </span>
 
-                      const naoLidas =
-                        Number(
-                          conversa?.unread_count || 0
-                        );
+                    </button>
 
-                      return (
+                  ))}
 
-                        <button
-                          type="button"
-                          key={
-                            `unidade-${unidade.id}`
-                          }
-                          className="chat-conversa"
-                          onClick={() =>
-                            abrirOuCriarConversa(
-                              unidade
-                            )
-                          }
-                        >
-
-                          <div
-                            className="chat-conversa-topo"
-                          >
-
-                            <strong>
-                              {unidade.name}
-                            </strong>
-
-                            {naoLidas > 0 && (
-
-                              <b>
-                                {naoLidas}
-                              </b>
-
-                            )}
-
-                          </div>
-
-                          <span>
-
-                            {conversa?.last_message ||
-                              'Nova conversa'}
-
-                          </span>
-
-                        </button>
-                      );
-                    }
-                  )
-
-                )}
+                </div>
 
 
                 {/* ==================================================
