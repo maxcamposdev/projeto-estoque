@@ -12,7 +12,21 @@ const app = express();
 
 // Segurança básica
 app.use(helmet());
-app.use(cors({ origin: process.env.WEB_URL || '*', credentials: true }));
+const allowedOrigins = (process.env.WEB_URL || 'http://localhost:5173')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Origem não permitida pelo CORS.'));
+  },
+  credentials: true,
+}));
 
 // Parse de JSON com captura do corpo cru (para assinatura do webhook WhatsApp)
 app.use(express.json({

@@ -247,10 +247,235 @@ async function concluirTarefa(req, res, next) {
   }
 }
 
+
+async function listarUsuariosParaAtribuicao(req, res, next) {
+  try {
+    const result = await db.query(`
+      SELECT
+        u.id,
+        u.name,
+        u.email,
+        u.role,
+        u.unit_id,
+        un.name AS unit_name
+      FROM users u
+      LEFT JOIN units un ON un.id = u.unit_id
+      ORDER BY u.name ASC
+    `);
+
+    res.json(result.rows);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function listarAtribuicoes(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const rotina = await db.query(
+      `SELECT id FROM routines WHERE id = $1`,
+      [id]
+    );
+
+    if (rotina.rows.length === 0) {
+      return res.status(404).json({
+        error: 'Rotina não encontrada.',
+      });
+    }
+
+    const result = await db.query(`
+      SELECT
+        ra.id AS assignment_id,
+        ra.routine_id,
+        ra.user_id,
+        ra.start_date,
+        ra.end_date,
+        ra.active,
+        u.name,
+        u.email,
+        u.role,
+        u.unit_id,
+        un.name AS unit_name
+      FROM routine_assignments ra
+      INNER JOIN users u ON u.id = ra.user_id
+      LEFT JOIN units un ON un.id = u.unit_id
+      WHERE ra.routine_id = $1
+        AND ra.active = TRUE
+      ORDER BY u.name ASC
+    `, [id]);
+
+    res.json(result.rows);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function atribuirRotina(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { user_id, start_date, end_date } = req.body;
+
+    if (!user_id) {
+      return res.status(400).json({
+        error: 'Funcionário é obrigatório.',
+      });
+    }
+
+    const rotina = await db.query(
+      `SELECT id FROM routines WHERE id = $1`,
+      [id]
+    );
+
+    if (rotina.rows.length === 0) {
+      return res.status(404).json({
+        error: 'Rotina não encontrada.',
+      });
+    }
+
+    const usuario = await db.query(
+      `SELECT id, name, email, role FROM users WHERE id = $1`,
+      [user_id]
+    );
+
+    if (usuario.rows.length === 0) {
+      return res.status(404).json({
+        error: 'Usuário não encontrado.',
+      });
+    }
+
+    const dataInicio = start_date || new Date().toISOString().slice(0, 10);
+
+    const existente = await db.query(`
+      SELECT id
+      FROM routine_assignments
+      WHERE routine_id = $1
+        AND user_id = $2
+        AND start_date = $3
+    `, [id, user_id, dataInicio]);
+
+    if (existente.rows.length > 0) {
+      return res.status(409).json({
+        error: 'Este usuário já está atribuído a esta rotina nesta data.',
+      });
+    }
+
+    const result = await db.query(`
+      INSERT INTO routine_assignments
+        (routine_id, user_id, start_date, end_date, active)
+      VALUES
+        ($1, $2, $3, $4, TRUE)
+      RETURNING *
+    `, [
+      id,
+      user_id,
+      dataInicio,
+      end_date || null,
+    ]);
+
+    res.status(201).json({
+      ...result.rows[0],
+      user: usuario.rows[0],
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function removerAtribuicao(req, res, next) {
+  try {
+    const { id, userId } = req.params;
+
+    const result = await db.query(`
+      UPDATE routine_assignments
+      SET active = FALSE,
+          end_date = COALESCE(end_date, CURRENT_DATE)
+      WHERE routine_id = $1
+        AND user_id = $2
+        AND active = TRUE
+      RETURNING *
+    `, [id, userId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: 'Atribuição ativa não encontrada.',
+      });
+    }
+
+    res.json({
+      success: true,
+      assignment: result.rows[0],
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function minhasRotinas(req, res, next) {
+  try {
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: 'Usuário não autenticado.',
+      });
+    }
+
+    const result = await db.query(`
+      SELECT
+        r.*,
+        ra.id AS assignment_id,
+        ra.start_date,
+        ra.end_date,
+        COUNT(DISTINCT rt.id)::int AS total_tarefas,
+        COUNT(
+          DISTINCT CASE
+            WHEN rtc.completed = TRUE
+             AND rtc.execution_date = CURRENT_DATE
+            THEN rt.id
+          END
+        )::int AS tarefas_concluidas
+      FROM routine_assignments ra
+      INNER JOIN routines r
+        ON r.id = ra.routine_id
+      LEFT JOIN routine_tasks rt
+        ON rt.routine_id = r.id
+       AND rt.active = TRUE
+      LEFT JOIN routine_task_completions rtc
+        ON rtc.task_id = rt.id
+       AND rtc.user_id = $1
+       AND rtc.execution_date = CURRENT_DATE
+      WHERE ra.user_id = $1
+        AND ra.active = TRUE
+        AND r.active = TRUE
+        AND ra.start_date <= CURRENT_DATE
+        AND (
+          ra.end_date IS NULL
+          OR ra.end_date >= CURRENT_DATE
+        )
+      GROUP BY
+        r.id,
+        ra.id,
+        ra.start_date,
+        ra.end_date
+      ORDER BY r.name ASC
+    `, [userId]);
+
+    res.json(result.rows);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   listarRotinas,
   buscarRotina,
   criarRotina,
   criarTarefa,
   concluirTarefa,
+  listarUsuariosParaAtribuicao,
+  listarAtribuicoes,
+  atribuirRotina,
+  removerAtribuicao,
+  minhasRotinas,
 };
