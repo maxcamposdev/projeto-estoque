@@ -2,66 +2,87 @@
 
 Sistema de gestão operacional de estoque desenvolvido para conectar colaboradores, administração e sistema web.
 
+🌐 **Acesse o projeto online:**  
+https://maxcamposdev.github.io/projeto-estoque/
+
 ## Sobre o projeto
 
 Aplicativo mobile criado para profissionais que trabalham diretamente com produtos e rotinas de estoque.
 
+A plataforma foi desenvolvida para facilitar o controle das operações, permitindo integração entre equipe de estoque, administração e sistema web.
+
 ## Funcionalidades
 
-### 📦 Recebimento
+### 📦 Recepção
+
 - Visualização de notas programadas
-- Conferência de mercadorias
+- Recebimento de mercadorias
 - Entrada de produtos
 - Registro da operação no sistema
 
 ### 🛒 Reposição
+
 - Lista de produtos para abastecimento
 - Organização da área de venda
 - Controle de exposição dos produtos
 
 ### 🏷️ Atualização de preços
+
 - Produtos enviados pela administração
 - Atualização de valores
 - Controle de etiquetas
 
 ### 🔄 Movimentações
+
 - Registro de operações do estoque
 - Controle de alterações realizadas
 
 ### 💬 Comunicação
-- Contato com administração
-- Avisos operacionais
+
+- Contato com a administração
+- Avisos e informações operacionais
 
 ## Tecnologias
 
-### Mobile
+### 📱 Mobile
+
 - React Native
 - Expo
-- React Navigation
+- Navegação React
 - Axios
 
-### Backend
+### ⚙️ Backend
+
 - Node.js
 - API REST
 - Integração com sistema administrativo
 
+### 🌐 Web Administrativo
+
+- React
+- JavaScript
+- Interface responsiva
+- Integração com API
+
 ## Arquitetura
 
-Aplicativo Mobile  
-⬇️  
-API Backend  
-⬇️  
-Sistema Web Administrativo  
-⬇️  
+```
+Aplicativo Mobile
+        ⬇️
+API Backend
+        ⬇️
+Sistema Web Administrativo
+        ⬇️
 Banco de Dados
+```
 
 ## Objetivo
 
-Criar uma plataforma integrada onde as ações realizadas no estoque atualizam o sistema administrativo e permitem acompanhamento das operações.
+Criar uma plataforma integrada onde as ações realizadas no estoque atualizam o sistema administrativo, permitindo maior controle das operações, acompanhamento das movimentações e organização das compras.
 
 ## Desenvolvedor
 
-Max Campos
+**Max Campos**
 
-GitHub:
-https://github.com/maxcamposdev
+Projeto online:
+https://maxcamposdev.github.io/projeto-estoque/
