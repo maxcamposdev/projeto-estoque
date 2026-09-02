@@ -13,7 +13,6 @@ import Transferencias from './pages/Transferencias';
 import Devolucoes from './pages/Devolucoes';
 import ConsultaEstoque from './pages/ConsultaEstoque';
 import Comunicacao from './pages/Comunicacao';
-import Rotinas from './pages/Rotinas';
 import RotinaDetalhes from './pages/RotinaDetalhes';
 import Caixa from './pages/Caixa';
 import ChatFlutuante from './components/ChatFlutuante';
