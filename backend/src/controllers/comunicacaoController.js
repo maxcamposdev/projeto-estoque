@@ -137,7 +137,7 @@ exports.criarConversa = async (req, res, next) => {
       FROM units
       WHERE
         id = $1
-        AND status = 'ACTIVE'
+        AND active = true
     `, [outraUnidadeId]);
 
     if (unidade.rows.length === 0) {
@@ -403,7 +403,7 @@ exports.unidades = async (req, res, next) => {
         name
       FROM units
       WHERE
-        status = 'ACTIVE'
+        active = true
         AND id <> $1
       ORDER BY name
     `, [unitId]);
