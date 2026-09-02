@@ -48,3 +48,53 @@ CREATE TABLE IF NOT EXISTS stock_movements (
 CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id);
 CREATE INDEX IF NOT EXISTS idx_movements_product ON stock_movements(product_id);
 CREATE INDEX IF NOT EXISTS idx_movements_created ON stock_movements(created_at);
+-- ============================================================
+-- COMUNICAÇÃO ENTRE UNIDADES
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS internal_conversations (
+    id SERIAL PRIMARY KEY,
+    unit_a_id INTEGER NOT NULL REFERENCES units(id) ON DELETE CASCADE,
+    unit_b_id INTEGER NOT NULL REFERENCES units(id) ON DELETE CASCADE,
+    created_by INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+
+    transfer_request_id INTEGER,
+    purchase_order_id INTEGER,
+    purchase_return_id INTEGER,
+
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT internal_conversations_units_different
+        CHECK (unit_a_id <> unit_b_id)
+);
+
+CREATE TABLE IF NOT EXISTS internal_conversation_messages (
+    id SERIAL PRIMARY KEY,
+    conversation_id INTEGER NOT NULL
+        REFERENCES internal_conversations(id) ON DELETE CASCADE,
+    user_id INTEGER NOT NULL
+        REFERENCES users(id) ON DELETE CASCADE,
+    message TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    read_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS internal_conversations_unit_a_idx
+    ON internal_conversations(unit_a_id);
+
+CREATE INDEX IF NOT EXISTS internal_conversations_unit_b_idx
+    ON internal_conversations(unit_b_id);
+
+CREATE UNIQUE INDEX IF NOT EXISTS internal_conversations_units_unique
+    ON internal_conversations(unit_a_id, unit_b_id)
+    WHERE transfer_request_id IS NULL
+      AND purchase_order_id IS NULL
+      AND purchase_return_id IS NULL;
+
+CREATE INDEX IF NOT EXISTS internal_conversation_messages_conversation_idx
+    ON internal_conversation_messages(conversation_id, created_at);
+
+CREATE INDEX IF NOT EXISTS internal_conversation_messages_unread_idx
+    ON internal_conversation_messages(conversation_id, read_at)
+    WHERE read_at IS NULL;

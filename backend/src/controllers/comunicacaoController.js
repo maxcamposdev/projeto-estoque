@@ -5,6 +5,10 @@ function minhaUnidade(req) {
   return Number.isInteger(id) && id > 0 ? id : null;
 }
 
+function ehAdmin(req) {
+  return req.user?.role === 'admin';
+}
+
 
 // ============================================================
 // LISTAR CONVERSAS
@@ -13,14 +17,24 @@ function minhaUnidade(req) {
 exports.listarConversas = async (req, res, next) => {
   try {
     const unitId = minhaUnidade(req);
+    const admin = ehAdmin(req);
 
-    if (!unitId) {
+    if (!unitId && !admin) {
       return res.status(409).json({
         success: false,
-        message:
-          'Usuário sem unidade vinculada.'
+        message: 'Usuário sem unidade vinculada.'
       });
     }
+
+    const filtro =
+      admin
+        ? ''
+        : 'AND (c.unit_a_id = $2 OR c.unit_b_id = $2)';
+
+    const params =
+      admin
+        ? [Number(req.user.id)]
+        : [Number(req.user.id), unitId];
 
     const result = await db.query(`
       SELECT
@@ -72,9 +86,8 @@ exports.listarConversas = async (req, res, next) => {
       INNER JOIN units ub
         ON ub.id = c.unit_b_id
 
-      WHERE
-        c.unit_a_id = $2
-        OR c.unit_b_id = $2
+      WHERE 1 = 1
+        ${filtro}
 
       ORDER BY
         COALESCE(
@@ -85,17 +98,13 @@ exports.listarConversas = async (req, res, next) => {
           ),
           c.updated_at
         ) DESC
-    `, [
-      Number(req.user.id),
-      unitId
-    ]);
+    `, params);
 
     res.json({
       success: true,
       conversas: result.rows.map((item) => ({
         ...item,
-        unread_count:
-          Number(item.unread_count || 0)
+        unread_count: Number(item.unread_count || 0)
       }))
     });
 
@@ -112,19 +121,26 @@ exports.listarConversas = async (req, res, next) => {
 exports.criarConversa = async (req, res, next) => {
   try {
     const unitId = minhaUnidade(req);
+    const admin = ehAdmin(req);
 
     const outraUnidadeId =
       Number(req.body?.unit_id);
 
-    if (!unitId || !Number.isInteger(outraUnidadeId)) {
-      return res.status(400).json({
+    if (!admin && !unitId) {
+      return res.status(409).json({
         success: false,
-        message:
-          'Informe uma unidade válida.'
+        message: 'Usuário sem unidade vinculada.'
       });
     }
 
-    if (unitId === outraUnidadeId) {
+    if (!Number.isInteger(outraUnidadeId) || outraUnidadeId <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Informe uma unidade válida.'
+      });
+    }
+
+    if (!admin && unitId === outraUnidadeId) {
       return res.status(400).json({
         success: false,
         message:
@@ -143,18 +159,69 @@ exports.criarConversa = async (req, res, next) => {
     if (unidade.rows.length === 0) {
       return res.status(404).json({
         success: false,
-        message:
-          'Unidade não encontrada.'
+        message: 'Unidade não encontrada.'
       });
     }
 
+    /*
+     * Para o administrador da rede, precisamos saber
+     * de qual unidade a conversa será criada.
+     *
+     * O admin pode informar a unidade de origem através
+     * de "from_unit_id". Caso não informe, usamos a menor
+     * unidade diferente da unidade escolhida.
+     */
+    let origemId = unitId;
+
+    if (admin) {
+      const origemInformada =
+        Number(req.body?.from_unit_id);
+
+      if (
+        Number.isInteger(origemInformada) &&
+        origemInformada > 0 &&
+        origemInformada !== outraUnidadeId
+      ) {
+        const origem = await db.query(`
+          SELECT id
+          FROM units
+          WHERE id = $1
+            AND active = true
+        `, [origemInformada]);
+
+        if (origem.rows.length > 0) {
+          origemId = origemInformada;
+        }
+      }
+
+      if (!origemId) {
+        const origem = await db.query(`
+          SELECT id
+          FROM units
+          WHERE active = true
+            AND id <> $1
+          ORDER BY id
+          LIMIT 1
+        `, [outraUnidadeId]);
+
+        if (origem.rows.length === 0) {
+          return res.status(409).json({
+            success: false,
+            message: 'Não existem outras unidades ativas.'
+          });
+        }
+
+        origemId = Number(origem.rows[0].id);
+      }
+    }
+
     const a = Math.min(
-      unitId,
+      origemId,
       outraUnidadeId
     );
 
     const b = Math.max(
-      unitId,
+      origemId,
       outraUnidadeId
     );
 
@@ -214,14 +281,15 @@ exports.criarConversa = async (req, res, next) => {
 exports.mensagens = async (req, res, next) => {
   try {
     const unitId = minhaUnidade(req);
+    const admin = ehAdmin(req);
+
     const conversationId =
       Number(req.params.id);
 
-    if (!unitId) {
+    if (!unitId && !admin) {
       return res.status(409).json({
         success: false,
-        message:
-          'Usuário sem unidade vinculada.'
+        message: 'Usuário sem unidade vinculada.'
       });
     }
 
@@ -231,13 +299,12 @@ exports.mensagens = async (req, res, next) => {
       WHERE
         id = $1
         AND (
-          unit_a_id = $2
-          OR unit_b_id = $2
+          ${admin ? 'TRUE' : 'unit_a_id = $2 OR unit_b_id = $2'}
         )
-    `, [
-      conversationId,
-      unitId
-    ]);
+    `, admin
+      ? [conversationId]
+      : [conversationId, unitId]
+    );
 
     if (conversa.rows.length === 0) {
       return res.status(403).json({
@@ -292,6 +359,8 @@ exports.mensagens = async (req, res, next) => {
 exports.enviarMensagem = async (req, res, next) => {
   try {
     const unitId = minhaUnidade(req);
+    const admin = ehAdmin(req);
+
     const conversationId =
       Number(req.params.id);
 
@@ -300,19 +369,17 @@ exports.enviarMensagem = async (req, res, next) => {
         req.body?.message || ''
       ).trim();
 
-    if (!unitId) {
+    if (!unitId && !admin) {
       return res.status(409).json({
         success: false,
-        message:
-          'Usuário sem unidade vinculada.'
+        message: 'Usuário sem unidade vinculada.'
       });
     }
 
     if (!message) {
       return res.status(400).json({
         success: false,
-        message:
-          'Digite uma mensagem.'
+        message: 'Digite uma mensagem.'
       });
     }
 
@@ -330,13 +397,12 @@ exports.enviarMensagem = async (req, res, next) => {
       WHERE
         id = $1
         AND (
-          unit_a_id = $2
-          OR unit_b_id = $2
+          ${admin ? 'TRUE' : 'unit_a_id = $2 OR unit_b_id = $2'}
         )
-    `, [
-      conversationId,
-      unitId
-    ]);
+    `, admin
+      ? [conversationId]
+      : [conversationId, unitId]
+    );
 
     if (conversa.rows.length === 0) {
       return res.status(403).json({
@@ -395,18 +461,41 @@ exports.enviarMensagem = async (req, res, next) => {
 exports.unidades = async (req, res, next) => {
   try {
     const unitId = minhaUnidade(req);
+    const admin = ehAdmin(req);
 
-    const result = await db.query(`
-      SELECT
-        id,
-        code,
-        name
-      FROM units
-      WHERE
-        active = true
-        AND id <> $1
-      ORDER BY name
-    `, [unitId]);
+    let result;
+
+    if (admin) {
+      result = await db.query(`
+        SELECT
+          id,
+          code,
+          name
+        FROM units
+        WHERE active = true
+        ORDER BY name
+      `);
+    } else {
+      if (!unitId) {
+        return res.status(409).json({
+          success: false,
+          message:
+            'Usuário sem unidade vinculada.'
+        });
+      }
+
+      result = await db.query(`
+        SELECT
+          id,
+          code,
+          name
+        FROM units
+        WHERE
+          active = true
+          AND id <> $1
+        ORDER BY name
+      `, [unitId]);
+    }
 
     res.json({
       success: true,
