@@ -12,6 +12,7 @@ const transferenciaRoutes = require('./transferencia.routes');
 const devolucaoRoutes = require('./devolucao.routes');
 const estoqueRedeRoutes = require('./estoqueRede.routes');
 const comunicacaoRoutes = require('./comunicacao.routes');
+const rotinaRoutes = require('./rotina.routes');
 const salesRoutes = require('./sales.routes');
 const router = express.Router();
 
@@ -50,5 +51,6 @@ router.use('/transferencias', transferenciaRoutes);
 router.use('/devolucoes', devolucaoRoutes);
 router.use('/estoque-rede', estoqueRedeRoutes);
 router.use('/comunicacao', comunicacaoRoutes);
+router.use('/rotinas', rotinaRoutes);
 router.use('/sales', salesRoutes);
 module.exports = router;
