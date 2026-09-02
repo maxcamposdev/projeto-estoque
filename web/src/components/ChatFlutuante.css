@@ -956,3 +956,44 @@
     max-height:none !important;
   }
 }
+
+/* CORREÇÃO TEMA DARK - NOMES DAS LOJAS */
+.chat-loja-demo-info strong{
+  color:var(--text-primary) !important;
+}
+
+.chat-loja-demo-info small{
+  color:var(--text-secondary) !important;
+}
+
+.chat-loja-demo-seta{
+  color:var(--text-secondary) !important;
+}
+
+.chat-demo-header-info strong{
+  color:var(--text-primary) !important;
+}
+
+.chat-demo-mensagem{
+  color:var(--text-primary) !important;
+}
+
+.chat-demo-mensagem strong,
+.chat-demo-mensagem div{
+  color:var(--text-primary) !important;
+}
+
+@media (prefers-color-scheme: dark){
+
+  .chat-loja-demo-info strong{
+    color:#f3f4f6 !important;
+  }
+
+  .chat-loja-demo-info small{
+    color:#a1a1aa !important;
+  }
+
+  .chat-demo-header-info strong{
+    color:#f3f4f6 !important;
+  }
+}
